@@ -39,6 +39,547 @@ unsupported:
    - 9.2
    - 11.0 RC
 
+.requires_v12.1.0: &cuda12_1_0_requires
+  requires: >
+    cuda>=12.1
+    brand=tesla,driver>=450,driver<451
+    brand=tesla,driver>=470,driver<471
+    brand=unknown,driver>=470,driver<471
+    brand=nvidia,driver>=470,driver<471
+    brand=nvidiartx,driver>=470,driver<471
+    brand=geforce,driver>=470,driver<471
+    brand=geforcertx,driver>=470,driver<471
+    brand=quadro,driver>=470,driver<471
+    brand=quadrortx,driver>=470,driver<471
+    brand=titan,driver>=470,driver<471
+    brand=titanrtx,driver>=470,driver<471
+    brand=tesla,driver>=510,driver<511
+    brand=unknown,driver>=510,driver<511
+    brand=nvidia,driver>=510,driver<511
+    brand=nvidiartx,driver>=510,driver<511
+    brand=geforce,driver>=510,driver<511
+    brand=geforcertx,driver>=510,driver<511
+    brand=quadro,driver>=510,driver<511
+    brand=quadrortx,driver>=510,driver<511
+    brand=titan,driver>=510,driver<511
+    brand=titanrtx,driver>=510,driver<511
+    brand=tesla,driver>=515,driver<516
+    brand=unknown,driver>=515,driver<516
+    brand=nvidia,driver>=515,driver<516
+    brand=nvidiartx,driver>=515,driver<516
+    brand=geforce,driver>=515,driver<516
+    brand=geforcertx,driver>=515,driver<516
+    brand=quadro,driver>=515,driver<516
+    brand=quadrortx,driver>=515,driver<516
+    brand=titan,driver>=515,driver<516
+    brand=titanrtx,driver>=515,driver<516
+    brand=tesla,driver>=525,driver<526
+    brand=unknown,driver>=525,driver<526
+    brand=nvidia,driver>=525,driver<526
+    brand=nvidiartx,driver>=525,driver<526
+    brand=geforce,driver>=525,driver<526
+    brand=geforcertx,driver>=525,driver<526
+    brand=quadro,driver>=525,driver<526
+    brand=quadrortx,driver>=525,driver<526
+    brand=titan,driver>=525,driver<526
+    brand=titanrtx,driver>=525,driver<526
+
+cuda_v12.1.0:
+  dist_base_path: dist/12.1.0
+  image_name: gitlab-master.nvidia.com:5005/cuda-installer/cuda
+  release_label: 12.1.0
+  push_repos:
+    - artifactory
+    - docker.io
+    - ngc
+  centos7:
+    base_image: centos:7
+    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/rhel7
+    template_path: templates/redhat
+    x86_64:
+      components:
+        cudart:
+          version: 12.1.55-1
+        cudart_dev:
+          version: 12.1.55-1
+        libcublas:
+          version: 12.1.0.26-1
+        libcublas_dev:
+          version: 12.1.0.26-1
+        libnpp:
+          version: 12.0.2.50-1
+        libnpp_dev:
+          version: 12.0.2.50-1
+        nvml_dev:
+          version: 12.1.55-1
+        nvprof:
+          version: 12.1.55-1
+        nvtx:
+          version: 12.1.66-1
+        profiler_api:
+          version: 12.1.55-1
+        libnccl2:
+          version: 2.17.1-1
+        libnccl2_dev:
+          version: 2.17.1-1
+      <<: *cuda12_1_0_requires
+  rockylinux8:
+    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/rhel8
+    template_path: templates/redhat  
+    arm64:
+      components:
+        cudart:
+          version: 12.1.55-1
+        cudart_dev:
+          version: 12.1.55-1
+        libcublas:
+          version: 12.1.0.26-1
+        libcublas_dev:
+          version: 12.1.0.26-1
+        libcusparse:
+          version: 12.0.2.55-1
+        libcusparse_dev:
+          version: 12.0.2.55-1
+        libnpp:
+          version: 12.0.2.50-1
+        libnpp_dev:
+          version: 12.0.2.50-1
+        nvml_dev:
+          version: 12.1.55-1
+        nvtx:
+          version: 12.1.66-1
+        profiler_api:
+          version: 12.1.55-1
+        libnccl2:
+          version: 2.17.1-1
+        libnccl2_dev:
+          version: 2.17.1-1
+      requires: 'cuda>=12.1'
+    base_image: rockylinux:8
+    x86_64:
+      components:
+        cudart:
+          version: 12.1.55-1
+        cudart_dev:
+          version: 12.1.55-1
+        libcublas:
+          version: 12.1.0.26-1
+        libcublas_dev:
+          version: 12.1.0.26-1
+        libcusparse:
+          version: 12.0.2.55-1
+        libcusparse_dev:
+          version: 12.0.2.55-1
+        libnpp:
+          version: 12.0.2.50-1
+        libnpp_dev:
+          version: 12.0.2.50-1
+        nvml_dev:
+          version: 12.1.55-1
+        nvprof:
+          version: 12.1.55-1
+        nvtx:
+          version: 12.1.66-1
+        profiler_api:
+          version: 12.1.55-1
+        libnccl2:
+          version: 2.17.1-1
+        libnccl2_dev:
+          version: 2.17.1-1
+      <<: *cuda12_1_0_requires
+  rockylinux9:
+    base_image: rockylinux:9
+    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/rhel9
+    template_path: templates/redhat
+    arm64:
+      components:
+        cudart:
+          version: 12.1.55-1
+        cudart_dev:
+          version: 12.1.55-1
+        libcublas:
+          version: 12.1.0.26-1
+        libcublas_dev:
+          version: 12.1.0.26-1
+        libcusparse:
+          version: 12.0.2.55-1
+        libcusparse_dev:
+          version: 12.0.2.55-1
+        libnpp:
+          version: 12.0.2.50-1
+        libnpp_dev:
+          version: 12.0.2.50-1
+        nvml_dev:
+          version: 12.1.55-1
+        nvtx:
+          version: 12.1.66-1
+        profiler_api:
+          version: 12.1.55-1
+        libnccl2:
+          version: 2.17.1-1
+        libnccl2_dev:
+          version: 2.17.1-1
+      requires: 'cuda>=12.1'
+    x86_64:
+      components:
+        cudart:
+          version: 12.1.55-1
+        cudart_dev:
+          version: 12.1.55-1
+        libcublas:
+          version: 12.1.0.26-1
+        libcublas_dev:
+          version: 12.1.0.26-1
+        libcusparse:
+          version: 12.0.2.55-1
+        libcusparse_dev:
+          version: 12.0.2.55-1
+        libnpp:
+          version: 12.0.2.50-1
+        libnpp_dev:
+          version: 12.0.2.50-1
+        nvml_dev:
+          version: 12.1.55-1
+        nvprof:
+          version: 12.1.55-1
+        nvtx:
+          version: 12.1.66-1
+        profiler_api:
+          version: 12.1.55-1
+        libnccl2:
+          version: 2.17.1-1
+        libnccl2_dev:
+          version: 2.17.1-1
+      <<: *cuda12_1_0_requires
+  ubi7:
+    base_image: registry.access.redhat.com/ubi7/ubi:latest
+    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/rhel7
+    template_path: templates/redhat
+    x86_64:
+      components:
+        cudart:
+          version: 12.1.55-1
+        cudart_dev:
+          version: 12.1.55-1
+        libcublas:
+          version: 12.1.0.26-1
+        libcublas_dev:
+          version: 12.1.0.26-1
+        libnpp:
+          version: 12.0.2.50-1
+        libnpp_dev:
+          version: 12.0.2.50-1
+        nvml_dev:
+          version: 12.1.55-1
+        nvprof:
+          version: 12.1.55-1
+        nvtx:
+          version: 12.1.66-1
+        profiler_api:
+          version: 12.1.55-1
+        libnccl2:
+          version: 2.17.1-1
+        libnccl2_dev:
+          version: 2.17.1-1
+      <<: *cuda12_1_0_requires
+  ubi8:
+    base_image: registry.access.redhat.com/ubi8/ubi:latest  
+    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/rhel8
+    template_path: templates/redhat  
+    arm64:
+      components:
+        cudart:
+          version: 12.1.55-1
+        cudart_dev:
+          version: 12.1.55-1
+        libcublas:
+          version: 12.1.0.26-1
+        libcublas_dev:
+          version: 12.1.0.26-1
+        libnpp:
+          version: 12.0.2.50-1
+        libnpp_dev:
+          version: 12.0.2.50-1
+        nvml_dev:
+          version: 12.1.55-1
+        nvtx:
+          version: 12.1.66-1
+        profiler_api:
+          version: 12.1.55-1
+        libnccl2:
+          version: 2.17.1-1
+        libnccl2_dev:
+          version: 2.17.1-1
+      requires: 'cuda>=12.1'
+    ppc64le:
+      components:
+        cudart:
+          version: 12.1.55-1
+        cudart_dev:
+          version: 12.1.55-1
+        libcublas:
+          version: 12.1.0.26-1
+        libcublas_dev:
+          version: 12.1.0.26-1
+        libnpp:
+          version: 12.0.2.50-1
+        libnpp_dev:
+          version: 12.0.2.50-1
+        nvml_dev:
+          version: 12.1.55-1
+        nvprof:
+          version: 12.1.55-1
+        nvtx:
+          version: 12.1.66-1
+        profiler_api:
+          version: 12.1.55-1
+        libnccl2:
+          version: 2.17.1-1
+        libnccl2_dev:
+          version: 2.17.1-1
+      requires: 'cuda>=12.1'
+    x86_64:
+      components:
+        cudart:
+          version: 12.1.55-1
+        cudart_dev:
+          version: 12.1.55-1
+        libcublas:
+          version: 12.1.0.26-1
+        libcublas_dev:
+          version: 12.1.0.26-1
+        libnpp:
+          version: 12.0.2.50-1
+        libnpp_dev:
+          version: 12.0.2.50-1
+        nvml_dev:
+          version: 12.1.55-1
+        nvprof:
+          version: 12.1.55-1
+        nvtx:
+          version: 12.1.66-1
+        profiler_api:
+          version: 12.1.55-1
+        libnccl2:
+          version: 2.17.1-1
+        libnccl2_dev:
+          version: 2.17.1-1
+      <<: *cuda12_1_0_requires
+  ubi9:
+    base_image: registry.access.redhat.com/ubi9/ubi:latest
+    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/rhel9
+    template_path: templates/redhat  
+    arm64:
+      components:
+        cudart:
+          version: 12.1.55-1
+        cudart_dev:
+          version: 12.1.55-1
+        libcublas:
+          version: 12.1.0.26-1
+        libcublas_dev:
+          version: 12.1.0.26-1
+        libnpp:
+          version: 12.0.2.50-1
+        libnpp_dev:
+          version: 12.0.2.50-1
+        nvml_dev:
+          version: 12.1.55-1
+        nvtx:
+          version: 12.1.66-1
+        profiler_api:
+          version: 12.1.55-1
+        libnccl2:
+          version: 2.17.1-1
+        libnccl2_dev:
+          version: 2.17.1-1
+      requires: 'cuda>=12.1'
+    x86_64:
+      components:
+        cudart:
+          version: 12.1.55-1
+        cudart_dev:
+          version: 12.1.55-1
+        libcublas:
+          version: 12.1.0.26-1
+        libcublas_dev:
+          version: 12.1.0.26-1
+        libnpp:
+          version: 12.0.2.50-1
+        libnpp_dev:
+          version: 12.0.2.50-1
+        nvml_dev:
+          version: 12.1.55-1
+        nvprof:
+          version: 12.1.55-1
+        nvtx:
+          version: 12.1.66-1
+        profiler_api:
+          version: 12.1.55-1
+        libnccl2:
+          version: 2.17.1-1
+        libnccl2_dev:
+          version: 2.17.1-1
+      <<: *cuda12_1_0_requires
+  ubuntu18.04:
+    base_image: ubuntu:18.04
+    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804
+    template_path: templates/ubuntu
+    x86_64:
+      components:
+        cudart:
+          version: 12.1.55-1
+        cudart_dev:
+          version: 12.1.55-1
+        libcublas:
+          version: 12.1.0.26-1
+        libcublas_dev:
+          version: 12.1.0.26-1
+        libcusparse:
+          version: 12.0.2.55-1
+        libcusparse_dev:
+          version: 12.0.2.55-1
+        libnpp:
+          version: 12.0.2.50-1
+        libnpp_dev:
+          version: 12.0.2.50-1
+        nvml_dev:
+          version: 12.1.55-1
+        nvprof:
+          version: 12.1.55-1
+        nvtx:
+          version: 12.1.66-1
+        profiler_api:
+          version: 12.1.55-1
+      <<: *cuda12_1_0_requires
+  ubuntu20.04:
+    base_image: ubuntu:20.04
+    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004
+    template_path: templates/ubuntu  
+    arm64:
+      components:
+        cudart:
+          version: 12.1.55-1
+        cudart_dev:
+          version: 12.1.55-1
+        libcublas:
+          version: 12.1.0.26-1
+        libcublas_dev:
+          version: 12.1.0.26-1
+        libcusparse:
+          version: 12.0.2.55-1
+        libcusparse_dev:
+          version: 12.0.2.55-1
+        libnpp:
+          version: 12.0.2.50-1
+        libnpp_dev:
+          version: 12.0.2.50-1
+        nvml_dev:
+          version: 12.1.55-1
+        nvtx:
+          version: 12.1.66-1
+        profiler_api:
+          version: 12.1.55-1
+        libnccl2:
+          version: 2.17.1-1
+        libnccl2_dev:
+          version: 2.17.1-1
+      requires: 'cuda>=12.1'
+    x86_64:
+      components:
+        cudart:
+          version: 12.1.55-1
+        cudart_dev:
+          version: 12.1.55-1
+        libcublas:
+          version: 12.1.0.26-1
+        libcublas_dev:
+          version: 12.1.0.26-1
+        libcusparse:
+          version: 12.0.2.55-1
+        libcusparse_dev:
+          version: 12.0.2.55-1
+        libnpp:
+          version: 12.0.2.50-1
+        libnpp_dev:
+          version: 12.0.2.50-1
+        nvml_dev:
+          version: 12.1.55-1
+        nvprof:
+          version: 12.1.55-1
+        nvtx:
+          version: 12.1.66-1
+        profiler_api:
+          version: 12.1.55-1
+        libnccl2:
+          version: 2.17.1-1
+        libnccl2_dev:
+          version: 2.17.1-1
+      <<: *cuda12_1_0_requires
+  ubuntu22.04:
+    base_image: ubuntu:22.04
+    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204
+    template_path: templates/ubuntu  
+    arm64:
+      components:
+        cudart:
+          version: 12.1.55-1
+        cudart_dev:
+          version: 12.1.55-1
+        libcublas:
+          version: 12.1.0.26-1
+        libcublas_dev:
+          version: 12.1.0.26-1
+        libcusparse:
+          version: 12.0.2.55-1
+        libcusparse_dev:
+          version: 12.0.2.55-1
+        libnpp:
+          version: 12.0.2.50-1
+        libnpp_dev:
+          version: 12.0.2.50-1
+        nvml_dev:
+          version: 12.1.55-1
+        nvtx:
+          version: 12.1.66-1
+        profiler_api:
+          version: 12.1.55-1
+        libnccl2:
+          version: 2.17.1-1
+        libnccl2_dev:
+          version: 2.17.1-1
+      requires: 'cuda>=12.1'
+    x86_64:
+      components:
+        cudart:
+          version: 12.1.55-1
+        cudart_dev:
+          version: 12.1.55-1
+        libcublas:
+          version: 12.1.0.26-1
+        libcublas_dev:
+          version: 12.1.0.26-1
+        libcusparse:
+          version: 12.0.2.55-1
+        libcusparse_dev:
+          version: 12.0.2.55-1
+        libnpp:
+          version: 12.0.2.50-1
+        libnpp_dev:
+          version: 12.0.2.50-1
+        nvml_dev:
+          version: 12.1.55-1
+        nvprof:
+          version: 12.1.55-1
+        nvtx:
+          version: 12.1.66-1
+        profiler_api:
+          version: 12.1.55-1
+        libnccl2:
+          version: 2.17.1-1
+        libnccl2_dev:
+          version: 2.17.1-1
+      <<: *cuda12_1_0_requires
 
 .requires_v12.0.1: &cuda12_0_1_requires
   requires: >
@@ -74,17 +615,6 @@ unsupported:
     brand=quadrortx,driver>=515,driver<516
     brand=titan,driver>=515,driver<516
     brand=titanrtx,driver>=515,driver<516
-    brand=tesla,driver>=520,driver<521
-    brand=unknown,driver>=520,driver<521
-    brand=nvidia,driver>=520,driver<521
-    brand=nvidiartx,driver>=520,driver<521
-    brand=geforce,driver>=520,driver<521
-    brand=geforcertx,driver>=520,driver<521
-    brand=quadro,driver>=520,driver<521
-    brand=quadrortx,driver>=520,driver<521
-    brand=titan,driver>=520,driver<521
-    brand=titanrtx,driver>=520,driver<521
-
 
 cuda_v12.0.1:
   dist_base_path: dist/12.0.1
@@ -121,9 +651,11 @@ cuda_v12.0.1:
         profiler_api:
           version: 12.0.140-1
         libnccl2:
-          version: 2.16.2-1
+          version: 2.17.1-1
         libnccl2_dev:
-          version: 2.16.2-1
+          version: 2.17.1-1
+        cudnn8:
+          version: 8.8.0.121-1
       <<: *cuda12_0_1_requires
   rockylinux8:
     base_image: rockylinux:8
@@ -154,9 +686,11 @@ cuda_v12.0.1:
         profiler_api:
           version: 12.0.140-1
         libnccl2:
-          version: 2.16.2-1
+          version: 2.16.5-1
         libnccl2_dev:
-          version: 2.16.2-1          
+          version: 2.16.5-1
+        cudnn8:
+          version: 8.8.0.121-1
       requires: 'cuda>=12.0'
     x86_64:
       components:
@@ -185,9 +719,11 @@ cuda_v12.0.1:
         profiler_api:
           version: 12.0.140-1
         libnccl2:
-          version: 2.16.2-1
+          version: 2.16.5-1
         libnccl2_dev:
-          version: 2.16.2-1
+          version: 2.16.5-1
+        cudnn8:
+          version: 8.8.0.121-1
       <<: *cuda12_0_1_requires
   rockylinux9:
     base_image: rockylinux:9
@@ -245,9 +781,11 @@ cuda_v12.0.1:
         profiler_api:
           version: 12.0.140-1
         libnccl2:
-          version: 2.16.2-1
+          version: 2.16.5-1
         libnccl2_dev:
-          version: 2.16.2-1
+          version: 2.16.5-1
+        cudnn8:
+          version: 8.8.0.121-1
       <<: *cuda12_0_1_requires
   ubi7:
     base_image: registry.access.redhat.com/ubi7/ubi:latest
@@ -276,13 +814,11 @@ cuda_v12.0.1:
         profiler_api:
           version: 12.0.140-1
         libnccl2:
-          version: 2.16.2-1
+          version: 2.17.1-1
         libnccl2_dev:
-          version: 2.16.2-1
-        libnccl2:
-          version: 2.16.2-1
-        libnccl2_dev:
-          version: 2.16.2-1
+          version: 2.17.1-1
+        cudnn8:
+          version: 8.8.0.121-1
       <<: *cuda12_0_1_requires
   ubi8:
     base_image: registry.access.redhat.com/ubi8/ubi:latest  
@@ -309,9 +845,11 @@ cuda_v12.0.1:
         profiler_api:
           version: 12.0.140-1
         libnccl2:
-          version: 2.16.2-1
+          version: 2.16.5-1
         libnccl2_dev:
-          version: 2.16.2-1
+          version: 2.16.5-1
+        cudnn8:
+          version: 8.8.0.121-1
       requires: 'cuda>=12.0'
     ppc64le:
       components:
@@ -336,9 +874,11 @@ cuda_v12.0.1:
         profiler_api:
           version: 12.0.140-1
         libnccl2:
-          version: 2.16.2-1
+          version: 2.16.5-1
         libnccl2_dev:
-          version: 2.16.2-1          
+          version: 2.16.5-1
+        cudnn8:
+          version: 8.8.0.121-1
       requires: 'cuda>=12.0'
     x86_64:
       components:
@@ -363,9 +903,11 @@ cuda_v12.0.1:
         profiler_api:
           version: 12.0.140-1
         libnccl2:
-          version: 2.16.2-1
+          version: 2.16.5-1
         libnccl2_dev:
-          version: 2.16.2-1
+          version: 2.16.5-1
+        cudnn8:
+          version: 8.8.0.121-1
       <<: *cuda12_0_1_requires
   ubi9:
     base_image: registry.access.redhat.com/ubi9/ubi:latest
@@ -415,9 +957,11 @@ cuda_v12.0.1:
         profiler_api:
           version: 12.0.140-1
         libnccl2:
-          version: 2.16.2-1
+          version: 2.16.5-1
         libnccl2_dev:
-          version: 2.16.2-1          
+          version: 2.16.5-1
+        cudnn8:
+          version: 8.8.0.121-1
       <<: *cuda12_0_1_requires
   ubuntu18.04:
     base_image: ubuntu:18.04
@@ -449,6 +993,8 @@ cuda_v12.0.1:
           version: 12.0.140-1
         profiler_api:
           version: 12.0.140-1
+        cudnn8:
+          version: 8.8.0.121-1
       <<: *cuda12_0_1_requires
   ubuntu20.04:
     base_image: ubuntu:20.04
@@ -479,9 +1025,11 @@ cuda_v12.0.1:
         profiler_api:
           version: 12.0.140-1
         libnccl2:
-          version: 2.16.2-1
+          version: 2.17.1-1
         libnccl2_dev:
-          version: 2.16.2-1          
+          version: 2.17.1-1
+        cudnn8:
+          version: 8.8.0.121-1
       requires: 'cuda>=12.0'
     x86_64:
       components:
@@ -510,9 +1058,11 @@ cuda_v12.0.1:
         profiler_api:
           version: 12.0.140-1
         libnccl2:
-          version: 2.16.2-1
+          version: 2.17.1-1
         libnccl2_dev:
-          version: 2.16.2-1          
+          version: 2.17.1-1
+        cudnn8:
+          version: 8.8.0.121-1
       <<: *cuda12_0_1_requires
   ubuntu22.04:
     base_image: ubuntu:22.04
@@ -543,9 +1093,11 @@ cuda_v12.0.1:
         profiler_api:
           version: 12.0.140-1
         libnccl2:
-          version: 2.16.2-1
+          version: 2.16.5-1
         libnccl2_dev:
-          version: 2.16.2-1
+          version: 2.16.5-1
+        cudnn8:
+          version: 8.8.0.121-1
       requires: 'cuda>=12.0'
     x86_64:
       components:
@@ -574,9 +1126,11 @@ cuda_v12.0.1:
         profiler_api:
           version: 12.0.140-1
         libnccl2:
-          version: 2.16.2-1
+          version: 2.16.5-1
         libnccl2_dev:
-          version: 2.16.2-1
+          version: 2.16.5-1
+        cudnn8:
+          version: 8.8.0.121-1
       <<: *cuda12_0_1_requires
 
 
@@ -614,16 +1168,6 @@ cuda_v12.0.1:
     brand=quadrortx,driver>=515,driver<516
     brand=titan,driver>=515,driver<516
     brand=titanrtx,driver>=515,driver<516
-    brand=tesla,driver>=520,driver<521
-    brand=unknown,driver>=520,driver<521
-    brand=nvidia,driver>=520,driver<521
-    brand=nvidiartx,driver>=520,driver<521
-    brand=geforce,driver>=520,driver<521
-    brand=geforcertx,driver>=520,driver<521
-    brand=quadro,driver>=520,driver<521
-    brand=quadrortx,driver>=520,driver<521
-    brand=titan,driver>=520,driver<521
-    brand=titanrtx,driver>=520,driver<521
 
 cuda_v12.0.0:
   dist_base_path: dist/12.0.0
@@ -660,9 +1204,9 @@ cuda_v12.0.0:
         profiler_api:
           version: 12.0.76-1
         libnccl2:
-          version: 2.16.2-1
+          version: 2.17.1-1
         libnccl2_dev:
-          version: 2.16.2-1
+          version: 2.17.1-1
       <<: *cuda12_0_0_requires
   rockylinux8:
     base_image: rockylinux:8
@@ -693,9 +1237,9 @@ cuda_v12.0.0:
         profiler_api:
           version: 12.0.76-1
         libnccl2:
-          version: 2.16.2-1
+          version: 2.16.5-1
         libnccl2_dev:
-          version: 2.16.2-1
+          version: 2.16.5-1
       requires: 'cuda>=12.0'
     x86_64:
       components:
@@ -724,9 +1268,9 @@ cuda_v12.0.0:
         profiler_api:
           version: 12.0.76-1
         libnccl2:
-          version: 2.16.2-1
+          version: 2.16.5-1
         libnccl2_dev:
-          version: 2.16.2-1
+          version: 2.16.5-1
       <<: *cuda12_0_0_requires
   ubi7:
     base_image: registry.access.redhat.com/ubi7/ubi:latest
@@ -755,9 +1299,9 @@ cuda_v12.0.0:
         profiler_api:
           version: 12.0.76-1
         libnccl2:
-          version: 2.16.2-1
+          version: 2.17.1-1
         libnccl2_dev:
-          version: 2.16.2-1
+          version: 2.17.1-1
       <<: *cuda12_0_0_requires
   ubi8:
     arm64:
@@ -781,9 +1325,9 @@ cuda_v12.0.0:
         profiler_api:
           version: 12.0.76-1
         libnccl2:
-          version: 2.16.2-1
+          version: 2.16.5-1
         libnccl2_dev:
-          version: 2.16.2-1
+          version: 2.16.5-1
       requires: 'cuda>=12.0'
     base_image: registry.access.redhat.com/ubi8/ubi:latest
     ppc64le:
@@ -809,9 +1353,9 @@ cuda_v12.0.0:
         profiler_api:
           version: 12.0.76-1
         libnccl2:
-          version: 2.16.2-1
+          version: 2.16.5-1
         libnccl2_dev:
-          version: 2.16.2-1
+          version: 2.16.5-1
       requires: 'cuda>=12.0'
     repo_url: https://developer.download.nvidia.com/compute/cuda/repos/rhel8
     template_path: templates/redhat
@@ -838,9 +1382,9 @@ cuda_v12.0.0:
         profiler_api:
           version: 12.0.76-1
         libnccl2:
-          version: 2.16.2-1
+          version: 2.16.5-1
         libnccl2_dev:
-          version: 2.16.2-1
+          version: 2.16.5-1
       <<: *cuda12_0_0_requires
   ubuntu18.04:
     base_image: ubuntu:18.04
@@ -899,9 +1443,9 @@ cuda_v12.0.0:
         profiler_api:
           version: 12.0.76-1
         libnccl2:
-          version: 2.16.2-1
+          version: 2.17.1-1
         libnccl2_dev:
-          version: 2.16.2-1
+          version: 2.17.1-1
       requires: 'cuda>=12.0'
     base_image: ubuntu:20.04
     repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004
@@ -933,9 +1477,9 @@ cuda_v12.0.0:
         profiler_api:
           version: 12.0.76-1
         libnccl2:
-          version: 2.16.2-1
+          version: 2.17.1-1
         libnccl2_dev:
-          version: 2.16.2-1
+          version: 2.17.1-1
       <<: *cuda12_0_0_requires
   ubuntu22.04:
     arm64:
@@ -963,9 +1507,9 @@ cuda_v12.0.0:
         profiler_api:
           version: 12.0.76-1
         libnccl2:
-          version: 2.16.2-1
+          version: 2.16.5-1
         libnccl2_dev:
-          version: 2.16.2-1
+          version: 2.16.5-1
       requires: 'cuda>=12.0'
     base_image: ubuntu:22.04
     repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204
@@ -997,9 +1541,9 @@ cuda_v12.0.0:
         profiler_api:
           version: 12.0.76-1
         libnccl2:
-          version: 2.16.2-1
+          version: 2.16.5-1
         libnccl2_dev:
-          version: 2.16.2-1
+          version: 2.16.5-1
       <<: *cuda12_0_0_requires
 
 

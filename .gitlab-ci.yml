@@ -53,7 +53,7 @@ before_script:
   - retry 5 20 docker login -u '$oauthtoken' -p $NVCR_TOKEN nvcr.io;
 
 .security_scan:
-  image: gitlab-master.nvidia.com:5005/pstooling/pulse-group/pulse-container-scanner/pulse-cli:stable
+  image: gitlab-master.nvidia.com:5005/pstooling/pulse-group/pulse-container-scanner/pulse-cli:v2.0.0
   variables:
     PSS_SSA_ID: "x9thwm-cootr2q1jdv5p7b8iw4fs4ob3x6nqqsoznyk"
     PSS_SSA_SCOPE: "nspect.verify%20scan.anchore"
@@ -2815,6 +2815,18 @@ centos7-v12.0.0:
   <<: *cuda_base_definition
   <<: *centos7_12_0_0_only
 
+centos7-v12.0.0-cudnn8:
+  <<: *cudnn_definition
+  <<: *centos7_12_0_0_only
+  # Variables overwritten here. Don't move this section.
+  variables:
+    <<: *centos7_12_0_0_variables
+    CUDNN_VERSION: "cudnn8"
+    ARCHES: "x86_64"
+  needs:
+    - job: centos7-v12.0.0
+      artifacts: true
+
 centos7-v12.0.0-test-x86_64:
   <<: *centos7_12_0_0_only
   <<: *test_definition
@@ -2829,6 +2841,8 @@ centos7-v12.0.0-test-x86_64:
   needs:
     - job: centos7-v12.0.0
       artifacts: true
+    - job: centos7-v12.0.0-cudnn8
+      optional: true
 
 centos7-v12.0.0-scan-x86_64:
   <<: *scan_definition
@@ -2859,6 +2873,8 @@ centos7-v12.0.0-deploy:
   needs:
     - job: centos7-v12.0.0
       artifacts: true
+    - job: centos7-v12.0.0-cudnn8
+      optional: true
     - job: centos7-v12.0.0-test-x86_64
       optional: true
     - job: centos7-v12.0.0-scan-x86_64
@@ -2887,6 +2903,18 @@ rockylinux8-v12.0.0:
   <<: *cuda_base_definition
   <<: *rockylinux8_12_0_0_only
 
+rockylinux8-v12.0.0-cudnn8:
+  <<: *cudnn_definition
+  <<: *rockylinux8_12_0_0_only
+  # Variables overwritten here. Don't move this section.
+  variables:
+    <<: *rockylinux8_12_0_0_variables
+    CUDNN_VERSION: "cudnn8"
+    ARCHES: "arm64, x86_64"
+  needs:
+    - job: rockylinux8-v12.0.0
+      artifacts: true
+
 rockylinux8-v12.0.0-test-arm64:
   <<: *rockylinux8_12_0_0_only
   <<: *test_definition
@@ -2901,6 +2929,8 @@ rockylinux8-v12.0.0-test-arm64:
   needs:
     - job: rockylinux8-v12.0.0
       artifacts: true
+    - job: rockylinux8-v12.0.0-cudnn8
+      optional: true
 
 rockylinux8-v12.0.0-scan-arm64:
   <<: *scan_definition
@@ -2933,6 +2963,8 @@ rockylinux8-v12.0.0-test-x86_64:
   needs:
     - job: rockylinux8-v12.0.0
       artifacts: true
+    - job: rockylinux8-v12.0.0-cudnn8
+      optional: true
 
 rockylinux8-v12.0.0-scan-x86_64:
   <<: *scan_definition
@@ -2963,6 +2995,8 @@ rockylinux8-v12.0.0-deploy:
   needs:
     - job: rockylinux8-v12.0.0
       artifacts: true
+    - job: rockylinux8-v12.0.0-cudnn8
+      optional: true
     - job: rockylinux8-v12.0.0-test-arm64
       optional: true
     - job: rockylinux8-v12.0.0-scan-arm64
@@ -2995,6 +3029,18 @@ ubi7-v12.0.0:
   <<: *cuda_base_definition
   <<: *ubi7_12_0_0_only
 
+ubi7-v12.0.0-cudnn8:
+  <<: *cudnn_definition
+  <<: *ubi7_12_0_0_only
+  # Variables overwritten here. Don't move this section.
+  variables:
+    <<: *ubi7_12_0_0_variables
+    CUDNN_VERSION: "cudnn8"
+    ARCHES: "x86_64"
+  needs:
+    - job: ubi7-v12.0.0
+      artifacts: true
+
 ubi7-v12.0.0-test-x86_64:
   <<: *ubi7_12_0_0_only
   <<: *test_definition
@@ -3009,6 +3055,8 @@ ubi7-v12.0.0-test-x86_64:
   needs:
     - job: ubi7-v12.0.0
       artifacts: true
+    - job: ubi7-v12.0.0-cudnn8
+      optional: true
 
 ubi7-v12.0.0-scan-x86_64:
   <<: *scan_definition
@@ -3039,6 +3087,8 @@ ubi7-v12.0.0-deploy:
   needs:
     - job: ubi7-v12.0.0
       artifacts: true
+    - job: ubi7-v12.0.0-cudnn8
+      optional: true
     - job: ubi7-v12.0.0-test-x86_64
       optional: true
     - job: ubi7-v12.0.0-scan-x86_64
@@ -3067,6 +3117,18 @@ ubi8-v12.0.0:
   <<: *cuda_base_definition
   <<: *ubi8_12_0_0_only
 
+ubi8-v12.0.0-cudnn8:
+  <<: *cudnn_definition
+  <<: *ubi8_12_0_0_only
+  # Variables overwritten here. Don't move this section.
+  variables:
+    <<: *ubi8_12_0_0_variables
+    CUDNN_VERSION: "cudnn8"
+    ARCHES: "arm64, ppc64le, x86_64"
+  needs:
+    - job: ubi8-v12.0.0
+      artifacts: true
+
 ubi8-v12.0.0-test-arm64:
   <<: *ubi8_12_0_0_only
   <<: *test_definition
@@ -3081,6 +3143,8 @@ ubi8-v12.0.0-test-arm64:
   needs:
     - job: ubi8-v12.0.0
       artifacts: true
+    - job: ubi8-v12.0.0-cudnn8
+      optional: true
 
 ubi8-v12.0.0-scan-arm64:
   <<: *scan_definition
@@ -3113,6 +3177,8 @@ ubi8-v12.0.0-test-ppc64le:
   needs:
     - job: ubi8-v12.0.0
       artifacts: true
+    - job: ubi8-v12.0.0-cudnn8
+      optional: true
 
 ubi8-v12.0.0-scan-ppc64le:
   <<: *scan_definition
@@ -3145,6 +3211,8 @@ ubi8-v12.0.0-test-x86_64:
   needs:
     - job: ubi8-v12.0.0
       artifacts: true
+    - job: ubi8-v12.0.0-cudnn8
+      optional: true
 
 ubi8-v12.0.0-scan-x86_64:
   <<: *scan_definition
@@ -3175,6 +3243,8 @@ ubi8-v12.0.0-deploy:
   needs:
     - job: ubi8-v12.0.0
       artifacts: true
+    - job: ubi8-v12.0.0-cudnn8
+      optional: true
     - job: ubi8-v12.0.0-test-arm64
       optional: true
     - job: ubi8-v12.0.0-scan-arm64
@@ -3211,6 +3281,18 @@ ubuntu18.04-v12.0.0:
   <<: *cuda_base_definition
   <<: *ubuntu18_04_12_0_0_only
 
+ubuntu18.04-v12.0.0-cudnn8:
+  <<: *cudnn_definition
+  <<: *ubuntu18_04_12_0_0_only
+  # Variables overwritten here. Don't move this section.
+  variables:
+    <<: *ubuntu18_04_12_0_0_variables
+    CUDNN_VERSION: "cudnn8"
+    ARCHES: "x86_64"
+  needs:
+    - job: ubuntu18.04-v12.0.0
+      artifacts: true
+
 ubuntu18.04-v12.0.0-test-x86_64:
   <<: *ubuntu18_04_12_0_0_only
   <<: *test_definition
@@ -3225,6 +3307,8 @@ ubuntu18.04-v12.0.0-test-x86_64:
   needs:
     - job: ubuntu18.04-v12.0.0
       artifacts: true
+    - job: ubuntu18.04-v12.0.0-cudnn8
+      optional: true
 
 ubuntu18.04-v12.0.0-scan-x86_64:
   <<: *scan_definition
@@ -3255,6 +3339,8 @@ ubuntu18.04-v12.0.0-deploy:
   needs:
     - job: ubuntu18.04-v12.0.0
       artifacts: true
+    - job: ubuntu18.04-v12.0.0-cudnn8
+      optional: true
     - job: ubuntu18.04-v12.0.0-test-x86_64
       optional: true
     - job: ubuntu18.04-v12.0.0-scan-x86_64
@@ -3283,6 +3369,18 @@ ubuntu20.04-v12.0.0:
   <<: *cuda_base_definition
   <<: *ubuntu20_04_12_0_0_only
 
+ubuntu20.04-v12.0.0-cudnn8:
+  <<: *cudnn_definition
+  <<: *ubuntu20_04_12_0_0_only
+  # Variables overwritten here. Don't move this section.
+  variables:
+    <<: *ubuntu20_04_12_0_0_variables
+    CUDNN_VERSION: "cudnn8"
+    ARCHES: "arm64, x86_64"
+  needs:
+    - job: ubuntu20.04-v12.0.0
+      artifacts: true
+
 ubuntu20.04-v12.0.0-test-arm64:
   <<: *ubuntu20_04_12_0_0_only
   <<: *test_definition
@@ -3297,6 +3395,8 @@ ubuntu20.04-v12.0.0-test-arm64:
   needs:
     - job: ubuntu20.04-v12.0.0
       artifacts: true
+    - job: ubuntu20.04-v12.0.0-cudnn8
+      optional: true
 
 ubuntu20.04-v12.0.0-scan-arm64:
   <<: *scan_definition
@@ -3329,6 +3429,8 @@ ubuntu20.04-v12.0.0-test-x86_64:
   needs:
     - job: ubuntu20.04-v12.0.0
       artifacts: true
+    - job: ubuntu20.04-v12.0.0-cudnn8
+      optional: true
 
 ubuntu20.04-v12.0.0-scan-x86_64:
   <<: *scan_definition
@@ -3359,6 +3461,8 @@ ubuntu20.04-v12.0.0-deploy:
   needs:
     - job: ubuntu20.04-v12.0.0
       artifacts: true
+    - job: ubuntu20.04-v12.0.0-cudnn8
+      optional: true
     - job: ubuntu20.04-v12.0.0-test-arm64
       optional: true
     - job: ubuntu20.04-v12.0.0-scan-arm64
@@ -3391,6 +3495,18 @@ ubuntu22.04-v12.0.0:
   <<: *cuda_base_definition
   <<: *ubuntu22_04_12_0_0_only
 
+ubuntu22.04-v12.0.0-cudnn8:
+  <<: *cudnn_definition
+  <<: *ubuntu22_04_12_0_0_only
+  # Variables overwritten here. Don't move this section.
+  variables:
+    <<: *ubuntu22_04_12_0_0_variables
+    CUDNN_VERSION: "cudnn8"
+    ARCHES: "arm64, x86_64"
+  needs:
+    - job: ubuntu22.04-v12.0.0
+      artifacts: true
+
 ubuntu22.04-v12.0.0-test-arm64:
   <<: *ubuntu22_04_12_0_0_only
   <<: *test_definition
@@ -3405,6 +3521,8 @@ ubuntu22.04-v12.0.0-test-arm64:
   needs:
     - job: ubuntu22.04-v12.0.0
       artifacts: true
+    - job: ubuntu22.04-v12.0.0-cudnn8
+      optional: true
 
 ubuntu22.04-v12.0.0-scan-arm64:
   <<: *scan_definition
@@ -3437,6 +3555,8 @@ ubuntu22.04-v12.0.0-test-x86_64:
   needs:
     - job: ubuntu22.04-v12.0.0
       artifacts: true
+    - job: ubuntu22.04-v12.0.0-cudnn8
+      optional: true
 
 ubuntu22.04-v12.0.0-scan-x86_64:
   <<: *scan_definition
@@ -3467,6 +3587,8 @@ ubuntu22.04-v12.0.0-deploy:
   needs:
     - job: ubuntu22.04-v12.0.0
       artifacts: true
+    - job: ubuntu22.04-v12.0.0-cudnn8
+      optional: true
     - job: ubuntu22.04-v12.0.0-test-arm64
       optional: true
     - job: ubuntu22.04-v12.0.0-scan-arm64

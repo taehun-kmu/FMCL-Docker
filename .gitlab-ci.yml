@@ -53,10 +53,11 @@ before_script:
   - retry 5 20 docker login -u '$oauthtoken' -p $NVCR_TOKEN nvcr.io;
 
 .security_scan:
-  image: gitlab-master.nvidia.com:5005/pstooling/pulse-group/pulse-container-scanner/pulse-cli:latest
+  image: gitlab-master.nvidia.com:5005/pstooling/pulse-group/pulse-container-scanner/pulse-cli:stable
   variables:
     PSS_SSA_ID: "x9thwm-cootr2q1jdv5p7b8iw4fs4ob3x6nqqsoznyk"
-    SSA_ISSUER_URL: "https://${PSS_SSA_ID}.ssa.nvidia.com/token"
+    PSS_SSA_SCOPE: "nspect.verify%20scan.anchore"
+    SSA_ISSUER_URL: "https://${PSS_SSA_ID}.ssa.nvidia.com/token?grant_type=client_credentials&scope=${PSS_SSA_SCOPE}"
     IMAGE_ARCHIVE: "cuda-${CUDA_VERSION}-devel-${OS}${IMAGE_TAG_SUFFIX}.tar"
 
 stages:
@@ -319,7 +320,7 @@ prepare:
       echo "Connection request with Pulse Security Service using SSA..."
 
       AuthHeader=$(echo -n $SSA_CLIENT_ID:$SSA_CLIENT_SECRET | base64 | tr -d '\n')
-      export SSA_TOKEN=$(curl --location --request POST ${SSA_ISSUER_URL} --header "Authorization: Basic $AuthHeader" --header 'Content-Type: application/x-www-form-urlencoded' --data-urlencode 'grant_type=client_credentials' --data-urlencode 'scope=nspect.verify scan.anchore'| jq ".access_token" |  tr -d '"')
+      export SSA_TOKEN=$(curl --request POST --header "Authorization: Basic $AuthHeader" --header "Content-Type: application/x-www-form-urlencoded" ${SSA_ISSUER_URL} | jq ".access_token" |  tr -d '"')
 
       if [ -z "$SSA_TOKEN" ]; then
           exit 1;

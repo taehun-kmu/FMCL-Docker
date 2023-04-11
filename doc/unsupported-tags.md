@@ -7,13 +7,6 @@ All tags for _[`cuda-arm64`](https://hub.docker.com/r/nvidia/cuda-arm64/tags) an
 >   _Use at your own risk._
 
 
-### ubuntu18.04
-#### CUDA 9.2
-- `9.2-base-ubuntu18.04`
-- `9.2-cudnn7-devel-ubuntu18.04`
-- `9.2-cudnn7-runtime-ubuntu18.04`
-- `9.2-devel-ubuntu18.04`
-- `9.2-runtime-ubuntu18.04`
 ### ubi7
 #### CUDA 8.0
 - `8.0-cudnn5-devel-ubi7`
@@ -75,6 +68,171 @@ All tags for _[`cuda-arm64`](https://hub.docker.com/r/nvidia/cuda-arm64/tags) an
 - `9.2-cudnn7-runtime-centos7`
 - `9.2-devel-centos7`
 - `9.2-runtime-centos7`
+### ubuntu18.04
+#### CUDA 12.1.0
+- `12.1.0-base-ubuntu18.04`
+- `12.1.0-devel-ubuntu18.04`
+- `12.1.0-runtime-ubuntu18.04`
+#### CUDA 12.0.1
+- `12.0.1-base-ubuntu18.04`
+- `12.0.1-cudnn8-devel-ubuntu18.04`
+- `12.0.1-cudnn8-runtime-ubuntu18.04`
+- `12.0.1-devel-ubuntu18.04`
+- `12.0.1-runtime-ubuntu18.04`
+#### CUDA 12.0.0
+- `12.0.0-base-ubuntu18.04`
+- `12.0.0-cudnn8-devel-ubuntu18.04`
+- `12.0.0-cudnn8-runtime-ubuntu18.04`
+- `12.0.0-devel-ubuntu18.04`
+- `12.0.0-runtime-ubuntu18.04`
+#### CUDA 11.8.0
+- `11.8.0-base-ubuntu18.04`
+- `11.8.0-cudnn8-devel-ubuntu18.04`
+- `11.8.0-cudnn8-runtime-ubuntu18.04`
+- `11.8.0-devel-ubuntu18.04`
+- `11.8.0-runtime-ubuntu18.04`
+#### CUDA 11.7.1
+- `11.7.1-base-ubuntu18.04`
+- `11.7.1-cudnn8-devel-ubuntu18.04`
+- `11.7.1-cudnn8-runtime-ubuntu18.04`
+- `11.7.1-devel-ubuntu18.04`
+- `11.7.1-runtime-ubuntu18.04`
+#### CUDA 11.7.0
+- `11.7.0-base-ubuntu18.04`
+- `11.7.0-cudnn8-devel-ubuntu18.04`
+- `11.7.0-cudnn8-runtime-ubuntu18.04`
+- `11.7.0-devel-ubuntu18.04`
+- `11.7.0-runtime-ubuntu18.04`
+#### CUDA 11.6.2
+- `11.6.2-base-ubuntu18.04`
+- `11.6.2-cudnn8-devel-ubuntu18.04`
+- `11.6.2-cudnn8-runtime-ubuntu18.04`
+- `11.6.2-devel-ubuntu18.04`
+- `11.6.2-runtime-ubuntu18.04`
+#### CUDA 11.6.1
+- `11.6.1-base-ubuntu18.04`
+- `11.6.1-cudnn8-devel-ubuntu18.04`
+- `11.6.1-cudnn8-runtime-ubuntu18.04`
+- `11.6.1-devel-ubuntu18.04`
+- `11.6.1-runtime-ubuntu18.04`
+#### CUDA 11.6.0
+- `11.6.0-base-ubuntu18.04`
+- `11.6.0-cudnn8-devel-ubuntu18.04`
+- `11.6.0-cudnn8-runtime-ubuntu18.04`
+- `11.6.0-devel-ubuntu18.04`
+- `11.6.0-runtime-ubuntu18.04`
+#### CUDA 11.5.2
+- `11.5.2-base-ubuntu18.04`
+- `11.5.2-cudnn8-devel-ubuntu18.04`
+- `11.5.2-cudnn8-runtime-ubuntu18.04`
+- `11.5.2-devel-ubuntu18.04`
+- `11.5.2-runtime-ubuntu18.04`
+#### CUDA 11.5.1
+- `11.5.1-base-ubuntu18.04`
+- `11.5.1-cudnn8-devel-ubuntu18.04`
+- `11.5.1-cudnn8-runtime-ubuntu18.04`
+- `11.5.1-devel-ubuntu18.04`
+- `11.5.1-runtime-ubuntu18.04`
+#### CUDA 11.5.0
+- `11.5.0-base-ubuntu18.04`
+- `11.5.0-cudnn8-devel-ubuntu18.04`
+- `11.5.0-cudnn8-runtime-ubuntu18.04`
+- `11.5.0-devel-ubuntu18.04`
+- `11.5.0-runtime-ubuntu18.04`
+#### CUDA 11.4.3
+- `11.4.3-base-ubuntu18.04`
+- `11.4.3-cudnn8-devel-ubuntu18.04`
+- `11.4.3-cudnn8-runtime-ubuntu18.04`
+- `11.4.3-devel-ubuntu18.04`
+- `11.4.3-runtime-ubuntu18.04`
+#### CUDA 11.4.2
+- `11.4.2-base-ubuntu18.04`
+- `11.4.2-cudnn8-devel-ubuntu18.04`
+- `11.4.2-cudnn8-runtime-ubuntu18.04`
+- `11.4.2-devel-ubuntu18.04`
+- `11.4.2-runtime-ubuntu18.04`
+#### CUDA 11.4.1
+- `11.4.1-base-ubuntu18.04`
+- `11.4.1-cudnn8-devel-ubuntu18.04`
+- `11.4.1-cudnn8-runtime-ubuntu18.04`
+- `11.4.1-devel-ubuntu18.04`
+- `11.4.1-runtime-ubuntu18.04`
+#### CUDA 11.4.0
+- `11.4.0-base-ubuntu18.04`
+- `11.4.0-cudnn8-devel-ubuntu18.04`
+- `11.4.0-cudnn8-runtime-ubuntu18.04`
+- `11.4.0-devel-ubuntu18.04`
+- `11.4.0-runtime-ubuntu18.04`
+#### CUDA 11.3.1
+- `11.3.1-base-ubuntu18.04`
+- `11.3.1-cudnn8-devel-ubuntu18.04`
+- `11.3.1-cudnn8-runtime-ubuntu18.04`
+- `11.3.1-devel-ubuntu18.04`
+- `11.3.1-runtime-ubuntu18.04`
+#### CUDA 11.3.0
+- `11.3.0-base-ubuntu18.04`
+- `11.3.0-cudnn8-devel-ubuntu18.04`
+- `11.3.0-cudnn8-runtime-ubuntu18.04`
+- `11.3.0-devel-ubuntu18.04`
+- `11.3.0-runtime-ubuntu18.04`
+#### CUDA 11.2.2
+- `11.2.2-base-ubuntu18.04`
+- `11.2.2-cudnn8-devel-ubuntu18.04`
+- `11.2.2-cudnn8-runtime-ubuntu18.04`
+- `11.2.2-devel-ubuntu18.04`
+- `11.2.2-runtime-ubuntu18.04`
+#### CUDA 11.2.1
+- `11.2.1-base-ubuntu18.04`
+- `11.2.1-cudnn8-devel-ubuntu18.04`
+- `11.2.1-cudnn8-runtime-ubuntu18.04`
+- `11.2.1-devel-ubuntu18.04`
+- `11.2.1-runtime-ubuntu18.04`
+#### CUDA 11.2.0
+- `11.2.0-base-ubuntu18.04`
+- `11.2.0-cudnn8-devel-ubuntu18.04`
+- `11.2.0-cudnn8-runtime-ubuntu18.04`
+- `11.2.0-devel-ubuntu18.04`
+- `11.2.0-runtime-ubuntu18.04`
+#### CUDA 11.1.1
+- `11.1.1-base-ubuntu18.04`
+- `11.1.1-cudnn8-devel-ubuntu18.04`
+- `11.1.1-cudnn8-runtime-ubuntu18.04`
+- `11.1.1-devel-ubuntu18.04`
+- `11.1.1-runtime-ubuntu18.04`
+#### CUDA 11.0.3
+- `11.0.3-base-ubuntu18.04`
+- `11.0.3-cudnn8-devel-ubuntu18.04`
+- `11.0.3-cudnn8-runtime-ubuntu18.04`
+- `11.0.3-devel-ubuntu18.04`
+- `11.0.3-runtime-ubuntu18.04`
+#### CUDA 10.2
+- `10.2-base-ubuntu18.04`
+- `10.2-cudnn7-devel-ubuntu18.04`
+- `10.2-cudnn7-runtime-ubuntu18.04`
+- `10.2-cudnn8-devel-ubuntu18.04`
+- `10.2-cudnn8-runtime-ubuntu18.04`
+- `10.2-devel-ubuntu18.04`
+- `10.2-runtime-ubuntu18.04`
+#### CUDA 10.1
+- `10.1-base-ubuntu18.04`
+- `10.1-cudnn7-devel-ubuntu18.04`
+- `10.1-cudnn7-runtime-ubuntu18.04`
+- `10.1-cudnn8-devel-ubuntu18.04`
+- `10.1-cudnn8-runtime-ubuntu18.04`
+- `10.1-devel-ubuntu18.04`
+- `10.1-runtime-ubuntu18.04`
+#### CUDA 10.0
+- `10.0-base-ubuntu18.04`
+- `10.0-cudnn7-devel-ubuntu18.04`
+- `10.0-cudnn7-runtime-ubuntu18.04`
+- `10.0-devel-ubuntu18.04`
+- `10.0-runtime-ubuntu18.04`
+#### CUDA 9.2
+- `9.2-base-ubuntu18.04`
+- `9.2-cudnn7-devel-ubuntu18.04`
+- `9.2-cudnn7-runtime-ubuntu18.04`
+- `9.2-devel-ubuntu18.04`
+- `9.2-runtime-ubuntu18.04`
 ### ubuntu17.04
 #### CUDA 9.0
 - `9.0-base-ubuntu17.04`

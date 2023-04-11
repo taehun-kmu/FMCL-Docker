@@ -458,7 +458,7 @@ class ManagerTrigger(Manager):
             payload[f"variables[NO_PUSH]"] = "true"
         if "l4t" in self.flavor:  # type: ignore
             # FIXME: HACK until these scripts can be made to have proper container image "flavor" support
-            payload[f"variables[UBUNTU18_04_L4T]"] = "true"
+            payload[f"variables[UBUNTU20_04_L4T]"] = "true"
         if self.flavor:
             payload[f"variables[FLAVOR]"] = self.flavor
         payload[f"variables[TRIGGER]"] = "true"
@@ -1343,7 +1343,7 @@ class ManagerGenerate(Manager):
             tag_dict = json.loads(get_repo_tags(docker_repo).stdout)
         except Exception as e:
             log.error("Some problem occurred in getting tags from DockerHub")
-            log.error(e)            
+            log.error(e)
             sys.exit(1)
 
         for key in tag_dict.keys():

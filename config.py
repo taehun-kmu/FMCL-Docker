@@ -125,12 +125,6 @@ def _pop_supported_platforms():
             package_format="deb",
         ),
         SupportedPlatform(
-            distro="ubuntu",
-            version="18.04",
-            arches=[arches.x86_64],
-            package_format="deb",
-        ),
-        SupportedPlatform(
             distro="centos", version="7", arches=[arches.x86_64], package_format="rpm"
         ),
         SupportedPlatform(

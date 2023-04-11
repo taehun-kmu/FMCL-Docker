@@ -29,6 +29,7 @@ unsupported:
    - ubuntu14.04
    - ubuntu16.04
    - ubuntu17.04
+   - ubuntu18.04
   release_label:
    - 6.5
    - 7.0
@@ -125,7 +126,7 @@ cuda_v12.1.0:
       <<: *cuda12_1_0_requires
   rockylinux8:
     repo_url: https://developer.download.nvidia.com/compute/cuda/repos/rhel8
-    template_path: templates/redhat  
+    template_path: templates/redhat
     arm64:
       components:
         cudart:
@@ -283,9 +284,9 @@ cuda_v12.1.0:
           version: 2.17.1-1
       <<: *cuda12_1_0_requires
   ubi8:
-    base_image: registry.access.redhat.com/ubi8/ubi:latest  
+    base_image: registry.access.redhat.com/ubi8/ubi:latest
     repo_url: https://developer.download.nvidia.com/compute/cuda/repos/rhel8
-    template_path: templates/redhat  
+    template_path: templates/redhat
     arm64:
       components:
         cudart:
@@ -368,7 +369,7 @@ cuda_v12.1.0:
   ubi9:
     base_image: registry.access.redhat.com/ubi9/ubi:latest
     repo_url: https://developer.download.nvidia.com/compute/cuda/repos/rhel9
-    template_path: templates/redhat  
+    template_path: templates/redhat
     arm64:
       components:
         cudart:
@@ -421,41 +422,10 @@ cuda_v12.1.0:
         libnccl2_dev:
           version: 2.17.1-1
       <<: *cuda12_1_0_requires
-  ubuntu18.04:
-    base_image: ubuntu:18.04
-    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804
-    template_path: templates/ubuntu
-    x86_64:
-      components:
-        cudart:
-          version: 12.1.55-1
-        cudart_dev:
-          version: 12.1.55-1
-        libcublas:
-          version: 12.1.0.26-1
-        libcublas_dev:
-          version: 12.1.0.26-1
-        libcusparse:
-          version: 12.0.2.55-1
-        libcusparse_dev:
-          version: 12.0.2.55-1
-        libnpp:
-          version: 12.0.2.50-1
-        libnpp_dev:
-          version: 12.0.2.50-1
-        nvml_dev:
-          version: 12.1.55-1
-        nvprof:
-          version: 12.1.55-1
-        nvtx:
-          version: 12.1.66-1
-        profiler_api:
-          version: 12.1.55-1
-      <<: *cuda12_1_0_requires
   ubuntu20.04:
     base_image: ubuntu:20.04
     repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004
-    template_path: templates/ubuntu  
+    template_path: templates/ubuntu
     arm64:
       components:
         cudart:
@@ -519,7 +489,7 @@ cuda_v12.1.0:
   ubuntu22.04:
     base_image: ubuntu:22.04
     repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204
-    template_path: templates/ubuntu  
+    template_path: templates/ubuntu
     arm64:
       components:
         cudart:
@@ -821,9 +791,9 @@ cuda_v12.0.1:
           version: 8.8.0.121-1
       <<: *cuda12_0_1_requires
   ubi8:
-    base_image: registry.access.redhat.com/ubi8/ubi:latest  
+    base_image: registry.access.redhat.com/ubi8/ubi:latest
     repo_url: https://developer.download.nvidia.com/compute/cuda/repos/rhel8
-    template_path: templates/redhat  
+    template_path: templates/redhat
     arm64:
       components:
         cudart:
@@ -963,43 +933,10 @@ cuda_v12.0.1:
         cudnn8:
           version: 8.8.0.121-1
       <<: *cuda12_0_1_requires
-  ubuntu18.04:
-    base_image: ubuntu:18.04
-    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804
-    template_path: templates/ubuntu
-    x86_64:
-      components:
-        cudart:
-          version: 12.0.146-1
-        cudart_dev:
-          version: 12.0.146-1
-        libcublas:
-          version: 12.0.2.224-1
-        libcublas_dev:
-          version: 12.0.2.224-1
-        libcusparse:
-          version: 12.0.1.140-1
-        libcusparse_dev:
-          version: 12.0.1.140-1
-        libnpp:
-          version: 12.0.1.104-1
-        libnpp_dev:
-          version: 12.0.1.104-1
-        nvml_dev:
-          version: 12.0.140-1
-        nvprof:
-          version: 12.0.146-1
-        nvtx:
-          version: 12.0.140-1
-        profiler_api:
-          version: 12.0.140-1
-        cudnn8:
-          version: 8.8.0.121-1
-      <<: *cuda12_0_1_requires
   ubuntu20.04:
     base_image: ubuntu:20.04
     repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004
-    template_path: templates/ubuntu  
+    template_path: templates/ubuntu
     arm64:
       components:
         cudart:
@@ -1067,7 +1004,7 @@ cuda_v12.0.1:
   ubuntu22.04:
     base_image: ubuntu:22.04
     repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204
-    template_path: templates/ubuntu  
+    template_path: templates/ubuntu
     arm64:
       components:
         cudart:
@@ -1397,39 +1334,6 @@ cuda_v12.0.0:
           version: 2.16.5-1
         libnccl2_dev:
           version: 2.16.5-1
-        cudnn8:
-          version: 8.8.0.121-1
-      <<: *cuda12_0_0_requires
-  ubuntu18.04:
-    base_image: ubuntu:18.04
-    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804
-    template_path: templates/ubuntu
-    x86_64:
-      components:
-        cudart:
-          version: 12.0.107-1
-        cudart_dev:
-          version: 12.0.107-1
-        libcublas:
-          version: 12.0.1.189-1
-        libcublas_dev:
-          version: 12.0.1.189-1
-        libcusparse:
-          version: 12.0.0.76-1
-        libcusparse_dev:
-          version: 12.0.0.76-1
-        libnpp:
-          version: 12.0.0.30-1
-        libnpp_dev:
-          version: 12.0.0.30-1
-        nvml_dev:
-          version: 12.0.76-1
-        nvprof:
-          version: 12.0.90-1
-        nvtx:
-          version: 12.0.76-1
-        profiler_api:
-          version: 12.0.76-1
         cudnn8:
           version: 8.8.0.121-1
       <<: *cuda12_0_0_requires
@@ -1835,43 +1739,6 @@ cuda_v11.8.0:
         cudnn8:
           version: 8.7.0.84-1
       <<: *cuda11_8_0_requires
-  ubuntu18.04:
-    base_image: ubuntu:18.04
-    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804
-    template_path: templates/ubuntu
-    x86_64:
-      components:
-        cudart:
-          version: 11.8.89-1
-        cudart_dev:
-          version: 11.8.89-1
-        libcublas:
-          version: 11.11.3.6-1
-        libcublas_dev:
-          version: 11.11.3.6-1
-        libcusparse:
-          version: 11.7.5.86-1
-        libcusparse_dev:
-          version: 11.7.5.86-1
-        libnpp:
-          version: 11.8.0.86-1
-        libnpp_dev:
-          version: 11.8.0.86-1
-        nvml_dev:
-          version: 11.8.86-1
-        nvprof:
-          version: 11.8.87-1
-        nvtx:
-          version: 11.8.86-1
-        profiler_api:
-          version: 11.8.86-1
-        libnccl2:
-          version: 2.15.5-1
-        libnccl2_dev:
-          version: 2.15.5-1
-        cudnn8:
-          version: 8.6.0.163-1
-      <<: *cuda11_8_0_requires
   ubuntu20.04:
     arm64:
       components:
@@ -2239,41 +2106,6 @@ cuda_v11.7.1:
           version: 11.10.3.66-1
         libcublas_dev:
           version: 11.10.3.66-1
-        libnpp:
-          version: 11.7.4.75-1
-        libnpp_dev:
-          version: 11.7.4.75-1
-        nvml_dev:
-          version: 11.7.91-1
-        nvprof:
-          version: 11.7.101-1
-        nvtx:
-          version: 11.7.91-1
-        libnccl2:
-          version: 2.13.4-1
-        libnccl2_dev:
-          version: 2.13.4-1
-        cudnn8:
-          version: 8.5.0.96-1
-      <<: *cuda11_7_1_requires
-  ubuntu18.04:
-    base_image: ubuntu:18.04
-    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804
-    template_path: templates/ubuntu
-    x86_64:
-      components:
-        cudart:
-          version: 11.7.99-1
-        cudart_dev:
-          version: 11.7.99-1
-        libcublas:
-          version: 11.10.3.66-1
-        libcublas_dev:
-          version: 11.10.3.66-1
-        libcusparse:
-          version: 11.7.4.91-1
-        libcusparse_dev:
-          version: 11.7.4.91-1
         libnpp:
           version: 11.7.4.75-1
         libnpp_dev:
@@ -2671,41 +2503,6 @@ cuda_v11.7.0:
         cudnn8:
           version: 8.5.0.96-1
       <<: *cuda11_7_0_requires
-  ubuntu18.04:
-    base_image: ubuntu:18.04
-    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804
-    template_path: templates/ubuntu
-    x86_64:
-      components:
-        cudart:
-          version: 11.7.60-1
-        cudart_dev:
-          version: 11.7.60-1
-        libcublas:
-          version: 11.10.1.25-1
-        libcublas_dev:
-          version: 11.10.1.25-1
-        libcusparse:
-          version: 11.7.3.50-1
-        libcusparse_dev:
-          version: 11.7.3.50-1
-        libnpp:
-          version: 11.7.3.21-1
-        libnpp_dev:
-          version: 11.7.3.21-1
-        nvml_dev:
-          version: 11.7.50-1
-        nvprof:
-          version: 11.7.50-1
-        nvtx:
-          version: 11.7.50-1
-        libnccl2:
-          version: 2.13.4-1
-        libnccl2_dev:
-          version: 2.13.4-1
-        cudnn8:
-          version: 8.5.0.96-1
-      <<: *cuda11_7_0_requires
   ubuntu20.04:
     arm64:
       components:
@@ -3064,68 +2861,6 @@ cuda_v11.6.2:
         cudnn8:
           version: 8.4.0.27-1
       <<: *cuda11_6_2_requires
-  ubuntu18.04:
-    arm64:
-      components:
-        cudart:
-          version: 11.6.55-1
-        cudart_dev:
-          version: 11.6.55-1
-        libcublas:
-          version: 11.9.2.110-1
-        libcublas_dev:
-          version: 11.9.2.110-1
-        libcusparse:
-          version: 11.7.2.124-1
-        libcusparse_dev:
-          version: 11.7.2.124-1
-        libnpp:
-          version: 11.6.3.124-1
-        libnpp_dev:
-          version: 11.6.3.124-1
-        nvml_dev:
-          version: 11.6.55-1
-        nvprof:
-          version: 11.6.124-1
-        nvtx:
-          version: 11.6.124-1
-        cudnn8:
-          version: 8.4.0.27-1
-      requires: "cuda>=11.6"
-    base_image: ubuntu:18.04
-    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804
-    template_path: templates/ubuntu
-    x86_64:
-      components:
-        cudart:
-          version: 11.6.55-1
-        cudart_dev:
-          version: 11.6.55-1
-        libcublas:
-          version: 11.9.2.110-1
-        libcublas_dev:
-          version: 11.9.2.110-1
-        libcusparse:
-          version: 11.7.2.124-1
-        libcusparse_dev:
-          version: 11.7.2.124-1
-        libnpp:
-          version: 11.6.3.124-1
-        libnpp_dev:
-          version: 11.6.3.124-1
-        nvml_dev:
-          version: 11.6.55-1
-        nvprof:
-          version: 11.6.124-1
-        nvtx:
-          version: 11.6.124-1
-        libnccl2:
-          version: 2.12.10-1
-        libnccl2_dev:
-          version: 2.12.10-1
-        cudnn8:
-          version: 8.4.0.27-1
-      <<: *cuda11_6_2_requires
   ubuntu20.04:
     arm64:
       components:
@@ -3420,68 +3155,6 @@ cuda_v11.6.1:
           version: 2.12.10-1
         libnccl2_dev:
           version: 2.12.10-1
-        cudnn8:
-          version: 8.4.0.27-1
-      <<: *cuda11_6_1_requires
-  ubuntu18.04:
-    base_image: ubuntu:18.04
-    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804
-    template_path: templates/ubuntu
-    arm64:
-      components:
-        cudart:
-          version: 11.6.55-1
-        cudart_dev:
-          version: 11.6.55-1
-        libcublas:
-          version: 11.8.1.74-1
-        libcublas_dev:
-          version: 11.8.1.74-1
-        libcusparse:
-          version: 11.7.2.112-1
-        libcusparse_dev:
-          version: 11.7.2.112-1
-        libnpp:
-          version: 11.6.2.112-1
-        libnpp_dev:
-          version: 11.6.2.112-1
-        nvml_dev:
-          version: 11.6.55-1
-        nvprof:
-          version: 11.6.112-1
-        nvtx:
-          version: 11.6.112-1
-        cudnn8:
-          version: 8.4.0.27-1
-        requires: "cuda>=11.6"
-    x86_64:
-      components:
-        cudart:
-          version: 11.6.55-1
-        cudart_dev:
-          version: 11.6.55-1
-        libcublas:
-          version: 11.8.1.74-1
-        libcublas_dev:
-          version: 11.8.1.74-1
-        libcusparse:
-          version: 11.7.2.112-1
-        libcusparse_dev:
-          version: 11.7.2.112-1
-        libnpp:
-          version: 11.6.2.112-1
-        libnpp_dev:
-          version: 11.6.2.112-1
-        nvml_dev:
-          version: 11.6.55-1
-        nvprof:
-          version: 11.6.112-1
-        nvtx:
-          version: 11.6.112-1
-        libnccl2:
-          version: 2.12.7-1
-        libnccl2_dev:
-          version: 2.12.7-1
         cudnn8:
           version: 8.4.0.27-1
       <<: *cuda11_6_1_requires
@@ -3782,68 +3455,6 @@ cuda_v11.6.0:
         cudnn8:
           version: 8.4.0.27-1
       <<: *cuda11_6_0_requires
-  ubuntu18.04:
-    arm64:
-      components:
-        cudart:
-          version: 11.6.55-1
-        cudart_dev:
-          version: 11.6.55-1
-        libcublas:
-          version: 11.8.1.74-1
-        libcublas_dev:
-          version: 11.8.1.74-1
-        libcusparse:
-          version: 11.7.1.55-1
-        libcusparse_dev:
-          version: 11.7.1.55-1
-        libnpp:
-          version: 11.6.0.55-1
-        libnpp_dev:
-          version: 11.6.0.55-1
-        nvml_dev:
-          version: 11.6.55-1
-        nvprof:
-          version: 11.6.55-1
-        nvtx:
-          version: 11.6.55-1
-        cudnn8:
-          version: 8.4.0.27-1
-      requires: 'cuda>=11.6'
-    base_image: ubuntu:18.04
-    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804
-    template_path: templates/ubuntu
-    x86_64:
-      components:
-        cudart:
-          version: 11.6.55-1
-        cudart_dev:
-          version: 11.6.55-1
-        libcublas:
-          version: 11.8.1.74-1
-        libcublas_dev:
-          version: 11.8.1.74-1
-        libcusparse:
-          version: 11.7.1.55-1
-        libcusparse_dev:
-          version: 11.7.1.55-1
-        libnpp:
-          version: 11.6.0.55-1
-        libnpp_dev:
-          version: 11.6.0.55-1
-        nvml_dev:
-          version: 11.6.55-1
-        nvprof:
-          version: 11.6.55-1
-        nvtx:
-          version: 11.6.55-1
-        libnccl2:
-          version: 2.12.10-1
-        libnccl2_dev:
-          version: 2.12.10-1
-        cudnn8:
-          version: 8.4.0.27-1
-      <<: *cuda11_6_0_requires
   ubuntu20.04:
     arm64:
       components:
@@ -4110,68 +3721,6 @@ cuda_v11.5.2:
           version: 11.7.4.6-1
         libcublas_dev:
           version: 11.7.4.6-1
-        libnpp:
-          version: 11.5.1.107-1
-        libnpp_dev:
-          version: 11.5.1.107-1
-        nvml_dev:
-          version: 11.5.50-1
-        nvprof:
-          version: 11.5.114-1
-        nvtx:
-          version: 11.5.114-1
-        libnccl2:
-          version: 2.11.4-1
-        libnccl2_dev:
-          version: 2.11.4-1
-        cudnn8:
-          version: 8.3.3.40-1
-      <<: *cuda11_5_2_requires
-  ubuntu18.04:
-    arm64:
-      components:
-        cudart:
-          version: 11.5.117-1
-        cudart_dev:
-          version: 11.5.117-1
-        libcublas:
-          version: 11.7.4.6-1
-        libcublas_dev:
-          version: 11.7.4.6-1
-        libcusparse:
-          version: 11.7.0.107-1
-        libcusparse_dev:
-          version: 11.7.0.107-1
-        libnpp:
-          version: 11.5.1.107-1
-        libnpp_dev:
-          version: 11.5.1.107-1
-        nvml_dev:
-          version: 11.5.50-1
-        nvprof:
-          version: 11.5.114-1
-        nvtx:
-          version: 11.5.114-1
-        cudnn8:
-          version: 8.3.3.40-1
-      requires: 'cuda>=11.5'
-    base_image: ubuntu:18.04
-    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804
-    template_path: templates/ubuntu
-    x86_64:
-      components:
-        cudart:
-          version: 11.5.117-1
-        cudart_dev:
-          version: 11.5.117-1
-        libcublas:
-          version: 11.7.4.6-1
-        libcublas_dev:
-          version: 11.7.4.6-1
-        libcusparse:
-          version: 11.7.0.107-1
-        libcusparse_dev:
-          version: 11.7.0.107-1
         libnpp:
           version: 11.5.1.107-1
         libnpp_dev:
@@ -4470,68 +4019,6 @@ cuda_v11.5.1:
           version: 11.7.4.6-1
         libcublas_dev:
           version: 11.7.4.6-1
-        libnpp:
-          version: 11.5.1.107-1
-        libnpp_dev:
-          version: 11.5.1.107-1
-        nvml_dev:
-          version: 11.5.50-1
-        nvprof:
-          version: 11.5.114-1
-        nvtx:
-          version: 11.5.114-1
-        libnccl2:
-          version: 2.11.4-1
-        libnccl2_dev:
-          version: 2.11.4-1
-        cudnn8:
-          version: 8.3.3.40-1
-      <<: *cuda11_5_1_requires
-  ubuntu18.04:
-    arm64:
-      components:
-        cudart:
-          version: 11.5.117-1
-        cudart_dev:
-          version: 11.5.117-1
-        libcublas:
-          version: 11.7.4.6-1
-        libcublas_dev:
-          version: 11.7.4.6-1
-        libcusparse:
-          version: 11.7.0.107-1
-        libcusparse_dev:
-          version: 11.7.0.107-1
-        libnpp:
-          version: 11.5.1.107-1
-        libnpp_dev:
-          version: 11.5.1.107-1
-        nvml_dev:
-          version: 11.5.50-1
-        nvprof:
-          version: 11.5.114-1
-        nvtx:
-          version: 11.5.114-1
-        cudnn8:
-          version: 8.3.3.40-1
-      requires: 'cuda>=11.5'
-    base_image: ubuntu:18.04
-    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804
-    template_path: templates/ubuntu
-    x86_64:
-      components:
-        cudart:
-          version: 11.5.117-1
-        cudart_dev:
-          version: 11.5.117-1
-        libcublas:
-          version: 11.7.4.6-1
-        libcublas_dev:
-          version: 11.7.4.6-1
-        libcusparse:
-          version: 11.7.0.107-1
-        libcusparse_dev:
-          version: 11.7.0.107-1
         libnpp:
           version: 11.5.1.107-1
         libnpp_dev:
@@ -4848,68 +4335,6 @@ cuda_v11.5.0:
         cudnn8:
           version: 8.3.3.40-1
       <<: *cuda11_5_0_requires
-  ubuntu18.04:
-    base_image: ubuntu:18.04
-    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804
-    template_path: templates/ubuntu
-    arm64:
-      components:
-        cudart:
-          version: 11.5.50-1
-        cudart_dev:
-          version: 11.5.50-1
-        libcublas:
-          version: 11.7.3.1-1
-        libcublas_dev:
-          version: 11.7.3.1-1
-        libcusparse:
-          version: 11.7.0.31-1
-        libcusparse_dev:
-          version: 11.7.0.31-1
-        libnpp:
-          version: 11.5.1.53-1
-        libnpp_dev:
-          version: 11.5.1.53-1
-        nvml_dev:
-          version: 11.5.50-1
-        nvprof:
-          version: 11.5.50-1
-        nvtx:
-          version: 11.5.50-1
-        cudnn8:
-          version: 8.3.3.40-1
-      requires: 'cuda>=11.5'
-    x86_64:
-      components:
-        cudart:
-          version: 11.5.50-1
-        cudart_dev:
-          version: 11.5.50-1
-        libcublas:
-          version: 11.7.3.1-1
-        libcublas_dev:
-          version: 11.7.3.1-1
-        libcusparse:
-          version: 11.7.0.31-1
-        libcusparse_dev:
-          version: 11.7.0.31-1
-        libnpp:
-          version: 11.5.1.53-1
-        libnpp_dev:
-          version: 11.5.1.53-1
-        nvml_dev:
-          version: 11.5.50-1
-        nvprof:
-          version: 11.5.50-1
-        nvtx:
-          version: 11.5.50-1
-        libnccl2:
-          version: 2.11.4-1
-        libnccl2_dev:
-          version: 2.11.4-1
-        cudnn8:
-          version: 8.3.3.40-1
-      <<: *cuda11_5_0_requires
   ubuntu20.04:
     base_image: ubuntu:20.04
     repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004
@@ -5180,66 +4605,6 @@ cuda_v11.4.3:
           version: 11.6.5.2-1
         libcublas_dev:
           version: 11.6.5.2-1
-        libnpp:
-          version: 11.4.0.110-1
-        libnpp_dev:
-          version: 11.4.0.110-1
-        nvml_dev:
-          version: 11.4.120-1
-        nvprof:
-          version: 11.4.120-1
-        nvtx:
-          version: 11.4.120-1
-        libnccl2:
-          version: 2.11.4-1
-        libnccl2_dev:
-          version: 2.11.4-1
-        cudnn8:
-          version: 8.2.4.15-1
-      <<: *cuda11_4_3_requires
-  ubuntu18.04:
-    arm64:
-      components:
-        cudart:
-          version: 11.4.148-1
-        cudart_dev:
-          version: 11.4.148-1
-        libcublas:
-          version: 11.6.5.2-1
-        libcublas_dev:
-          version: 11.6.5.2-1
-        libcusparse:
-          version: 11.6.0.120-1
-        libcusparse_dev:
-          version: 11.6.0.120-1
-        libnpp:
-          version: 11.4.0.110-1
-        libnpp_dev:
-          version: 11.4.0.110-1
-        nvml_dev:
-          version: 11.4.120-1
-        nvprof:
-          version: 11.4.120-1
-        nvtx:
-          version: 11.4.120-1
-      requires: 'cuda>=11.4'
-    base_image: ubuntu:18.04
-    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804
-    template_path: templates/ubuntu
-    x86_64:
-      components:
-        cudart:
-          version: 11.4.148-1
-        cudart_dev:
-          version: 11.4.148-1
-        libcublas:
-          version: 11.6.5.2-1
-        libcublas_dev:
-          version: 11.6.5.2-1
-        libcusparse:
-          version: 11.6.0.120-1
-        libcusparse_dev:
-          version: 11.6.0.120-1
         libnpp:
           version: 11.4.0.110-1
         libnpp_dev:
@@ -5544,66 +4909,6 @@ cuda_v11.4.2:
         cudnn8:
           version: 8.2.4.15-1
       <<: *cuda11_4_2_requires
-  ubuntu18.04:
-    arm64:
-      components:
-        cudart:
-          version: 11.4.108-1
-        cudart_dev:
-          version: 11.4.108-1
-        libcublas:
-          version: 11.6.1.51-1
-        libcublas_dev:
-          version: 11.6.1.51-1
-        libcusparse:
-          version: 11.6.0.120-1
-        libcusparse_dev:
-          version: 11.6.0.120-1
-        libnpp:
-          version: 11.4.0.110-1
-        libnpp_dev:
-          version: 11.4.0.110-1
-        nvml_dev:
-          version: 11.4.120-1
-        nvprof:
-          version: 11.4.120-1
-        nvtx:
-          version: 11.4.120-1
-      requires: 'cuda>=11.4'
-    base_image: ubuntu:18.04
-    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804
-    template_path: templates/ubuntu
-    x86_64:
-      components:
-        cudart:
-          version: 11.4.108-1
-        cudart_dev:
-          version: 11.4.108-1
-        libcublas:
-          version: 11.6.1.51-1
-        libcublas_dev:
-          version: 11.6.1.51-1
-        libcusparse:
-          version: 11.6.0.120-1
-        libcusparse_dev:
-          version: 11.6.0.120-1
-        libnpp:
-          version: 11.4.0.110-1
-        libnpp_dev:
-          version: 11.4.0.110-1
-        nvml_dev:
-          version: 11.4.120-1
-        nvprof:
-          version: 11.4.120-1
-        nvtx:
-          version: 11.4.120-1
-        libnccl2:
-          version: 2.11.4-1
-        libnccl2_dev:
-          version: 2.11.4-1
-        cudnn8:
-          version: 8.2.4.15-1
-      <<: *cuda11_4_2_requires
   ubuntu20.04:
     arm64:
       components:
@@ -5890,68 +5195,6 @@ cuda_v11.4.1:
         cudnn8:
           version: 8.2.4.15-1
       <<: *cuda11_4_1_requires
-  ubuntu18.04:
-    base_image: ubuntu:18.04
-    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804
-    template_path: templates/ubuntu
-    arm64:
-      components:
-        cudart:
-          version: 11.4.108-1
-        cudart_dev:
-          version: 11.4.108-1
-        libcublas:
-          version: 11.5.4.8-1
-        libcublas_dev:
-          version: 11.5.4.8-1
-        libcusparse:
-          version: 11.6.0.100-1
-        libcusparse_dev:
-          version: 11.6.0.100-1
-        libnpp:
-          version: 11.4.0.90-1
-        libnpp_dev:
-          version: 11.4.0.90-1
-        nvml_dev:
-          version: 11.4.43-1
-        nvprof:
-          version: 11.4.100-1
-        nvtx:
-          version: 11.4.100-1
-        libnccl2:
-        libnccl2_dev:
-      requires: "cuda>=11.4"
-    x86_64:
-      components:
-        cudart:
-          version: 11.4.108-1
-        cudart_dev:
-          version: 11.4.108-1
-        libcublas:
-          version: 11.5.4.8-1
-        libcublas_dev:
-          version: 11.5.4.8-1
-        libcusparse:
-          version: 11.6.0.100-1
-        libcusparse_dev:
-          version: 11.6.0.100-1
-        libnpp:
-          version: 11.4.0.90-1
-        libnpp_dev:
-          version: 11.4.0.90-1
-        nvml_dev:
-          version: 11.4.43-1
-        nvprof:
-          version: 11.4.100-1
-        nvtx:
-          version: 11.4.100-1
-        libnccl2:
-          version: 2.11.4-1
-        libnccl2_dev:
-          version: 2.11.4-1
-        cudnn8:
-          version: 8.2.4.15-1
-      <<: *cuda11_4_1_requires
   ubuntu20.04:
     base_image: ubuntu:20.04
     repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004
@@ -6089,21 +5332,6 @@ cuda_v11.4.0:
       components:
         <<: *cuda11_4_0_components
         cudnn8:
-  ubuntu18.04:
-    template_path: templates/ubuntu
-    base_image: ubuntu:18.04
-    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804
-    x86_64:
-      <<: *cuda11_4_0_requires
-      components:
-        <<: *cuda11_4_0_components
-    arm64:
-      requires: "cuda>=11.4"
-      components:
-        <<: *cuda11_4_0_components
-        libnccl2:
-        libnccl2_dev:
-        cudnn8:
   centos7:
     template_path: templates/redhat
     base_image: centos:7
@@ -6218,21 +5446,6 @@ cuda_v11.3.1:
       requires: "cuda>=11.3"
       components:
         <<: *cuda11_3_1_components
-  ubuntu18.04:
-    template_path: templates/ubuntu
-    base_image: ubuntu:18.04
-    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804
-    x86_64:
-      <<: *cuda11_3_1_requires
-      components:
-        <<: *cuda11_3_1_components
-    arm64:
-      requires: "cuda>=11.3"
-      components:
-        <<: *cuda11_3_1_components
-        libnccl2:
-        libnccl2_dev:
-        cudnn8:
   centos7:
     template_path: templates/redhat
     base_image: centos:7
@@ -6348,21 +5561,6 @@ cuda_v11.3.0:
       requires: "cuda>=11.3"
       components:
         <<: *cuda11_3_0_components
-  ubuntu18.04:
-    template_path: templates/ubuntu
-    base_image: ubuntu:18.04
-    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804
-    x86_64:
-      <<: *cuda11_3_0_requires
-      components:
-        <<: *cuda11_3_0_components
-    arm64:
-      requires: "cuda>=11.3"
-      components:
-        <<: *cuda11_3_0_components
-        libnccl2:
-        libnccl2_dev:
-        cudnn8:
   centos7:
     template_path: templates/redhat
     base_image: centos:7
@@ -6474,21 +5672,6 @@ cuda_v11.2.2:
       requires: "cuda>=11.2"
       components:
         <<: *cuda11_2_2_components
-  ubuntu18.04:
-    template_path: templates/ubuntu
-    base_image: ubuntu:18.04
-    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804
-    x86_64:
-      <<: *cuda11_2_2_requires
-      components:
-        <<: *cuda11_2_2_components
-    arm64:
-      requires: "cuda>=11.2"
-      components:
-        <<: *cuda11_2_2_components
-        libnccl2:
-        libnccl2_dev:
-        cudnn8:
   centos7:
     template_path: templates/redhat
     base_image: centos:7
@@ -6601,21 +5784,6 @@ cuda_v11.2.1:
       requires: "cuda>=11.2"
       components:
         <<: *cuda11_2_1_components
-  ubuntu18.04:
-    template_path: templates/ubuntu
-    base_image: ubuntu:18.04
-    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804
-    x86_64:
-      <<: *cuda11_2_1_requires
-      components:
-        <<: *cuda11_2_1_components
-    arm64:
-      requires: "cuda>=11.2"
-      components:
-        <<: *cuda11_2_1_components
-        libnccl2:
-        libnccl2_dev:
-        cudnn8:
   centos7:
     template_path: templates/redhat
     base_image: centos:7
@@ -6728,21 +5896,6 @@ cuda_v11.2.0:
       requires: "cuda>=11.2"
       components:
         <<: *cuda11_2_0_components
-  ubuntu18.04:
-    template_path: templates/ubuntu
-    base_image: ubuntu:18.04
-    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804
-    x86_64:
-      <<: *cuda11_2_0_requires
-      components:
-        <<: *cuda11_2_0_components
-    arm64:
-      requires: "cuda>=11.2"
-      components:
-        <<: *cuda11_2_0_components
-        libnccl2:
-        libnccl2_dev:
-        cudnn8:
   centos7:
     template_path: templates/redhat
     base_image: centos:7
@@ -6850,50 +6003,6 @@ cuda_v11.1.1:
       <<: *cuda11_1_1_requires
       components:
         <<: *cuda11_1_1_components
-  ubuntu18.04:
-    template_path: templates/ubuntu
-    base_image: ubuntu:18.04
-    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804
-    x86_64:
-      <<: *cuda11_1_1_requires
-      components:
-        <<: *cuda11_1_1_components
-    ppc64le:
-      requires: "cuda>=11.1"
-      components:
-        <<: *cuda11_1_1_components
-        cudnn8:
-          version: 8.0.4.30-1
-          source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/ppc64el/libcudnn8_8.0.4.30-1+cuda11.1_ppc64el.deb
-          sha256sum: 2779c07458fc4ae690070decf59cfcb3ec9a67607f9a26819f1631e661961ccb
-          dev:
-            version: 8.0.4.30-1
-            source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/ppc64el/libcudnn8-dev_8.0.4.30-1+cuda11.1_ppc64el.deb
-            sha256sum: 66a087f34aa5996fb369db6b56f7c1be9a5d073462602513496a5722a9fc719d
-        libnccl2:
-          version: 2.8.3-1
-          sha256sum: 44680363bb8c00b0beeb4566b0f5fffea65c3db2c2683ce16437f98fc55d1790
-          source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/ppc64el/libnccl2_2.8.3-1+cuda11.1_ppc64el.deb
-          basename: libnccl2_2.8.3-1+cuda11.1_ppc64el.deb
-        libnccl2_dev:
-          version: 2.8.3-1
-          sha256sum: 869b81268d792667bde4f5ebdef16b8e49e843f2f36dd6cecc3518daa25d6341
-          source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/ppc64el/libnccl-dev_2.8.3-1+cuda11.1_ppc64el.deb
-          basename: libnccl-dev_2.8.3-1+cuda11.1_ppc64el.deb
-    arm64:
-      requires: "cuda>=11.1"
-      components:
-        <<: *cuda11_1_1_components
-        libnccl2:
-          version: 2.8.3-1
-          sha256sum: d6c414fb2ca20ee7a7d6dfdd5ff6f6ff5aa48a51658d7cc68486f20c3097a1f7
-          source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/sbsa/libnccl2_2.8.3-1+cuda11.1_arm64.deb
-          basename: libnccl2_2.8.3-1+cuda11.1_arm64.deb
-        libnccl2_dev:
-          version: 2.8.3-1
-          sha256sum: c9a0d47598afaab0107b55326ab19fd558e774266c1da80e0d6ff02b809a9672
-          source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/sbsa/libnccl-dev_2.8.3-1+cuda11.1_arm64.deb
-          basename: libnccl-dev_2.8.3-1+cuda11.1_arm64.deb
   centos7:
     template_path: templates/redhat
     base_image: centos:7
@@ -7009,54 +6118,6 @@ cuda_v11.0.3:
       <<: *cuda11_0_3_requires
       components:
         <<: *cuda11_0_3_components
-  ubuntu18.04:
-    template_path: templates/ubuntu
-    base_image: ubuntu:18.04
-    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804
-    x86_64:
-      <<: *cuda11_0_3_requires
-      components:
-        <<: *cuda11_0_3_components
-    ppc64le:
-      requires: "cuda>=11.0"
-      components:
-        <<: *cuda11_0_3_components
-        cudnn8:
-          version: 8.0.4.30-1
-        libnccl2:
-          version: 2.8.3-1
-          sha256sum: 6f804cb32a6a4e83c46b60ea0f88160d0a11f6b965855bab55a106de73d3358c
-          source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/ppc64el/libnccl2_2.8.3-1+cuda11.0_ppc64el.deb
-          basename: libnccl2_2.8.3-1+cuda11.0_ppc64el.deb
-        libnccl2_dev:
-          version: 2.8.3-1
-          sha256sum: 3d694a41a11f9f76b22709ac0533db306604e8a2473a71aca8280e8cf7c9f152
-          source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/ppc64el/libnccl-dev_2.8.3-1+cuda11.0_ppc64el.deb
-          basename: libnccl-dev_2.8.3-1+cuda11.0_ppc64el.deb
-        cudnn8:
-          dev:
-            version: 8.0.4.30-1
-            source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/ppc64el/libcudnn8-dev_8.0.4.30-1+cuda11.0_ppc64el.deb
-            sha256sum: d1ce46c901624ae241a232369a146d45556161e0f844b9ca68d709804605d64b
-          version: 8.0.4.30-1
-          source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/ppc64el/libcudnn8_8.0.4.30-1+cuda11.0_ppc64el.deb
-          sha256sum: a3763378e8ce2b2f1e5c8db46eed54c3c23ddc1b19b5b9741a9aec7918bcf94f
-    arm64:
-      requires: "cuda>=11.0"
-      components:
-        <<: *cuda11_0_3_components
-        # No cuDNN for arm on ubuntu 18.04
-        cudnn8:
-        libnccl2:
-          version: 2.8.3-1
-          sha256sum: 7157c77a5593cfd4e0c600308a336a8087c067ce09ebf170493a1f516dd42a44
-          source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/sbsa/libnccl2_2.8.3-1+cuda11.0_arm64.deb
-          basename: libnccl2_2.8.3-1+cuda11.0_arm64.deb
-        libnccl2_dev:
-          version: 2.8.3-1
-          sha256sum: e8fe10aa2dd8c54d97ecc6f3b92cef1e7243af07a03f8d7a18f49c4c90b8102e
-          source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/sbsa/libnccl-dev_2.8.3-1+cuda11.0_arm64.deb
-          basename: libnccl-dev_2.8.3-1+cuda11.0_arm64.deb
   centos7:
     template_path: templates/redhat
     base_image: centos:7
@@ -7166,23 +6227,6 @@ cuda_v10.2:
     - artifactory
     - docker.io
     - ngc
-  ubuntu18.04:
-    template_path: templates/ubuntu/legacy
-    base_image: ubuntu:18.04
-    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804
-    x86_64:
-      <<: *cuda10_2_requires
-      components:
-        <<: *cuda10_2_components
-    ppc64le:
-      requires: "cuda>=10.2"
-      components:
-        <<: *cuda10_2_components
-        libnccl2:
-          version: 2.11.4-1
-        libnccl2_dev:
-          version: 2.11.4-1
-        cudnn8:
   centos7:
     template_path: templates/redhat/legacy
     base_image: centos:7
@@ -7286,72 +6330,6 @@ cuda_v10.1:
     - artifactory
     - docker.io
     - ngc
-  ubuntu18.04:
-    template_path: templates/ubuntu/legacy
-    base_image: ubuntu:18.04
-    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804
-    x86_64:
-      <<: *cuda10_1_requires
-      components:
-        <<: *cuda10_1_components
-        libnccl2:
-          version: 2.8.3-1
-          sha256sum: 2e2218653517288004b25cafbf511f523c42a3fa7af21e7edf32f145a4deda94
-          source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/libnccl2_2.8.3-1+cuda10.1_amd64.deb
-          basename: libnccl2_2.8.3-1+cuda10.1_amd64.deb
-        libnccl2_dev:
-          version: 2.8.3-1
-          sha256sum: fb3f5f11ad8ee6e35f24ab9ed2e601a6684b5524f47e0a362db11041644696b3
-          source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/libnccl-dev_2.8.3-1+cuda10.1_amd64.deb
-          basename: libnccl-dev_2.8.3-1+cuda10.1_amd64.deb
-        cudnn7:
-          dev:
-            version: 7.6.5.32-1
-            source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/libcudnn7-dev_7.6.5.32-1+cuda10.1_amd64.deb
-            sha256sum: 3f83b8d599a2ccfd9bdc6c22363d1abdccd02cfb0bffd7350a93e7b961e26ecb
-          version: 7.6.5.32-1
-          source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/libcudnn7_7.6.5.32-1+cuda10.1_amd64.deb
-          sha256sum: 07d73672d03836126050e5b78b1a5199fabaa5a540b924903acba00cbfe81848
-        # cudnn8:
-        #   dev:
-        #     version: 8.0.4.30-1
-        #     source: db34543856db0d5d11f1ee78324426547638f0882aef488dce6876e874947aa6
-        #     sha256sum: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/libcudnn8-dev_8.0.4.30-1+cuda10.1_amd64.deb
-        #   version: 8.0.4.30-1
-        #   source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/libcudnn8_8.0.4.30-1+cuda10.1_amd64.deb
-        #   sha256sum: 9d05ac2e4638c719f3b305613e24ea020426d870ea69a726f3984e9f75f0f51d
-    ppc64le:
-      requires: "cuda>=10.1"
-      components:
-        <<: *cuda10_1_components
-        cudnn8:
-          version: 8.0.4.30-1
-        libnccl2:
-          version: 2.8.3-1
-          sha256sum: e5f73701b0af959de36db8fc6549d698e452bb8bc3c64da5b6e9d5c40d8bab01
-          source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/ppc64el/libnccl2_2.8.3-1+cuda10.1_ppc64el.deb
-          basename: libnccl2_2.8.3-1+cuda10.1_ppc64el.deb
-        libnccl2_dev:
-          version: 2.8.3-1
-          sha256sum: 90461ea41c2053a886257f16b3c7f76b69efa47eabb8956510260f8e6468f873
-          source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/ppc64el/libnccl-dev_2.8.3-1+cuda10.1_ppc64el.deb
-          basename: libnccl-dev_2.8.3-1+cuda10.1_ppc64el.deb
-        cudnn7:
-          dev:
-            version: 7.6.5.32-1
-            source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/ppc64el/libcudnn7-dev_7.6.5.32-1+cuda10.1_ppc64el.deb
-            sha256sum: eab03afa2f4efd0429903a4357e294c4940dbdb866ff71f4c7502da419812b02
-          version: 7.6.5.32-1
-          source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/ppc64el/libcudnn7_7.6.5.32-1+cuda10.1_ppc64el.deb
-          sha256sum: ad4d435fc199a811e0ed5dcac8a20c19531ad0b387163ff25e979c01d73f9e8f
-        cudnn8:
-          dev:
-            version: 8.0.4.30-1
-            source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/ppc64el/libcudnn8-dev_8.0.4.30-1+cuda10.1_ppc64el.deb
-            sha256sum: 0c70365a879d485eb0ccd31afcaf408d4ffd4f22e5c26d3cd49e001d643a8ab6
-          version: 8.0.4.30-1
-          source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/ppc64el/libcudnn8_8.0.4.30-1+cuda10.1_ppc64el.deb
-          sha256sum: da448059bdbd4585c8855f93438654503fa75bf75dc8c6de39eceabd7c9dc76a
   centos7:
     template_path: templates/redhat/legacy
     base_image: centos:7
@@ -7517,54 +6495,6 @@ cuda_v10.0:
     - artifactory
     - docker.io
     - ngc
-  ubuntu18.04:
-    template_path: templates/ubuntu/legacy
-    base_image: ubuntu:18.04
-    repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804
-    x86_64:
-      <<: *cuda10_0_requires
-      components:
-        <<: *cuda10_0_components
-        libnccl2:
-          version: 2.6.4-1
-          sha256sum: f92759e2ab0e36a1c9887f080f7283a774a7c971e352203db4d94d99c44f1028
-          source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/libnccl2_2.6.4-1+cuda10.0_amd64.deb
-          basename: libnccl2_2.6.4-1+cuda10.0_amd64.deb
-        libnccl2_dev:
-          version: 2.6.4-1
-          sha256sum: 5df80a94bc62835d5bec16fa0a510e337e56a43f1b2f1ec8f27278dd22bef0e9
-          source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/libnccl-dev_2.6.4-1+cuda10.0_amd64.deb
-          basename: libnccl-dev_2.6.4-1+cuda10.0_amd64.deb
-        cudnn7:
-          dev:
-            version: 7.6.5.32-1
-            source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/libcudnn7-dev_7.6.5.32-1+cuda10.0_amd64.deb
-            sha256sum: 2a9a15089040ea53c5ed224f39a5d9d43319d6db7c499716e7d222acf3cb3427
-          version: 7.6.5.32-1
-          source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/libcudnn7_7.6.5.32-1+cuda10.0_amd64.deb
-          sha256sum: a7e21448181bf69b2f4b9fb3e8c8bdfd962e327b1716d34608488641b4199bb2
-    ppc64le:
-      requires: "cuda>=10.0"
-      components:
-        <<: *cuda10_0_components
-        libnccl2:
-          version: 2.6.4-1
-          sha256sum: be3fc521c0b10498bdcff17b8331c71f79e7e17372e8572cc97db3162951955a
-          source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/ppc64el/libnccl2_2.6.4-1+cuda10.0_ppc64el.deb
-          basename: libnccl2_2.6.4-1+cuda10.0_ppc64el.deb
-        libnccl2_dev:
-          version: 2.6.4-1
-          sha256sum: 63bf5de89c9c42fc7ef0a0814f8a59fd99ff8a184c1aa191d4d1d340f6704faf
-          source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/ppc64el/libnccl-dev_2.6.4-1+cuda10.0_ppc64el.deb
-          basename: libnccl-dev_2.6.4-1+cuda10.0_ppc64el.deb
-        cudnn7:
-          dev:
-            version: 7.6.5.32-1
-            source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/ppc64el/libcudnn7-dev_7.6.5.32-1+cuda10.0_ppc64el.deb
-            sha256sum: 3c53602b5a9e6fd7405a0598a8bbe952a68880a56beeee09dc427f79388defa0
-          version: 7.6.5.32-1
-          source: https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/ppc64el/libcudnn7_7.6.5.32-1+cuda10.0_ppc64el.deb
-          sha256sum: 1e650f9e87ef160730fadd909fcd511be633d7bf07761183bfcfd839239e033d
   centos7:
     template_path: templates/redhat/legacy
     base_image: centos:7

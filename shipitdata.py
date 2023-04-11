@@ -163,7 +163,7 @@ class ShipitData:
         distros = set()
         if self.tegra:
             log.debug("TEGRA DETECTED")
-            distros.add("ubuntu1804")
+            distros.add("ubuntu2004")
             return distros
         for platform in self.data.targets.items():
             for os in platform[1]:

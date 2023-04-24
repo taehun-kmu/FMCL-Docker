@@ -21,4 +21,5 @@ function setup() {
     fi
     docker_run --rm --gpus 0 --platform linux/${ARCH} ${image} bash -c "printenv | grep -q 'brand=tesla'"
     [ "$status" -eq 0 ]
+    # image cleanup is done in run_tests.sh
 }

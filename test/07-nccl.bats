@@ -23,4 +23,5 @@ image="${IMAGE_NAME}:${CUDA_VERSION}-devel-${OS}${IMAGE_TAG_SUFFIX}"
 #     fi
 #     docker_run --rm --gpus 0 ${image} bash -c "$CMD"
 #     [ "$status" -eq 0 ]
+#     # image cleanup is done in run_tests.sh
 # }

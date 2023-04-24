@@ -15,4 +15,5 @@ function setup() {
     fi
     docker_run --rm --gpus 0 --env narch=${narch} --platform linux/${ARCH} ${image} bash -c '[[ "$(uname -m)" == "${narch}" ]] || false'
     [ "$status" -eq 0 ]
+    # image cleanup is done in run_tests.sh
 }

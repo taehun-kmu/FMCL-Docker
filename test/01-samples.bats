@@ -14,10 +14,6 @@ function setup() {
     check_runtime
 }
 
-function teardown() {
-    docker rmi -f ${image}-${BATS_TEST_NAME}
-}
-
 function dq_ubuntu() {
     printf "%s\n" "RUN apt-get update && apt-get install -y make g++ git" >> Dockerfile
     if [[ "${unsupported_git_tags[@]}" =~ "${major}.${minor}" ]]; then

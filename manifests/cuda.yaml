@@ -4651,6 +4651,8 @@ cuda_v11.4.3:
           version: 2.11.4-1
         libnccl2_dev:
           version: 2.11.4-1
+        cudnn8:
+          version: 8.2.4.12-1
       requires: 'cuda>=11.4'
     base_image: ubuntu:20.04
     repo_url: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004

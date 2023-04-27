@@ -6,7 +6,7 @@ set -e
 image="${IMAGE_NAME}:${CUDA_VERSION}-devel-${OS}${IMAGE_TAG_SUFFIX}"
 
 docker pull --platform linux/${ARCH} ${image}
-docker pull --platform linux/${ARCH} rockylinux:8
+docker pull --platform linux/${ARCH} rockylinux:9
 
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 test_path=$(realpath "${script_dir}/../")
@@ -23,6 +23,11 @@ for test in $(find $test_path -iname "[0-9]*-*.bats" | sort); do
       echo "Skipping test '${test}' on architecture ${ARCH}"
       continue
   fi
+  if [[ "${test}" == *license* ]] && [[ "${ARCH}" != "ppc64el" ]]; then
+      # FIXME: use a ppc64le container with curl
+      echo "Skipping test '${test}' on architecture ${ARCH}"
+      continue
+  fi
   if [[ "${test}" == *"test/08-cudnn7.bats"* ]] || [[ "${test}" == *"test/09-cudnn8.bats"* ]]; then
       # 23:07 Sat May 21 2022: temporary disable until server resources can be increased
       echo "Skipping test '${test}'!!"
@@ -33,5 +38,6 @@ for test in $(find $test_path -iname "[0-9]*-*.bats" | sort); do
 done
 
 docker rmi -f ${image}
-docker rmi -f rockylinux:8
+# TODO: cleanup after pipeline
+# docker rmi -f rockylinux:9
 docker image prune -f --filter "dangling=true"

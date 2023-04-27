@@ -1,10 +1,10 @@
 ARG IMAGE_NAME
-FROM ${IMAGE_NAME}:11.8.0-runtime-ubi7 as base
+FROM ${IMAGE_NAME}:12.1.0-runtime-rockylinux9 as base
 
 FROM base as base-amd64
 
 ENV NV_CUDNN_VERSION 8.9.0.131-1
-ENV NV_CUDNN_PACKAGE libcudnn8-${NV_CUDNN_VERSION}.cuda11.8
+ENV NV_CUDNN_PACKAGE libcudnn8-${NV_CUDNN_VERSION}.cuda12.1
 
 
 FROM base-${TARGETARCH}

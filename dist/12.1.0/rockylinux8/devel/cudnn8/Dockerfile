@@ -1,20 +1,17 @@
 ARG IMAGE_NAME
-FROM ${IMAGE_NAME}:11.8.0-runtime-ubi8 as base
+FROM ${IMAGE_NAME}:12.1.0-devel-rockylinux8 as base
 
 FROM base as base-amd64
 
 ENV NV_CUDNN_VERSION 8.9.0.131-1
-ENV NV_CUDNN_PACKAGE libcudnn8-${NV_CUDNN_VERSION}.cuda11.8
+ENV NV_CUDNN_PACKAGE libcudnn8-${NV_CUDNN_VERSION}.cuda12.1
+ENV NV_CUDNN_PACKAGE_DEV libcudnn8-devel-${NV_CUDNN_VERSION}.cuda12.1
 
 FROM base as base-arm64
 
 ENV NV_CUDNN_VERSION 8.9.0.131-1
-ENV NV_CUDNN_PACKAGE libcudnn8-${NV_CUDNN_VERSION}.cuda11.8
-
-FROM base as base-ppc64le
-
-ENV NV_CUDNN_VERSION 8.9.0.131-1
-ENV NV_CUDNN_PACKAGE libcudnn8-${NV_CUDNN_VERSION}.cuda11.8
+ENV NV_CUDNN_PACKAGE libcudnn8-${NV_CUDNN_VERSION}.cuda12.1
+ENV NV_CUDNN_PACKAGE_DEV libcudnn8-devel-${NV_CUDNN_VERSION}.cuda12.1
 
 
 FROM base-${TARGETARCH}
@@ -27,5 +24,6 @@ LABEL com.nvidia.cudnn.version="${NV_CUDNN_VERSION}"
 
 RUN yum install -y \
     ${NV_CUDNN_PACKAGE} \
+    ${NV_CUDNN_PACKAGE_DEV} \
     && yum clean all \
     && rm -rf /var/cache/yum/*

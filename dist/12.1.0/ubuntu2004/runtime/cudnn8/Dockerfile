@@ -1,22 +1,19 @@
 ARG IMAGE_NAME
-FROM ${IMAGE_NAME}:11.8.0-devel-ubuntu22.04 as base
+FROM ${IMAGE_NAME}:12.1.0-runtime-ubuntu20.04 as base
 
 FROM base as base-amd64
 
 ENV NV_CUDNN_VERSION 8.9.0.131
 ENV NV_CUDNN_PACKAGE_NAME "libcudnn8"
 
-ENV NV_CUDNN_PACKAGE "libcudnn8=$NV_CUDNN_VERSION-1+cuda11.8"
-ENV NV_CUDNN_PACKAGE_DEV "libcudnn8-dev=$NV_CUDNN_VERSION-1+cuda11.8"
-
+ENV NV_CUDNN_PACKAGE "libcudnn8=$NV_CUDNN_VERSION-1+cuda12.1"
 
 FROM base as base-arm64
 
 ENV NV_CUDNN_VERSION 8.9.0.131
 ENV NV_CUDNN_PACKAGE_NAME "libcudnn8"
 
-ENV NV_CUDNN_PACKAGE "libcudnn8=$NV_CUDNN_VERSION-1+cuda11.8"
-ENV NV_CUDNN_PACKAGE_DEV "libcudnn8-dev=$NV_CUDNN_VERSION-1+cuda11.8"
+ENV NV_CUDNN_PACKAGE "libcudnn8=$NV_CUDNN_VERSION-1+cuda12.1"
 
 FROM base-${TARGETARCH}
 
@@ -27,6 +24,5 @@ LABEL com.nvidia.cudnn.version="${NV_CUDNN_VERSION}"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ${NV_CUDNN_PACKAGE} \
-    ${NV_CUDNN_PACKAGE_DEV} \
     && apt-mark hold ${NV_CUDNN_PACKAGE_NAME} \
     && rm -rf /var/lib/apt/lists/*

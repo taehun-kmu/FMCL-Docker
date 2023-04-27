@@ -89,6 +89,7 @@ cuda_v12.1.0:
   dist_base_path: dist/12.1.0
   image_name: gitlab-master.nvidia.com:5005/cuda-installer/cuda
   release_label: 12.1.0
+  end_of_life: True
   push_repos:
     - artifactory
     - docker.io
@@ -1110,6 +1111,7 @@ cuda_v12.0.0:
   dist_base_path: dist/12.0.0
   image_name: gitlab-master.nvidia.com:5005/cuda-installer/cuda
   release_label: 12.0.0
+  end_of_life: True
   push_repos:
     - artifactory
     - docker.io

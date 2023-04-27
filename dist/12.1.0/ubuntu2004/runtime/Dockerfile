@@ -57,4 +57,5 @@ RUN apt-mark hold ${NV_LIBCUBLAS_PACKAGE_NAME} ${NV_LIBNCCL_PACKAGE_NAME}
 COPY entrypoint.d/ /opt/nvidia/entrypoint.d/
 COPY nvidia_entrypoint.sh /opt/nvidia/
 ENV NVIDIA_PRODUCT_NAME="CUDA"
+ENV NVIDIA_CUDA_END_OF_LIFE=1
 ENTRYPOINT ["/opt/nvidia/nvidia_entrypoint.sh"]

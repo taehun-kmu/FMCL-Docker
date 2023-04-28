@@ -50,6 +50,7 @@ before_script:
   - 'echo "CUDNN_VERSION: $CUDNN_VERSION"'
   - 'echo "IMAGE_TAG_SUFFIX: $IMAGE_TAG_SUFFIX"'
   - 'echo "NO_OS_SUFFIX: $NO_OS_SUFFIX"'
+  - 'echo "NO_CACHE: $NO_CACHE"'
   # Gitlab is used to stage images
   - retry 5 20 docker login -u "gitlab-ci-token" -p $CI_JOB_TOKEN gitlab-master.nvidia.com:5005
   # Login to NGC to pull images
@@ -118,10 +119,12 @@ prepare:
     - run_cmd retry 3 10 docker buildx build --pull --push ${PLATFORM_ARG} -t "${IMAGE_NAME}:${CUDA_VERSION}-runtime-${OS}" ${TAG_RUNTIME} "${DIST_BASE_PATH}/runtime"
                           --build-arg BUILDKIT_INLINE_CACHE=1 --progress plain
                           --cache-from=type=registry,ref=${IMAGE_NAME}:${CUDA_VERSION}-runtime-${OS}
+                          ${NO_CACHE:+"--no-cache"}
     - run_cmd retry 3 10 docker buildx build --pull --push ${PLATFORM_ARG} -t "${IMAGE_NAME}:${CUDA_VERSION}-devel-${OS}" ${TAG_DEVEL} "${DIST_BASE_PATH}/devel"
                           --build-arg "IMAGE_NAME=${IMAGE_NAME}"
                           --build-arg BUILDKIT_INLINE_CACHE=1 --progress plain
                           --cache-from=type=registry,ref=${IMAGE_NAME}:${CUDA_VERSION}-devel-${OS}
+                          ${NO_CACHE:+"--no-cache"}
     - 'echo "CUDA_TAGS=\"${CUDA_TAGS} ${CUDA_VERSION}-runtime-${OS} ${CUDA_VERSION}-devel-${OS}\"" >> tags.env'
     - cat tags.env
   artifacts:
@@ -184,7 +187,7 @@ prepare:
       echo "####################################################################"
       if ! run_cmd retry 3 10 docker buildx build --pull --push ${PLATFORM_ARG} -t "${IMAGE_NAME}:${CUDA_VERSION}-base-${OS}${IMAGE_TAG_SUFFIX}" ${TAG_BASE} "${DIST_BASE_PATH}/base" \
                             --build-arg BUILDKIT_INLINE_CACHE=1 --progress plain \
-                            --cache-from=type=registry,ref=${IMAGE_NAME}:${CUDA_VERSION}-base-${OS}${IMAGE_TAG_SUFFIX}; then
+                            --cache-from=type=registry,ref=${IMAGE_NAME}:${CUDA_VERSION}-base-${OS}${IMAGE_TAG_SUFFIX} ${NO_CACHE:+"--no-cache"}; then
           echo "Failed building the base image!"
           # kitmaker_webhook_failed
           exit 1
@@ -195,7 +198,7 @@ prepare:
       if ! run_cmd retry 3 10 docker buildx build --pull --push ${PLATFORM_ARG} -t "${IMAGE_NAME}:${CUDA_VERSION}-runtime-${OS}${IMAGE_TAG_SUFFIX}" ${TAG_RUNTIME} \
                             --build-arg "IMAGE_NAME=${IMAGE_NAME}" "${DIST_BASE_PATH}/runtime" \
                             --build-arg BUILDKIT_INLINE_CACHE=1 --progress plain \
-                            --cache-from=type=registry,ref=${IMAGE_NAME}:${CUDA_VERSION}-runtime-${OS}${IMAGE_TAG_SUFFIX}; then
+                            --cache-from=type=registry,ref=${IMAGE_NAME}:${CUDA_VERSION}-runtime-${OS}${IMAGE_TAG_SUFFIX} ${NO_CACHE:+"--no-cache"}; then
           echo "Failed building the runtime image!"
           # kitmaker_webhook_failed
           exit 1
@@ -206,7 +209,7 @@ prepare:
       if ! run_cmd retry 3 10 docker buildx build --pull --push ${PLATFORM_ARG} -t "${IMAGE_NAME}:${CUDA_VERSION}-devel-${OS}${IMAGE_TAG_SUFFIX}" ${TAG_DEVEL} \
                             --build-arg "IMAGE_NAME=${IMAGE_NAME}" "${DIST_BASE_PATH}/devel" \
                             --build-arg BUILDKIT_INLINE_CACHE=1 --progress plain \
-                            --cache-from=type=registry,ref=${IMAGE_NAME}:${CUDA_VERSION}-devel-${OS}${IMAGE_TAG_SUFFIX}; then
+                            --cache-from=type=registry,ref=${IMAGE_NAME}:${CUDA_VERSION}-devel-${OS}${IMAGE_TAG_SUFFIX} ${NO_CACHE:+"--no-cache"}; then
           echo "Failed building the devel image!"
           # kitmaker_webhook_failed
           exit 1
@@ -262,7 +265,7 @@ prepare:
       if ! run_cmd retry 3 10 docker buildx build --pull --push ${PLATFORM_ARG} -t "${IMAGE_NAME}:${CUDA_VERSION}-${CUDNN_VERSION}-runtime-${OS}${IMAGE_TAG_SUFFIX}" ${TAG_CUDNN_RUNTIME} \
                   --build-arg "IMAGE_NAME=${IMAGE_NAME}" "${DIST_BASE_PATH}/runtime/${CUDNN_VERSION}" \
                   --build-arg BUILDKIT_INLINE_CACHE=1 --progress plain \
-                  --cache-from=type=registry,ref=${IMAGE_NAME}:${CUDA_VERSION}-${CUDNN_VERSION}-runtime-${OS}${IMAGE_TAG_SUFFIX}; then
+                  --cache-from=type=registry,ref=${IMAGE_NAME}:${CUDA_VERSION}-${CUDNN_VERSION}-runtime-${OS}${IMAGE_TAG_SUFFIX} ${NO_CACHE:+"--no-cache"}; then
           echo "Failed building the cudnn runtime image!"
           # kitmaker_webhook_failed
           exit 1
@@ -273,7 +276,7 @@ prepare:
       if ! run_cmd retry 3 10 docker buildx build --pull --push ${PLATFORM_ARG} -t "${IMAGE_NAME}:${CUDA_VERSION}-${CUDNN_VERSION}-devel-${OS}${IMAGE_TAG_SUFFIX}" ${TAG_CUDNN_DEVEL} \
                   --build-arg "IMAGE_NAME=${IMAGE_NAME}" "${DIST_BASE_PATH}/devel/${CUDNN_VERSION}" \
                   --build-arg BUILDKIT_INLINE_CACHE=1 --progress plain \
-                  --cache-from=type=registry,ref=${IMAGE_NAME}:${CUDA_VERSION}-${CUDNN_VERSION}-devel-${OS}${IMAGE_TAG_SUFFIX}; then
+                  --cache-from=type=registry,ref=${IMAGE_NAME}:${CUDA_VERSION}-${CUDNN_VERSION}-devel-${OS}${IMAGE_TAG_SUFFIX} ${NO_CACHE:+"--no-cache"}; then
           echo "Failed building the cudnn devel image!"
           # kitmaker_webhook_failed
           exit 1

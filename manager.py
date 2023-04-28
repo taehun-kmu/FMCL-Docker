@@ -152,6 +152,8 @@ class ManagerTrigger(Manager):
 
     no_push: Any = cli.Flag(["--no-push"], help="Don't push images to the registries")
 
+    no_cache: Any = cli.Flag(["--no-cache"], help="Don't use the image cache during build")
+
     rebuildb: Any = cli.Flag(
         ["--rebuild-builder"],
         help="Force rebuild of the builder image used to build the cuda images.",
@@ -407,6 +409,7 @@ class ManagerTrigger(Manager):
         no_test = os.getenv("NO_TEST") or self.no_test
         no_scan = os.getenv("NO_SCAN") or self.no_scan
         no_push = os.getenv("NO_PUSH") or self.no_push
+        no_cache = os.getenv("NO_CACHE") or self.no_cache
         rebuildb = os.getenv("REBUILD_BUILDER") or self.rebuildb
         token = os.getenv("CI_JOB_TOKEN")
         if not token:
@@ -424,6 +427,8 @@ class ManagerTrigger(Manager):
             payload[f"variables[NO_TEST]"] = "true"
         if no_push:
             payload[f"variables[NO_PUSH]"] = "true"
+        if no_cache:
+            payload[f"variables[NO_CACHE]"] = "true"
         if rebuildb:
             payload[f"variables[REBUILD_BUILDER]"] = "true"
         if self.flavor:
@@ -445,6 +450,7 @@ class ManagerTrigger(Manager):
         no_test = os.getenv("NO_TEST") or self.no_test
         no_scan = os.getenv("NO_SCAN") or self.no_scan
         no_push = os.getenv("NO_PUSH") or self.no_push
+        no_cache = os.getenv("NO_CACHE") or self.no_cache
         token = os.getenv("CI_JOB_TOKEN")
         if not token:
             log.warning("CI_JOB_TOKEN is unset!")
@@ -456,6 +462,8 @@ class ManagerTrigger(Manager):
             payload[f"variables[NO_TEST]"] = "true"
         if no_push:
             payload[f"variables[NO_PUSH]"] = "true"
+        if no_cache:
+            payload[f"variables[NO_CACHE]"] = "true"
         if "l4t" in self.flavor:  # type: ignore
             # FIXME: HACK until these scripts can be made to have proper container image "flavor" support
             payload[f"variables[UBUNTU20_04_L4T]"] = "true"

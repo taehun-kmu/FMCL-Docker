@@ -52,6 +52,6 @@ following:
    Thank you for your understanding as our small team tries to navigate container security
    challenges.
 
-If the issue is not any of the above, then please create a ticket WITHOUT THIS TEXT.
+**If the issue is not any of the above, then please create a ticket WITHOUT THIS TEXT.**
 
 Thank you!

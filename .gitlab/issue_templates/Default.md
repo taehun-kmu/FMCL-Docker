@@ -23,19 +23,19 @@ following:
 **2) Is your issue caused by not being able to perform an update of the package system
      from within the container?**
 
-   We do our best to make sure our packages we publish are available in all regions
-   through our CDN provider. But sometimes our CDN has issues that are usually resolved
-   within an hour or two after being encountered.
+   We do our best to make sure the packages we publish are available in all regions
+   globally through our CDN provider. But sometimes our CDN has issues that are usually
+   resolved within an hour or two after being encountered.
 
    If after more than six hours have passed and you have not been able to perform an
    update, then please check: https://github.com/NVIDIA/cuda-repo-management/issues
 
 **3) Are you trying to pull a tag from Docker Hub or NGC and the container runtime is
-     saying that it does not exist?**
+     erroring out because the tag does not exist?**
 
    Starting in May 2023, we will begin deleting old unsupported tags from Docker Hub and NGC.
 
-   This is being done to ensure that there are no unpatched critical vulnerabilities in
+   This is being done to ensure that there are no un-patched critical vulnerabilities in
    these container image tags as we do not support them any longer.
 
    We strongly encourage anyone using expired tags to upgrade to newer supported container
@@ -43,14 +43,15 @@ following:
    https://gitlab-master.nvidia.com/cuda-installer/cuda/-/blob/master/doc/supported-tags.md
 
    For those companies or individuals that do not want to upgrade to newer container
-   images, we provide support in our build script provided in this same repository for
-   self hosting older versions of the CUDA container images.
+   images, we provide support in a build script provided in this same repository for
+   self hosting older versions of the CUDA container images. See the project README for
+   details.
 
    The CUDA container image support policy:
    https://gitlab-master.nvidia.com/cuda-installer/cuda/-/blob/master/doc/support-policy.md
 
-   Thank you for your understanding as our small team tries to navigate container security
-   challenges.
+   Thank you for your understanding as our small team tries to navigate a challenging
+   container security environment.
 
 **If the issue is not any of the above, then please create a ticket WITHOUT THIS TEXT.**
 

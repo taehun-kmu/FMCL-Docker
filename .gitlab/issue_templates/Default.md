@@ -3,7 +3,8 @@ Hello!
 Thank you for taking the time to report an issue with the CUDA container images.
 
 **The CUDA container images are supported by the Kitmaker team at NVIDIA.** The Kitmaker
-team is also responsible for the CUDA package repositories on (developer.download.nvidia.com)[http://developer.download.nvidia.com/compute/cuda/repos]
+team is also responsible for the CUDA package repositories on
+[developer.download.nvidia.com](http://developer.download.nvidia.com/compute/cuda/repos)
 including the CUDA driver.
 
 In order to ensure expedient support of your issue, first please read and understand the
@@ -61,7 +62,7 @@ following:
    (CUDA Image Issue Tracker)[https://gitlab.com/nvidia/container-images/cuda/-/issues]
 
    Other times, cuDNN does not release a version for a CUDA version, OS Distro, and
-   architecture. Please check the (cuDNN download page)[https://developer.nvidia.com/rdp/cudnn-download]
+   architecture. Please check the [cuDNN download page](https://developer.nvidia.com/rdp/cudnn-download)
    to see if the expected CUDA version, OS Distro, and architecture download exists.
 
    Otherwise, please create a ticket! Sorry and thanks in advanced!

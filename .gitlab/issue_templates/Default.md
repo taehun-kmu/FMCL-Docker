@@ -54,7 +54,7 @@ following:
    Thank you for your understanding as our small team tries to navigate a challenging
    container security environment.
 
-**4) A tag for a cuDNN version is missing***
+**4) A tag for a cuDNN version is missing**
 
    cuDNN is developed by a team separate from the CUDA Toolkit. Sometimes on toolkit
    release day the cuDNN version for that toolkit is not yet ready so those tags will be

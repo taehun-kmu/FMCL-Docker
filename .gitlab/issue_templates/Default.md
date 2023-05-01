@@ -59,7 +59,7 @@ following:
    cuDNN is developed by a team separate from the CUDA Toolkit. Sometimes on toolkit
    release day the cuDNN version for that toolkit is not yet ready so those tags will be
    missing. There might already be a ticket in the
-   (CUDA Image Issue Tracker)[https://gitlab.com/nvidia/container-images/cuda/-/issues]
+   [CUDA Image Issue Tracker](https://gitlab.com/nvidia/container-images/cuda/-/issues)
 
    Other times, cuDNN does not release a version for a CUDA version, OS Distro, and
    architecture. Please check the [cuDNN download page](https://developer.nvidia.com/rdp/cudnn-download)

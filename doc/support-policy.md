@@ -2,14 +2,15 @@
 
 As of Friday October 28th, 2022 we, the Kitmaker Team at Nvidia, responsible for the Nvidia CUDA Repositories and CUDA container images, are formally announcing a new support policy for CUDA Container Images.
 
-Going forward, *Cuda Toolkit images will End-of-Life (EOL) when the driver it shipped with goes EOL. * In addition, we will only support the latest point release for each of these toolkit versions.
+Going forward,  
+ - Cuda Toolkit images will End-of-Life (EOL) when the driver it shipped with goes EOL.  
+    For example, CUDA 11.4.3 shipped with R470. R470 goes EOL Jul 2024, so CUDA 11.4.3 images will no longer be updated starting Jul 2024.  
+ - In addition, we will only support the latest point release for each of these toolkit versions.  
+    For example when 12.1.1 is released, 12.1.0 is marked EOL  
+ - Once a CUDA container image set has gone EOL, we will update the Message of the Day for the image to indicate it has reached EOL. We will also provide notification via a gitlab issue our customers can subscribe to.
+ - After a period of Six Months time, the EOL tags **WILL BE DELETED from Docker Hub and Nvidia GPU Cloud (NGC)**. This deletion ensures unsupported tags (and image layers) are not left lying around for customers to continue using after they have long been abandoned.
 
-For example, CUDA 11.7.1 shipped with R515. R515 goes EOL May 2023, so CUDA 11.7.1 images will no longer be updated starting May 2023.
-
-Once a CUDA container image set has gone EOL, we will update the Message of the Day for the image to indicate it has reached EOL. We will also provide notification via a gitlab issue our customers can subscribe to.
-
-After a period of Six Months time, the EOL tags **WILL BE DELETED from Docker Hub and Nvidia GPU Cloud (NGC)**. This deletion ensures unsupported tags (and image layers) are not left lying around for customers to continue using after they have long been abandoned.
-
+Please see the [EOL chart](container_tags.pdf) for driver EOL and approx container tags deletion dates.
 
 ## Why
 

@@ -158,7 +158,7 @@ prepare:
               exit 1
           fi
 
-          run_cmd cp -R kitpick_dl/${NEW_CANDIDATE_URL#"http://"}/{base,devel,runtime} ${DIST_BASE_PATH}/
+          run_cmd cp -R kitpick_dl/${NEW_CANDIDATE_URL#"https://"}/{base,devel,runtime} ${DIST_BASE_PATH}/
           echo "Contents of ${DIST_BASE_PATH}/"
           find ${DIST_BASE_PATH}/
       fi
@@ -236,7 +236,7 @@ prepare:
               # kitmaker_webhook_failed
               exit 1
           fi
-          run_cmd cp -R kitpick_dl/${NEW_CANDIDATE_URL#"http://"}/{base,devel,runtime} ${DIST_BASE_PATH}/
+          run_cmd cp -R kitpick_dl/${NEW_CANDIDATE_URL#"https://"}/{base,devel,runtime} ${DIST_BASE_PATH}/
           echo "Contents of ${DIST_BASE_PATH}/"
           find kitpick/
           export CUDNN_VERSION="cudnn$(grep -r "CUDNN_VERSION" kitpick/ | head -n 1 | cut -f 3 -d" " | tr -d '[:space:]' | cut -c 1)"

@@ -76,14 +76,14 @@ class ShipitData:
             f"{shipit_distro}-{self.data.product_name}-linux-{modified_arch}.json"
         )
         shipit_json = (
-            f"http://cuda-internal.nvidia.com/funnel/{self.shipit_uuid}/{platform_name}"
+            f"https://kitmaker-web.nvidia.com/funnel/{self.shipit_uuid}/{platform_name}"
         )
         log.info(f"Retrieving funnel json from: {shipit_json}")
         return self.get_http_json(shipit_json)
 
     def get_shipit_global_json(self):
         global_json = (
-            f"http://cuda-internal.nvidia.com/funnel/{self.shipit_uuid}/global.json"
+            f"https://kitmaker-web.nvidia.com/funnel/{self.shipit_uuid}/global.json"
         )
         log.info(f"Retrieving global json from: {global_json}")
         ldata = self.get_http_json(global_json)
@@ -196,7 +196,7 @@ class ShipitData:
             repo_distro = "rhel"
         clean_distro = "{}{}".format(repo_distro, self.distro_version.replace(".", ""))
         return (
-            f"http://cuda-internal.nvidia.com/release-candidates/"
+            f"https://kitmaker-web.nvidia.com/"
             f"kitpicks/{self.product_name}/{self.release_label}/{self.candidate_number}/repos/{clean_distro}"
         )
 

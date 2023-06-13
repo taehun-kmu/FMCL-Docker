@@ -1,4 +1,4 @@
-/label ~"needs-triage"
+/label ~needs-triage
 
 Hello!
 

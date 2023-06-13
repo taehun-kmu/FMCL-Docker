@@ -30,6 +30,11 @@ ENV NV_LIBNCCL_DEV_PACKAGE ${NV_LIBNCCL_DEV_PACKAGE_NAME}-${NV_LIBNCCL_DEV_PACKA
 ENV NV_CUDA_PROFILER_API_VERSION {{ cuda.x86_64.components.cuda_profiler_api.version }}
 ENV NV_CUDA_PROFILER_API_PACKAGE cuda-profiler-api-{{ cuda.version.major }}-{{ cuda.version.minor }}-${NV_CUDA_PROFILER_API_VERSION}
 {% endif %}
+{% if "nsight_compute" in cuda.x86_64.components %}
+    {% set has_nsight_compute_package = true %}
+ENV NV_CUDA_NSIGHT_COMPUTE_VERSION {{ cuda.x86_64.components.nsight_compute.version }}
+ENV NV_CUDA_NSIGHT_COMPUTE_DEV_PACKAGE cuda-nsight-compute-{{ cuda.version.major }}-{{ cuda.version.minor }}-${NV_CUDA_NSIGHT_COMPUTE_VERSION}
+{% endif %}
 
 {% endif %}
 {% if "arm64" in cuda %}
@@ -60,6 +65,11 @@ ENV NV_LIBNCCL_DEV_PACKAGE ${NV_LIBNCCL_DEV_PACKAGE_NAME}-${NV_LIBNCCL_DEV_PACKA
     {% set has_cuda_profiler_api_package = true %}
 ENV NV_CUDA_PROFILER_API_VERSION {{ cuda.arm64.components.cuda_profiler_api.version }}
 ENV NV_CUDA_PROFILER_API_PACKAGE cuda-profiler-api-{{ cuda.version.major }}-{{ cuda.version.minor }}-${NV_CUDA_PROFILER_API_VERSION}
+{% endif %}
+{% if "nsight_compute" in cuda.arm64.components %}
+    {% set has_nsight_compute_package = true %}
+ENV NV_CUDA_NSIGHT_COMPUTE_VERSION {{ cuda.arm64.components.nsight_compute.version }}
+ENV NV_CUDA_NSIGHT_COMPUTE_DEV_PACKAGE cuda-nsight-compute-{{ cuda.version.major }}-{{ cuda.version.minor }}-${NV_CUDA_NSIGHT_COMPUTE_VERSION}
 {% endif %}
 {% endif %}
 
@@ -92,6 +102,11 @@ ENV NV_LIBNCCL_DEV_PACKAGE ${NV_LIBNCCL_DEV_PACKAGE_NAME}-${NV_LIBNCCL_DEV_PACKA
 ENV NV_CUDA_PROFILER_API_VERSION {{ cuda.ppc64le.components.cuda_profiler_api.version }}
 ENV NV_CUDA_PROFILER_API_PACKAGE cuda-profiler-api-{{ cuda.version.major }}-{{ cuda.version.minor }}-${NV_CUDA_PROFILER_API_VERSION}
 {% endif %}
+{% if "nsight_compute" in cuda.ppc64le.components %}
+    {% set has_nsight_compute_package = true %}
+ENV NV_CUDA_NSIGHT_COMPUTE_VERSION {{ cuda.ppc64le.components.nsight_compute.version }}
+ENV NV_CUDA_NSIGHT_COMPUTE_DEV_PACKAGE cuda-nsight-compute-{{ cuda.version.major }}-{{ cuda.version.minor }}-${NV_CUDA_NSIGHT_COMPUTE_VERSION}
+{% endif %}
 {% endif %}
 
 FROM base-${TARGETARCH}
@@ -119,6 +134,9 @@ RUN yum install -y \
     {% endif %}
     {% if has_cuda_profiler_api_package %}
     ${NV_CUDA_PROFILER_API_PACKAGE} \
+    {% endif %}
+    {% if has_nsight_compute_package %}
+    ${NV_CUDA_NSIGHT_COMPUTE_DEV_PACKAGE} \
     {% endif %}
     && yum clean all \
     && rm -rf /var/cache/yum/*

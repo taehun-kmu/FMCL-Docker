@@ -109,6 +109,9 @@ class ShipitData:
 
     def pkg_rel_from_package_name(self, name, version):
         log.debug(f"have name: {name} version: {version}")
+        # HACK: see above.
+        if "cuda-nsight-compute" in name:
+            return "1"
         rgx = re.search(rf"[\w\d-]*{version}-(\d)_?", name)
         if rgx:
             log.debug(f"found match: {rgx.group(1)}")
@@ -122,6 +125,12 @@ class ShipitData:
 
         def fragment_by_name(name):
             name_with_hyphens = name.replace("_", "-")
+
+            # HACK: inconsistencies kill me..
+            # cuda-nsight-compute is not in the shipit data so we have to handle it here.
+            if "cuda_nsight_compute" in name:
+                return {'name': name_with_hyphens, 'version': self.release_label}
+
             for _, v in fragments.items():
                 for _, v2 in v.items():
                     if any(x in v2["name"] for x in [name, name_with_hyphens]):
@@ -141,8 +150,8 @@ class ShipitData:
             if not pkg_rel:
                 raise Exception(
                     (
-                        f"Could not get package release version from package name "
-                        "'{name}' using version '{version}'. Perhaps there is an issue in the RC data?"
+                        "Could not get package release version from package name "
+                        f"'{name}' using version '{version}'. Perhaps there is an issue in the RC data?"
                     )
                 )
 

@@ -15,6 +15,9 @@ ENV NV_LIBCUBLAS_DEV_VERSION 11.3.0.106-1
 ENV NV_LIBCUBLAS_DEV_PACKAGE_NAME libcublas-dev-11-1
 ENV NV_LIBCUBLAS_DEV_PACKAGE ${NV_LIBCUBLAS_DEV_PACKAGE_NAME}=${NV_LIBCUBLAS_DEV_VERSION}
 
+ENV NV_CUDA_NSIGHT_COMPUTE_VERSION 11.1.1-1
+ENV NV_CUDA_NSIGHT_COMPUTE_DEV_PACKAGE cuda-nsight-compute-11-1=${NV_CUDA_NSIGHT_COMPUTE_VERSION}
+
 ENV NV_NVPROF_VERSION 11.1.105-1
 ENV NV_NVPROF_DEV_PACKAGE cuda-nvprof-11-1=${NV_NVPROF_VERSION}
 
@@ -41,6 +44,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libcusparse-dev-11-1=${NV_LIBCUSPARSE_DEV_VERSION} \
     ${NV_LIBCUBLAS_DEV_PACKAGE} \
     ${NV_LIBNCCL_DEV_PACKAGE} \
+    ${NV_CUDA_NSIGHT_COMPUTE_DEV_PACKAGE} \
     && rm -rf /var/lib/apt/lists/*
 
 # Keep apt from auto upgrading the cublas and nccl packages. See https://gitlab.com/nvidia/container-images/cuda/-/issues/88

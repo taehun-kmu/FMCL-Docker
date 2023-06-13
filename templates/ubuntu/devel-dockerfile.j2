@@ -18,6 +18,12 @@ ENV NV_LIBNPP_DEV_PACKAGE libnpp-dev-{{ cuda.version.major }}-{{ cuda.version.mi
 ENV NV_LIBCUBLAS_DEV_VERSION {{ cuda.x86_64.components.libcublas_dev.version }}
 ENV NV_LIBCUBLAS_DEV_PACKAGE_NAME libcublas-dev-{{ cuda.version.major }}-{{ cuda.version.minor }}
 ENV NV_LIBCUBLAS_DEV_PACKAGE ${NV_LIBCUBLAS_DEV_PACKAGE_NAME}=${NV_LIBCUBLAS_DEV_VERSION}
+{% if "nsight_compute" in cuda.x86_64.components %}
+    {% set has_nsight_compute_package = true %}
+
+ENV NV_CUDA_NSIGHT_COMPUTE_VERSION {{ cuda.x86_64.components.nsight_compute.version }}
+ENV NV_CUDA_NSIGHT_COMPUTE_DEV_PACKAGE cuda-nsight-compute-{{ cuda.version.major }}-{{ cuda.version.minor }}=${NV_CUDA_NSIGHT_COMPUTE_VERSION}
+{% endif %}
 {% if "nvprof" in cuda.x86_64.components %}
     {% set has_nvprof_package = true %}
 
@@ -92,6 +98,12 @@ ENV NV_LIBCUBLAS_DEV_PACKAGE_NAME libcublas-dev-{{ cuda.version.major }}-{{ cuda
 {% endif %}
 ENV NV_LIBCUBLAS_DEV_VERSION {{ cuda.arm64.components.libcublas_dev.version }}
 ENV NV_LIBCUBLAS_DEV_PACKAGE ${NV_LIBCUBLAS_DEV_PACKAGE_NAME}=${NV_LIBCUBLAS_DEV_VERSION}
+{% if "nsight_compute" in cuda.arm64.components %}
+    {% set has_nsight_compute_package = true %}
+
+ENV NV_CUDA_NSIGHT_COMPUTE_VERSION {{ cuda.arm64.components.nsight_compute.version }}
+ENV NV_CUDA_NSIGHT_COMPUTE_DEV_PACKAGE cuda-nsight-compute-{{ cuda.version.major }}-{{ cuda.version.minor }}=${NV_CUDA_NSIGHT_COMPUTE_VERSION}
+{% endif %}
 {% if "nvprof" in cuda.arm64.components %}
     {% set has_nvprof_package = true %}
 
@@ -159,6 +171,12 @@ ENV NV_LIBNPP_DEV_PACKAGE libnpp-dev-{{ cuda.version.major }}-{{ cuda.version.mi
 ENV NV_LIBCUBLAS_DEV_VERSION {{ cuda.ppc64le.components.libcublas_dev.version }}
 ENV NV_LIBCUBLAS_DEV_PACKAGE_NAME libcublas-dev-{{ cuda.version.major }}-{{ cuda.version.minor }}
 ENV NV_LIBCUBLAS_DEV_PACKAGE ${NV_LIBCUBLAS_DEV_PACKAGE_NAME}=${NV_LIBCUBLAS_DEV_VERSION}
+{% if "nsight_compute" in cuda.ppc64le.components %}
+    {% set has_nsight_compute_package = true %}
+
+ENV NV_CUDA_NSIGHT_COMPUTE_VERSION {{ cuda.ppc64le.components.nsight_compute.version }}
+ENV NV_CUDA_NSIGHT_COMPUTE_DEV_PACKAGE cuda-nsight-compute-{{ cuda.version.major }}-{{ cuda.version.minor }}=${NV_CUDA_NSIGHT_COMPUTE_VERSION}
+{% endif %}
 {% if "nvprof" in cuda.ppc64le.components %}
     {% set has_nvprof_package = true %}
 
@@ -249,6 +267,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     {% endif %}
     {% if has_cuda_profiler_api_package %}
     ${NV_CUDA_PROFILER_API_PACKAGE} \
+    {% endif %}
+    {% if has_nsight_compute_package %}
+    ${NV_CUDA_NSIGHT_COMPUTE_DEV_PACKAGE} \
     {% endif %}
     && rm -rf /var/lib/apt/lists/*
 

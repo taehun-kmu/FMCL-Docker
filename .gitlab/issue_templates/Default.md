@@ -1,3 +1,5 @@
+/label ~"needs-triage"
+
 Hello!
 
 Thank you for taking the time to report an issue with the CUDA container images.

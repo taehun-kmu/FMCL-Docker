@@ -1,5 +1,3 @@
-/label ~needs-triage
-
 Hello!
 
 Thank you for taking the time to report an issue with the CUDA container images.
@@ -72,3 +70,10 @@ following:
 **If the issue is not any of the above, then please create a ticket WITHOUT THIS TEXT.**
 
 Thank you!
+
+********************
+
+/label ~needs-triage
+
+Describe your issue here!
+

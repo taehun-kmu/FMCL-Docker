@@ -4324,7 +4324,20 @@ cuda_v11.6.0:
       <<: *cuda11_6_0_requires
 
 .requires_v11.5.2: &cuda11_5_2_requires
-  requires: "cuda>=11.5 brand=tesla,driver>=418,driver<419 brand=tesla,driver>=450,driver<451 brand=tesla,driver>=470,driver<471"
+  requires: >
+    cuda>=11.5
+    brand=tesla,driver>=418,driver<419
+    brand=tesla,driver>=450,driver<451
+    brand=tesla,driver>=470,driver<471
+    brand=unknown,driver>=470,driver<471
+    brand=nvidia,driver>=470,driver<471
+    brand=nvidiartx,driver>=470,driver<471
+    brand=geforce,driver>=470,driver<471
+    brand=geforcertx,driver>=470,driver<471
+    brand=quadro,driver>=470,driver<471
+    brand=quadrortx,driver>=470,driver<471
+    brand=titan,driver>=470,driver<471
+    brand=titanrtx,driver>=470,driver<471
 
 cuda_v11.5.2:
   dist_base_path: dist/11.5.2

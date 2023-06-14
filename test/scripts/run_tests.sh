@@ -40,4 +40,4 @@ done
 docker rmi -f ${image}
 # TODO: cleanup after pipeline
 # docker rmi -f rockylinux:9
-docker image prune -f --filter "dangling=true"
+docker image prune -f --filter "dangling=true" || true

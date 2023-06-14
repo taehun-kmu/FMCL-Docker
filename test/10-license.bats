@@ -16,7 +16,7 @@ function setup() {
 @test "check_license_changed_upstream" {
     #  If this test is failing, the text of the license PDF needs to be converted to text and placed into the license file in this repository.
     #  Once that is done, all supported containers must be rebuilt to contain this new license.
-    docker_run --rm --gpus 0 --platform linux/${ARCH} rockylinux:9 bash -c "curl -fsSLO ${license_pdf} && echo "${license_pdf_sha1}  NVIDIA_Deep_Learning_Container_License.pdf" | sha1sum -c --strict -"
+    docker_run --rm --gpus 0 --platform linux/${ARCH} almalinux:9 bash -c "curl -fsSLO ${license_pdf} && echo "${license_pdf_sha1}  NVIDIA_Deep_Learning_Container_License.pdf" | sha1sum -c --strict -"
     [ "$status" -eq 0 ]
     # image cleanup is done in run_tests.h
 }

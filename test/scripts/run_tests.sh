@@ -6,7 +6,7 @@ set -e
 image="${IMAGE_NAME}:${CUDA_VERSION}-devel-${OS}${IMAGE_TAG_SUFFIX}"
 
 docker pull --platform linux/${ARCH} ${image}
-docker pull --platform linux/${ARCH} rockylinux:9
+docker pull --platform linux/${ARCH} almalinux:9
 
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 test_path=$(realpath "${script_dir}/../")

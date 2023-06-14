@@ -38,6 +38,3 @@ for test in $(find $test_path -iname "[0-9]*-*.bats" | sort); do
 done
 
 docker rmi -f ${image}
-# TODO: cleanup after pipeline
-# docker rmi -f rockylinux:9
-docker image prune -f --filter "dangling=true" || true

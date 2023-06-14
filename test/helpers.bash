@@ -15,10 +15,15 @@ function check_runtime() {
     docker info | grep 'Runtimes:' | grep -q 'nvidia'
 }
 
-# Taken from runc tests
 function docker_run() {
     run docker run "$@"
     echo "docker run $@ (status=$status):" >&2
+    echo "$output" >&2
+}
+
+function docker_rmi() {
+    run docker rmi "$@"
+    echo "docker rmi $@ (status=$status):" >&2
     echo "$output" >&2
 }
 

@@ -128,7 +128,7 @@ class ShipitData:
 
             # HACK: inconsistencies kill me..
             # cuda-nsight-compute is not in the shipit data so we have to handle it here.
-            if "cuda_nsight_compute" in name:
+            if "cuda_nsight_compute" in name and not self.tegra:
                 return {'name': name_with_hyphens, 'version': self.release_label}
 
             for _, v in fragments.items():

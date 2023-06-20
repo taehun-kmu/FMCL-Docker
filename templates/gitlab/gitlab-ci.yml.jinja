@@ -116,15 +116,17 @@ prepare:
     # COPY the NGC DEEP LEARNING CONTAINER LICENSE
     - run_cmd cp -v ./NGC-DL-CONTAINER-LICENSE "${DIST_BASE_PATH}/runtime"
     - run_cmd retry 3 10 docker buildx create --use ${PLATFORM_ARG} --driver-opt image=moby/buildkit:{{ cuda.moby_buildkit_version }} --name cuda
-    - run_cmd retry 3 10 docker buildx build --pull --push ${PLATFORM_ARG} -t "${IMAGE_NAME}:${CUDA_VERSION}-runtime-${OS}" ${TAG_RUNTIME} "${DIST_BASE_PATH}/runtime"
+    - if [[ -z ${NO_CACHE} ]]; then export PLZ_CACHE="--cache-from=type=registry,ref=${IMAGE_NAME}:${CUDA_VERSION}-runtime-${OS}"; fi
+    - run_cmd retry 3 10 docker buildx build --pull --push ${PLATFORM_ARG} -t "${IMAGE_NAME}:${CUDA_VERSION}-runtime-${OS}" ${TAG_RUNTIME}
                           --build-arg BUILDKIT_INLINE_CACHE=1 --progress plain
-                          --cache-from=type=registry,ref=${IMAGE_NAME}:${CUDA_VERSION}-runtime-${OS}
-                          ${NO_CACHE:+"--no-cache"}
-    - run_cmd retry 3 10 docker buildx build --pull --push ${PLATFORM_ARG} -t "${IMAGE_NAME}:${CUDA_VERSION}-devel-${OS}" ${TAG_DEVEL} "${DIST_BASE_PATH}/devel"
+                          ${PLZ_CACHE} ${NO_CACHE:+"--no-cache"}
+                          "${DIST_BASE_PATH}/runtime"
+    - if [[ -z ${NO_CACHE} ]]; then export PLZ_CACHE="--cache-from=type=registry,ref=${IMAGE_NAME}:${CUDA_VERSION}-devel-${OS}"; fi
+    - run_cmd retry 3 10 docker buildx build --pull --push ${PLATFORM_ARG} -t "${IMAGE_NAME}:${CUDA_VERSION}-devel-${OS}" ${TAG_DEVEL}
                           --build-arg "IMAGE_NAME=${IMAGE_NAME}"
                           --build-arg BUILDKIT_INLINE_CACHE=1 --progress plain
-                          --cache-from=type=registry,ref=${IMAGE_NAME}:${CUDA_VERSION}-devel-${OS}
-                          ${NO_CACHE:+"--no-cache"}
+                          ${PLZ_CACHE} ${NO_CACHE:+"--no-cache"}
+                          "${DIST_BASE_PATH}/devel"
     - 'echo "CUDA_TAGS=\"${CUDA_TAGS} ${CUDA_VERSION}-runtime-${OS} ${CUDA_VERSION}-devel-${OS}\"" >> tags.env'
     - cat tags.env
   artifacts:
@@ -185,9 +187,11 @@ prepare:
       echo "####################################################################"
       echo "BASE"
       echo "####################################################################"
-      if ! run_cmd retry 3 10 docker buildx build --pull --push ${PLATFORM_ARG} -t "${IMAGE_NAME}:${CUDA_VERSION}-base-${OS}${IMAGE_TAG_SUFFIX}" ${TAG_BASE} "${DIST_BASE_PATH}/base" \
+      if [[ -z ${NO_CACHE} ]]; then export PLZ_CACHE="--cache-from=type=registry,ref=${IMAGE_NAME}:${CUDA_VERSION}-base-${OS}${IMAGE_TAG_SUFFIX}"; fi
+      if ! run_cmd retry 3 10 docker buildx build --pull --push ${PLATFORM_ARG} -t "${IMAGE_NAME}:${CUDA_VERSION}-base-${OS}${IMAGE_TAG_SUFFIX}" ${TAG_BASE} \
                             --build-arg BUILDKIT_INLINE_CACHE=1 --progress plain \
-                            --cache-from=type=registry,ref=${IMAGE_NAME}:${CUDA_VERSION}-base-${OS}${IMAGE_TAG_SUFFIX} ${NO_CACHE:+"--no-cache"}; then
+                            ${PLZ_CACHE} ${NO_CACHE:+"--no-cache"} \
+                            "${DIST_BASE_PATH}/base"; then
           echo "Failed building the base image!"
           # kitmaker_webhook_failed
           exit 1
@@ -195,10 +199,12 @@ prepare:
       echo "####################################################################"
       echo "RUNTIME"
       echo "####################################################################"
+      if [[ -z ${NO_CACHE} ]]; then export PLZ_CACHE="--cache-from=type=registry,ref=${IMAGE_NAME}:${CUDA_VERSION}-runtime-${OS}${IMAGE_TAG_SUFFIX}"; fi
       if ! run_cmd retry 3 10 docker buildx build --pull --push ${PLATFORM_ARG} -t "${IMAGE_NAME}:${CUDA_VERSION}-runtime-${OS}${IMAGE_TAG_SUFFIX}" ${TAG_RUNTIME} \
-                            --build-arg "IMAGE_NAME=${IMAGE_NAME}" "${DIST_BASE_PATH}/runtime" \
+                            --build-arg "IMAGE_NAME=${IMAGE_NAME}" \
                             --build-arg BUILDKIT_INLINE_CACHE=1 --progress plain \
-                            --cache-from=type=registry,ref=${IMAGE_NAME}:${CUDA_VERSION}-runtime-${OS}${IMAGE_TAG_SUFFIX} ${NO_CACHE:+"--no-cache"}; then
+                            ${PLZ_CACHE} ${NO_CACHE:+"--no-cache"} \
+                            "${DIST_BASE_PATH}/runtime"; then
           echo "Failed building the runtime image!"
           # kitmaker_webhook_failed
           exit 1
@@ -206,10 +212,12 @@ prepare:
       echo "####################################################################"
       echo "DEVEL"
       echo "####################################################################"
+      if [[ -z ${NO_CACHE} ]]; then export PLZ_CACHE="--cache-from=type=registry,ref=${IMAGE_NAME}:${CUDA_VERSION}-devel-${OS}${IMAGE_TAG_SUFFIX}"; fi
       if ! run_cmd retry 3 10 docker buildx build --pull --push ${PLATFORM_ARG} -t "${IMAGE_NAME}:${CUDA_VERSION}-devel-${OS}${IMAGE_TAG_SUFFIX}" ${TAG_DEVEL} \
-                            --build-arg "IMAGE_NAME=${IMAGE_NAME}" "${DIST_BASE_PATH}/devel" \
+                            --build-arg "IMAGE_NAME=${IMAGE_NAME}" \
                             --build-arg BUILDKIT_INLINE_CACHE=1 --progress plain \
-                            --cache-from=type=registry,ref=${IMAGE_NAME}:${CUDA_VERSION}-devel-${OS}${IMAGE_TAG_SUFFIX} ${NO_CACHE:+"--no-cache"}; then
+                            ${PLZ_CACHE} ${NO_CACHE:+"--no-cache"} \
+                            "${DIST_BASE_PATH}/devel"; then
           echo "Failed building the devel image!"
           # kitmaker_webhook_failed
           exit 1
@@ -262,10 +270,12 @@ prepare:
       echo "####################################################################"
       echo "CUDNN RUNTIME"
       echo "####################################################################"
+      if [[ -z ${NO_CACHE} ]]; then export PLZ_CACHE="--cache-from=type=registry,ref=${IMAGE_NAME}:${CUDA_VERSION}-${CUDNN_VERSION}-runtime-${OS}${IMAGE_TAG_SUFFIX}"; fi
       if ! run_cmd retry 3 10 docker buildx build --pull --push ${PLATFORM_ARG} -t "${IMAGE_NAME}:${CUDA_VERSION}-${CUDNN_VERSION}-runtime-${OS}${IMAGE_TAG_SUFFIX}" ${TAG_CUDNN_RUNTIME} \
-                  --build-arg "IMAGE_NAME=${IMAGE_NAME}" "${DIST_BASE_PATH}/runtime/${CUDNN_VERSION}" \
+                  --build-arg "IMAGE_NAME=${IMAGE_NAME}" \
                   --build-arg BUILDKIT_INLINE_CACHE=1 --progress plain \
-                  --cache-from=type=registry,ref=${IMAGE_NAME}:${CUDA_VERSION}-${CUDNN_VERSION}-runtime-${OS}${IMAGE_TAG_SUFFIX} ${NO_CACHE:+"--no-cache"}; then
+                  ${PLZ_CACHE} ${NO_CACHE:+"--no-cache"} \
+                  "${DIST_BASE_PATH}/runtime/${CUDNN_VERSION}"; then
           echo "Failed building the cudnn runtime image!"
           # kitmaker_webhook_failed
           exit 1
@@ -273,10 +283,12 @@ prepare:
       echo "####################################################################"
       echo "CUDNN DEVEL"
       echo "####################################################################"
+      if [[ -z ${NO_CACHE} ]]; then export PLZ_CACHE="--cache-from=type=registry,ref=${IMAGE_NAME}:${CUDA_VERSION}-${CUDNN_VERSION}-devel-${OS}${IMAGE_TAG_SUFFIX}"; fi
       if ! run_cmd retry 3 10 docker buildx build --pull --push ${PLATFORM_ARG} -t "${IMAGE_NAME}:${CUDA_VERSION}-${CUDNN_VERSION}-devel-${OS}${IMAGE_TAG_SUFFIX}" ${TAG_CUDNN_DEVEL} \
-                  --build-arg "IMAGE_NAME=${IMAGE_NAME}" "${DIST_BASE_PATH}/devel/${CUDNN_VERSION}" \
+                  --build-arg "IMAGE_NAME=${IMAGE_NAME}" \
                   --build-arg BUILDKIT_INLINE_CACHE=1 --progress plain \
-                  --cache-from=type=registry,ref=${IMAGE_NAME}:${CUDA_VERSION}-${CUDNN_VERSION}-devel-${OS}${IMAGE_TAG_SUFFIX} ${NO_CACHE:+"--no-cache"}; then
+                  ${PLZ_CACHE} ${NO_CACHE:+"--no-cache"} \
+                  "${DIST_BASE_PATH}/devel/${CUDNN_VERSION}"; then
           echo "Failed building the cudnn devel image!"
           # kitmaker_webhook_failed
           exit 1

@@ -662,7 +662,7 @@ class ManagerContainerPush(Manager):
                 if self.dry_run:
                     log.debug("dry-run; not copying")
                     continue
-                if shellcmd(
+                out = shellcmd(
                     "skopeo",
                     (
                         "copy",
@@ -680,7 +680,8 @@ class ManagerContainerPush(Manager):
                         "2",
                         #  "--debug",
                     ),
-                ):
+                )
+                if out.returncode == 0:
                     log.info("Copy was successful")
                 else:
                     raise ImagePushRetry()

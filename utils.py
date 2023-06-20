@@ -104,6 +104,7 @@ def shellcmd(bin: str, args: tuple[str, ...], printOutput: bool = True) -> Shell
         if printOutput:
             log.error(line)
     p.communicate()
+    log.debug(f"command returncode: {p.returncode}")
     return ShellCmdReturn(p.returncode, out, err)
 
 

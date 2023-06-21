@@ -2027,7 +2027,7 @@ rockylinux9-v12.1.0-cudnn8:
   variables:
     <<: *rockylinux9_12_1_0_variables
     CUDNN_VERSION: "cudnn8"
-    ARCHES: "arm64, x86_64"
+    ARCHES: "x86_64"
   needs:
     - job: rockylinux9-v12.1.0
       artifacts: true
@@ -2405,7 +2405,7 @@ ubi9-v12.1.0-cudnn8:
   variables:
     <<: *ubi9_12_1_0_variables
     CUDNN_VERSION: "cudnn8"
-    ARCHES: "arm64, x86_64"
+    ARCHES: "x86_64"
   needs:
     - job: ubi9-v12.1.0
       artifacts: true

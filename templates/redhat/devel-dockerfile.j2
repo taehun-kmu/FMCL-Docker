@@ -117,6 +117,7 @@ LABEL maintainer "NVIDIA CORPORATION <sw-cuda-installer@nvidia.com>"
 
 RUN yum install -y \
     make \
+    findutils \
     cuda-command-line-tools-{{ cuda.version.major }}-{{ cuda.version.minor }}-${NV_CUDA_LIB_VERSION} \
     cuda-libraries-devel-{{ cuda.version.major }}-{{ cuda.version.minor }}-${NV_CUDA_LIB_VERSION} \
     cuda-minimal-build-{{ cuda.version.major }}-{{ cuda.version.minor }}-${NV_CUDA_LIB_VERSION} \

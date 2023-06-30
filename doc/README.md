@@ -21,13 +21,13 @@ For more information on CUDA, including the release notes, programming model, AP
 
 ## Announcement
 
-### Tag deprecation
+### CUDA Container Support Policy
 
-The following tags will no longer be updated.
+CUDA image container tags have a lifetime. The tags will be deleted Six Months after the last supported "Tesla Recommended Driver" has gone end-of-life OR a newer update release has been made for the same CUDA version.
 
-* `<cuda_version>-base`, `<cuda_version>-runtime`, `<cuda_version>-devel`
-  * These tags will be deleted.
-* All tags for 9.2, 9.1, 9.0, and 8.0
+Please see [CUDA Container Support Policy](https://gitlab.com/nvidia/container-images/cuda/-/blob/master/doc/support-policy.md) for more information.
+
+Breaking changes are announced on [Gitlab Issue #209](https://gitlab.com/nvidia/container-images/cuda/-/issues/209).
 
 ### Cuda Repo Signing Key has Changed!
 

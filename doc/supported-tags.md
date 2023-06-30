@@ -2,6 +2,13 @@
 
 A full list of tags that are supported with CUDA, cuDNN, and security updates.
 
+**CUDA Container Support Policy**
+
+CUDA image container tags have a lifetime. The tags will be deleted Six Months after the last supported "Tesla Recommended Driver" has gone end-of-life OR a newer update release has been made for the same CUDA version.
+
+Please see [CUDA Container Support Policy](https://gitlab.com/nvidia/container-images/cuda/-/blob/master/doc/support-policy.md) for more information.
+
+Breaking changes are announced on [Gitlab Issue #209](https://gitlab.com/nvidia/container-images/cuda/-/issues/209).
 > :information_source: Repos:<br> 
 > _nvcr.io/nvidia/cuda_<br>
 > _docker.io/nvidia/cuda_

@@ -1,6 +1,10 @@
 ## Unsupported tags
 
-All tags for _[`cuda-arm64`](https://hub.docker.com/r/nvidia/cuda-arm64/tags) and [`cuda-ppc64le`](https://hub.docker.com/r/nvidia/cuda-ppc64le/tags) are **deprecated**_, and are no longer supported along with the tags listed below.
+**CUDA Container Support Policy**
+
+CUDA image container tags have a lifetime. The tags will be deleted Six Months after the last supported "Tesla Recommended Driver" has gone end-of-life OR a newer update release has been made for the same CUDA version.
+
+Please see [CUDA Container Support Policy](https://gitlab.com/nvidia/container-images/cuda/-/blob/master/doc/support-policy.md) for more information.
 
 
 > :warning: These tags still exist and may contain critical vulnerabilities.<br> 

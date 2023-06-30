@@ -22,11 +22,10 @@ push_repos:
     image_name: nvidia/cuda
 
 
-# unsupported:
-#   distros:
-#    - <distro>
-#   release_label:
-#    - <release_label>
+unsupported:
+  release_label:
+   - 12.1.0
+   - 12.0.0
 
 
 .requires_v12.2.0: &cuda12_2_0_requires

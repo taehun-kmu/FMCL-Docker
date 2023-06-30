@@ -80,7 +80,7 @@ Please see the [project readme for instructions](https://gitlab.com/nvidia/conta
 
 ## How to get notified of upcoming changes
 
-Please consider subscribing to [this gitlab issue](https://gitlab.com/nvidia/container-images/cuda/-/issues/176) to be notified of breaking changes.
+Please consider subscribing to [Gitlab Issue #206](https://gitlab.com/nvidia/container-images/cuda/-/issues/206) to be notified of breaking changes.
 
 This issue is locked in the Gitlab issue tracker and comments can only be left by Nvidia employees.
 

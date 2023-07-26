@@ -485,6 +485,9 @@ class ManagerTrigger(Manager):
             r = requests.post(final_url, data=payload)
             log.info("response status code %s", r.status_code)
             log.info("response body %s", r.json())
+            if r.status_code == 404:
+                log.error("response is 404")
+                sys.exit(1)
         else:
             log.info("In dry-run mode so not making gitlab trigger POST")
 

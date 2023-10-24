@@ -69,7 +69,7 @@ class ShipitData:
             modified_arch = "sbsa"
         shipit_distro = f"{funnel_distro}{modified_distro_version}"
         if self.tegra:
-            shipit_distro = "l4t"
+            shipit_distro = "ubuntu2204"
             modified_arch = arches.tegra.arch
 
         platform_name = (
@@ -280,7 +280,7 @@ class ShipitData:
             if self.tegra:
                 self.arch = arches.tegra.common_name
             distros = platform[2]
-            if self.tegra and ("l4t" not in platform):
+            if self.tegra and ("aarch64" not in platform):
                 log.warning(
                     (
                         f"Skipping platform! '{os}-{self.arch}' "
@@ -290,7 +290,7 @@ class ShipitData:
                 continue
             log.info(f"Inspecting global.json platform: {platform}")
             for distro in distros:
-                if self.tegra and not "l4t" in distro:
+                if self.tegra and not "ubuntu2204" in distro:
                     # filters out the ubuntu distros in the shipitdata
                     continue
                 rgx = re.search(r"(\D*)(\d*)", distro)
@@ -306,7 +306,7 @@ class ShipitData:
                 else:
                     # Now that we are ready to render the template, change the arch if tegra
                     self.arch == "arm64"
-                    self.distro = "l4t"
+                    self.distro = "ubuntu2204"
                     self.distro_version = ""
                     platform = "l4t"
                     if not cudnn_json_path:
@@ -387,11 +387,11 @@ class ShipitData:
                     elif self.release_label == "11.4.19":
                         self.l4t_base_image = f"{L4T_BASE_IMAGE_NAME}:r35.4.1"
                         requires = "cuda>=11.4"
+                    elif self.release_label == "12.2.12":
+                        self.l4t_base_image = f"{L4T_BASE_IMAGE_NAME}:ubuntu22.04"
+                        requires = "cuda>=12.2"
                     elif not self.l4t_base_image:
-                        # 21:29 Mon May 09 2022: jesusa: This is not used much
-                        # for release because sometimes latest is not the
-                        # correct image...
-                        self.l4t_base_image = utils.latest_l4t_base_image()
+                        raise Exception("L4T Base tag not set!")
                     base_image = self.l4t_base_image
                     image_name = (
                         f"gitlab-master.nvidia.com:5005/cuda-installer/cuda/l4t-cuda"

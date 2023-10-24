@@ -151,43 +151,6 @@ def load_rc_push_repos_manifest_yaml():
     return obj
 
 
-def latest_l4t_base_image():
-    # bash equivalent
-    #
-    #  /usr/bin/skopeo list-tags docker://nvcr.io/nvidian/nvidia-l4t-base | jq -r '.["Tags"] | .[]' | grep "^r[[:digit:]]*\." | sort -r -n | head -n 1
-    #
-
-    out = shellcmd(
-        "skopeo",
-        ("list-tags", f"docker://{L4T_BASE_IMAGE_NAME}"),
-        printOutput=False,
-    )
-    #  pp(out)
-    if out.returncode != 0:
-        log.error(
-            f"Some problem occurred in getting tags from NGC (nvcr.io): {out.stderr}"
-        )
-        sys.exit(1)
-
-    try:
-        tag_dict = json.loads(out.stdout)
-    except json.JSONDecodeError as e:
-        log.error(f"Some problem occurred loading skopeo json ret: {e.msg}")
-        sys.exit(1)
-
-    tag_list = []
-    # TODO: refactor
-    for key in tag_dict.keys():
-        if "Tags" in key:
-            tag_list = list(tag_dict[key])
-    tag_list2 = []
-    for tag in tag_list:
-        # Match r32_CUDA
-        #  if re.match("^r[\d_]*CUDA", tag):
-        # Match r32\.*
-        if re.match("^r[\\d]*\\.", tag):
-            tag_list2.append(tag)
-    return f"{L4T_BASE_IMAGE_NAME}:{sorted(tag_list2, reverse=True)[0]}"
 
 
 def supported_distro_list_by_cuda_version(

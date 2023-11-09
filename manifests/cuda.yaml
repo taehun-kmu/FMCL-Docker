@@ -67,6 +67,7 @@ unsupported:
     brand=titanrtx,driver>=535,driver<536
 
 cuda_v12.3.0:
+  release_label: 12.3.0
   centos7:
     base_image: centos:7
     repo_url: https://developer.download.nvidia.com/compute/cuda/repos/rhel7

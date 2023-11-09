@@ -3,7 +3,7 @@ FROM ${IMAGE_NAME}:11.8.0-runtime-centos7 as base
 
 FROM base as base-amd64
 
-ENV NV_CUDNN_VERSION 8.9.0.131-1
+ENV NV_CUDNN_VERSION 8.9.6.50-1
 ENV NV_CUDNN_PACKAGE libcudnn8-${NV_CUDNN_VERSION}.cuda11.8
 
 

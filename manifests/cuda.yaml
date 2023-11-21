@@ -5730,7 +5730,7 @@ cuda_v11.4.3:
   libnccl2_dev:
     version: 2.9.9-1
   cudnn8:
-    version: 8.9.5.30-1
+    version: 8.2.1.32-1
 
 
 cuda_v11.3.1:

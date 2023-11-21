@@ -13,13 +13,8 @@ function setup() {
     if [ ${ARCH} != "x86_64" ]; then
        skip "Only needed on x86_64."
     fi
-    unsupported=('8.0', '9.0', '9.1', '9.2')
     debug "cuda_version: ${CUDA_VERSION}"
-    debug "unsupported: $(printf '%s' \"${unsupported[@]}\")"
-    if printf '%s' "${unsupported[@]}" | grep -q "${CUDA_VERSION}"; then
-        skip "NVIDIA_REQUIRE_CUDA not supported for this CUDA version"
-    fi
-    docker_run --rm --gpus 0 --platform linux/${ARCH} ${image} bash -c "printenv | grep -q 'brand=tesla'"
+    docker_run --rm --gpus 0 --platform linux/${ARCH} ${image} bash -c "printenv | grep -q 'cuda>='"
     [ "$status" -eq 0 ]
     # image cleanup is done in run_tests.sh
 }

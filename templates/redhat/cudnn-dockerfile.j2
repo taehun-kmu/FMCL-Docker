@@ -6,7 +6,11 @@ FROM base as base-amd64
 
 ENV NV_CUDNN_VERSION {{ cuda.x86_64.cudnn.version }}
 {% if cuda.cudnn.target == "runtime" %}
+{% if cuda.x86_64.cudnn.version[0] == "8" %}
 ENV NV_CUDNN_PACKAGE libcudnn{{ cuda.x86_64.cudnn.version[0] }}-${NV_CUDNN_VERSION}.cuda{{ cuda.version.major }}.{{ cuda.version.minor }}
+{% else %}
+ENV NV_CUDNN_PACKAGE libcudnn{{ cuda.x86_64.cudnn.version[0] }}-cuda-{{ cuda.version.major }}-${NV_CUDNN_VERSION}
+{% endif %}
 
 {% if "source" in cuda.x86_64.cudnn %}
     {% set hashcmd = "md5sum" -%}
@@ -33,8 +37,13 @@ RUN wget -q ${NV_CUDNN_DL_URL} \
 
 {% endif %}
 {% else %}
+{% if cuda.x86_64.cudnn.version[0] == "8" %}
 ENV NV_CUDNN_PACKAGE libcudnn{{ cuda.x86_64.cudnn.version[0] }}-${NV_CUDNN_VERSION}.cuda{{ cuda.version.major }}.{{ cuda.version.minor }}
 ENV NV_CUDNN_PACKAGE_DEV libcudnn{{ cuda.x86_64.cudnn.version[0] }}-devel-${NV_CUDNN_VERSION}.cuda{{ cuda.version.major }}.{{ cuda.version.minor }}
+{% else %}
+ENV NV_CUDNN_PACKAGE libcudnn{{ cuda.x86_64.cudnn.version[0] }}-cuda-{{ cuda.version.major }}-${NV_CUDNN_VERSION}
+ENV NV_CUDNN_PACKAGE libcudnn{{ cuda.x86_64.cudnn.version[0] }}-devel-cuda-{{ cuda.version.major }}-${NV_CUDNN_VERSION}
+{% endif %}
 
 {% if "source" in cuda.x86_64.cudnn %}
     {% set hashcmd = "md5sum" -%}
@@ -88,7 +97,11 @@ FROM base as base-arm64
 
 ENV NV_CUDNN_VERSION {{ cuda.arm64.cudnn.version }}
 {% if cuda.cudnn.target == "runtime" %}
+{% if cuda.arm64.cudnn.version[0] == "8" %}
 ENV NV_CUDNN_PACKAGE libcudnn{{ cuda.arm64.cudnn.version[0] }}-${NV_CUDNN_VERSION}.cuda{{ cuda.version.major }}.{{ cuda.version.minor }}
+{% else %}
+ENV NV_CUDNN_PACKAGE libcudnn{{ cuda.arm64.cudnn.version[0] }}-cuda-{{ cuda.version.major }}-${NV_CUDNN_VERSION}
+{% endif %}
 
 {% if "source" in cuda.arm64.cudnn %}
     {% set hashcmd = "md5sum" -%}
@@ -116,8 +129,13 @@ RUN wget -q ${NV_CUDNN_DL_URL} \
 
 {% endif %}
 {% else %}
+{% if cuda.arm64.cudnn.version[0] == "8" %}
 ENV NV_CUDNN_PACKAGE libcudnn{{ cuda.arm64.cudnn.version[0] }}-${NV_CUDNN_VERSION}.cuda{{ cuda.version.major }}.{{ cuda.version.minor }}
 ENV NV_CUDNN_PACKAGE_DEV libcudnn{{ cuda.arm64.cudnn.version[0] }}-devel-${NV_CUDNN_VERSION}.cuda{{ cuda.version.major }}.{{ cuda.version.minor }}
+{% else %}
+ENV NV_CUDNN_PACKAGE libcudnn{{ cuda.arm64.cudnn.version[0] }}-cuda-{{ cuda.version.major }}-${NV_CUDNN_VERSION}
+ENV NV_CUDNN_PACKAGE libcudnn{{ cuda.arm64.cudnn.version[0] }}-devel-cuda-{{ cuda.version.major }}-${NV_CUDNN_VERSION}
+{% endif %}
 
 {% if "source" in cuda.arm64.cudnn %}
     {% set hashcmd = "md5sum" -%}
@@ -171,7 +189,11 @@ FROM base as base-ppc64le
 
 ENV NV_CUDNN_VERSION {{ cuda.ppc64le.cudnn.version }}
 {% if cuda.cudnn.target == "runtime" %}
+{% if cuda.ppc64le.cudnn.version[0] == "8" %}
 ENV NV_CUDNN_PACKAGE libcudnn{{ cuda.ppc64le.cudnn.version[0] }}-${NV_CUDNN_VERSION}.cuda{{ cuda.version.major }}.{{ cuda.version.minor }}
+{% else %}
+ENV NV_CUDNN_PACKAGE libcudnn{{ cuda.ppc64le.cudnn.version[0] }}-cuda-{{ cuda.version.major }}-${NV_CUDNN_VERSION}
+{% endif %}
 
 {% if "source" in cuda.ppc64le.cudnn %}
     {% set hashcmd = "md5sum" -%}
@@ -198,8 +220,13 @@ RUN wget -q ${NV_CUDNN_DL_URL} \
 
 {% endif %}
 {% else %}
+{% if cuda.ppc64le.cudnn.version[0] == "8" %}
 ENV NV_CUDNN_PACKAGE libcudnn{{ cuda.ppc64le.cudnn.version[0] }}-${NV_CUDNN_VERSION}.cuda{{ cuda.version.major }}.{{ cuda.version.minor }}
 ENV NV_CUDNN_PACKAGE_DEV libcudnn{{ cuda.ppc64le.cudnn.version[0] }}-devel-${NV_CUDNN_VERSION}.cuda{{ cuda.version.major }}.{{ cuda.version.minor }}
+{% else %}
+ENV NV_CUDNN_PACKAGE libcudnn{{ cuda.ppc64le.cudnn.version[0] }}-cuda-{{ cuda.version.major }}-${NV_CUDNN_VERSION}
+ENV NV_CUDNN_PACKAGE libcudnn{{ cuda.ppc64le.cudnn.version[0] }}-devel-cuda-{{ cuda.version.major }}-${NV_CUDNN_VERSION}
+{% endif %}
 
 {% if "source" in cuda.ppc64le.cudnn %}
     {% set hashcmd = "md5sum" -%}

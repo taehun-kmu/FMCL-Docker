@@ -24,10 +24,12 @@ push_repos:
 
 unsupported:
   release_label:
+   - 12.3.1 # Newer version available
    - 12.3.0 # Newer version available
    - 12.2.0 # Newer version available
    - 12.1.0 # Newer version available
    - 12.0.0 # Newer version available
+   - 11.6.1 # Newer version available
    - 11.3.1 # Last supported TRD end-of-life. Tags will be removed from Dockerhub in six months (May 2024).
    - 11.2.2 # Last supported TRD end-of-life. Tags will be removed from Dockerhub in six months (May 2024).
    - 11.1.1 # Last supported TRD end-of-life. Tags will be removed from Dockerhub in six months (May 2024).

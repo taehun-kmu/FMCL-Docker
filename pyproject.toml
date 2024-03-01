@@ -6,7 +6,7 @@ authors = ["Jesus Alvarez <jesusa@nvidia.com>"]
 
 [tool.poetry.dependencies]
 python = ">3.8,<4"
-pyyaml = "*"
+pyyaml = ">6.0"
 plumbum = "*"
 jinja2 = "*"
 coloredlogs = "*"

@@ -1,6 +1,6 @@
 # Nvidia CUDA Linux Container Image Sources
 
-Usage of the CUDA container images requires the [Nvidia Container Runtime](https://github.com/NVIDIA/nvidia-container-runtime).
+Usage of the CUDA container images requires the [Nvidia Container Toolkit](https://github.com/NVIDIA/nvidia-container-toolkit).
 
 Container images are available from:
 

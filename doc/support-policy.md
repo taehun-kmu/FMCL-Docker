@@ -8,6 +8,8 @@ Going forward,
  - In addition, we will only support the latest point release for each of these toolkit versions.  
     For example when 12.1.1 is released, 12.1.0 is marked EOL  
  - Once a CUDA container image set has gone EOL, we will update the Message of the Day for the image to indicate it has reached EOL. We will also provide notification via a gitlab issue our customers can subscribe to.
+  - We are also including support for 2 major CUDA versions at any given time (e.g. 11 & 12 or 12 & 13). i.e. 11 will be marked EOL, after 13 is released. If 11 is already past deletion date based on above conditions, a month will be added to 11's deletion time to avoid disruption and provide ample time for customers to plan the transition. Please refer to the EOL chart for the deletion dates.
+
  - After a period of Six Months time, the EOL tags **WILL BE DELETED from Docker Hub and Nvidia GPU Cloud (NGC)**. This deletion ensures unsupported tags (and image layers) are not left lying around for customers to continue using after they have long been abandoned.
 
 Please see the [EOL chart](container_tags.pdf) for driver EOL and approx container tags deletion dates.

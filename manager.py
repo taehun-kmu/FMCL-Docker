@@ -188,7 +188,7 @@ class ManagerTrigger(Manager):
 
     arch: Any = cli.SwitchAttr(
         "--arch",
-        cli.Set("x86_64", "ppc64le", "arm64", case_sensitive=False),
+        cli.Set("x86_64", "arm64", case_sensitive=False),
         group="Targeted",
         excludes=["--manifest", "--trigger-override"],
         help="Generate container scripts for a particular architecture",
@@ -1167,7 +1167,7 @@ class ManagerGenerate(Manager):
                 ctx[cuda_version][pipeline_name]["distros"][distro]["arches"] = []
 
                 for arch, _ in manifest[key][distro].items():
-                    if arch not in ["arm64", "ppc64le", "x86_64"]:
+                    if arch not in ["arm64", "x86_64"]:
                         continue
                     no_os_suffix = self.get_data(
                         manifest, key, distro, "no_os_suffix", can_skip=True
@@ -1637,11 +1637,9 @@ class ManagerStaging(Manager):
     repos = [
         "gitlab-master.nvidia.com:5005/cuda-installer/cuda",
         "gitlab-master.nvidia.com:5005/cuda-installer/cuda/cuda-arm64",
-        "gitlab-master.nvidia.com:5005/cuda-installer/cuda/cuda-ppc64le",
         "gitlab-master.nvidia.com:5005/cuda-installer/cuda/l4t-cuda",
         "gitlab-master.nvidia.com:5005/cuda-installer/cuda/release-candidate/cuda",
         "gitlab-master.nvidia.com:5005/cuda-installer/cuda/release-candidate/cuda-arm64",
-        "gitlab-master.nvidia.com:5005/cuda-installer/cuda/release-candidate/cuda-ppc64le",
     ]
 
     delete_all: Any = cli.Flag(

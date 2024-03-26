@@ -92,13 +92,6 @@ arches = DotDict(
             container_arch="x86_64",
             nv_name="x86_64",
         ),
-        "ppc64le": SupportedArchitecture(
-            arch="ppc64le",
-            common_name="ppc64le",
-            repo_name=_package_repo_arch_repr(deb="ppc64el", rpm="ppc64le"),
-            container_arch="ppc64le",
-            nv_name="ppc64le",
-        ),
         "tegra": SupportedArchitecture(
             arch="aarch64",
             common_name="tegra",
@@ -125,9 +118,6 @@ def _pop_supported_platforms():
             package_format="deb",
         ),
         SupportedPlatform(
-            distro="centos", version="7", arches=[arches.x86_64], package_format="rpm"
-        ),
-        SupportedPlatform(
             distro="ubi",
             version="9",
             # ubi9 supports ppc64le, but CUDA does not...
@@ -144,7 +134,7 @@ def _pop_supported_platforms():
         SupportedPlatform(
             distro="ubi",
             version="8",
-            arches=[arches.x86_64, arches.arm64, arches.ppc64le],
+            arches=[arches.x86_64, arches.arm64],
             package_format="rpm",
         ),
         SupportedPlatform(
@@ -152,9 +142,6 @@ def _pop_supported_platforms():
             version="8",
             arches=[arches.x86_64, arches.arm64],
             package_format="rpm",
-        ),
-        SupportedPlatform(
-            distro="ubi", version="7", arches=[arches.x86_64], package_format="rpm"
         ),
         SupportedPlatform(
             distro="l4t",

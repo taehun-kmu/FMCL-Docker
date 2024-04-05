@@ -15,6 +15,12 @@ Breaking changes are announced on [Gitlab Issue #209](https://gitlab.com/nvidia/
 
 ### ubuntu22.04
 
+#### CUDA 12.4.0
+
+- [`12.4.0-base-ubuntu22.04` (*12.4.0/ubuntu22.04/base/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.4.0/ubuntu22.04/base/Dockerfile)
+- [`12.4.0-devel-ubuntu22.04` (*12.4.0/ubuntu22.04/devel/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.4.0/ubuntu22.04/devel/Dockerfile)
+- [`12.4.0-runtime-ubuntu22.04` (*12.4.0/ubuntu22.04/runtime/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.4.0/ubuntu22.04/runtime/Dockerfile)
+
 #### CUDA 12.3.2
 
 - [`12.3.2-base-ubuntu22.04` (*12.3.2/ubuntu22.04/base/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.3.2/ubuntu22.04/base/Dockerfile)
@@ -64,6 +70,12 @@ Breaking changes are announced on [Gitlab Issue #209](https://gitlab.com/nvidia/
 - [`11.7.1-runtime-ubuntu22.04` (*11.7.1/ubuntu22.04/runtime/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/11.7.1/ubuntu22.04/runtime/Dockerfile)
 
 ### ubuntu20.04
+
+#### CUDA 12.4.0
+
+- [`12.4.0-base-ubuntu20.04` (*12.4.0/ubuntu20.04/base/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.4.0/ubuntu20.04/base/Dockerfile)
+- [`12.4.0-devel-ubuntu20.04` (*12.4.0/ubuntu20.04/devel/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.4.0/ubuntu20.04/devel/Dockerfile)
+- [`12.4.0-runtime-ubuntu20.04` (*12.4.0/ubuntu20.04/runtime/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.4.0/ubuntu20.04/runtime/Dockerfile)
 
 #### CUDA 12.3.2
 
@@ -263,6 +275,12 @@ Breaking changes are announced on [Gitlab Issue #209](https://gitlab.com/nvidia/
 
 ### ubi9
 
+#### CUDA 12.4.0
+
+- [`12.4.0-base-ubi9` (*12.4.0/ubi9/base/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.4.0/ubi9/base/Dockerfile)
+- [`12.4.0-devel-ubi9` (*12.4.0/ubi9/devel/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.4.0/ubi9/devel/Dockerfile)
+- [`12.4.0-runtime-ubi9` (*12.4.0/ubi9/runtime/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.4.0/ubi9/runtime/Dockerfile)
+
 #### CUDA 12.3.2
 
 - [`12.3.2-base-ubi9` (*12.3.2/ubi9/base/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.3.2/ubi9/base/Dockerfile)
@@ -296,6 +314,12 @@ Breaking changes are announced on [Gitlab Issue #209](https://gitlab.com/nvidia/
 - [`12.0.1-runtime-ubi9` (*12.0.1/ubi9/runtime/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.0.1/ubi9/runtime/Dockerfile)
 
 ### ubi8
+
+#### CUDA 12.4.0
+
+- [`12.4.0-base-ubi8` (*12.4.0/ubi8/base/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.4.0/ubi8/base/Dockerfile)
+- [`12.4.0-devel-ubi8` (*12.4.0/ubi8/devel/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.4.0/ubi8/devel/Dockerfile)
+- [`12.4.0-runtime-ubi8` (*12.4.0/ubi8/runtime/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.4.0/ubi8/runtime/Dockerfile)
 
 #### CUDA 12.3.2
 
@@ -395,6 +419,12 @@ Breaking changes are announced on [Gitlab Issue #209](https://gitlab.com/nvidia/
 
 ### ubi7
 
+#### CUDA 12.4.0
+
+- [`12.4.0-base-ubi7` (*12.4.0/ubi7/base/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.4.0/ubi7/base/Dockerfile)
+- [`12.4.0-devel-ubi7` (*12.4.0/ubi7/devel/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.4.0/ubi7/devel/Dockerfile)
+- [`12.4.0-runtime-ubi7` (*12.4.0/ubi7/runtime/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.4.0/ubi7/runtime/Dockerfile)
+
 #### CUDA 12.3.2
 
 - [`12.3.2-base-ubi7` (*12.3.2/ubi7/base/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.3.2/ubi7/base/Dockerfile)
@@ -493,6 +523,12 @@ Breaking changes are announced on [Gitlab Issue #209](https://gitlab.com/nvidia/
 
 ### rockylinux9
 
+#### CUDA 12.4.0
+
+- [`12.4.0-base-rockylinux9` (*12.4.0/None/base/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.4.0/None/base/Dockerfile)
+- [`12.4.0-devel-rockylinux9` (*12.4.0/None/devel/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.4.0/None/devel/Dockerfile)
+- [`12.4.0-runtime-rockylinux9` (*12.4.0/None/runtime/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.4.0/None/runtime/Dockerfile)
+
 #### CUDA 12.3.2
 
 - [`12.3.2-base-rockylinux9` (*12.3.2/None/base/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.3.2/None/base/Dockerfile)
@@ -526,6 +562,12 @@ Breaking changes are announced on [Gitlab Issue #209](https://gitlab.com/nvidia/
 - [`12.0.1-runtime-rockylinux9` (*12.0.1/None/runtime/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.0.1/None/runtime/Dockerfile)
 
 ### rockylinux8
+
+#### CUDA 12.4.0
+
+- [`12.4.0-base-rockylinux8` (*12.4.0/None/base/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.4.0/None/base/Dockerfile)
+- [`12.4.0-devel-rockylinux8` (*12.4.0/None/devel/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.4.0/None/devel/Dockerfile)
+- [`12.4.0-runtime-rockylinux8` (*12.4.0/None/runtime/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.4.0/None/runtime/Dockerfile)
 
 #### CUDA 12.3.2
 
@@ -624,6 +666,12 @@ Breaking changes are announced on [Gitlab Issue #209](https://gitlab.com/nvidia/
 - [`11.0.3-runtime-rockylinux8` (*11.0.3/None/runtime/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/11.0.3/None/runtime/Dockerfile)
 
 ### centos7
+
+#### CUDA 12.4.0
+
+- [`12.4.0-base-centos7` (*12.4.0/centos7/base/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.4.0/centos7/base/Dockerfile)
+- [`12.4.0-devel-centos7` (*12.4.0/centos7/devel/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.4.0/centos7/devel/Dockerfile)
+- [`12.4.0-runtime-centos7` (*12.4.0/centos7/runtime/Dockerfile*)](https://gitlab.com/nvidia/container-images/cuda/blob/master/dist/12.4.0/centos7/runtime/Dockerfile)
 
 #### CUDA 12.3.2
 

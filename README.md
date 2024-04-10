@@ -15,6 +15,10 @@ Entrypoint scripts are rolling out now for all images, which include deprecation
 
 Please read our [Container Tag Support Policy](https://gitlab.com/nvidia/container-images/cuda/-/blob/master/doc/support-policy.md) for more information.
 
+### Centos7 and Ubi7 Deprecation Notice
+
+Centos7 and Ubi7 based images are available for CUDA 12.4.0. Container images starting with CUDA 12.4.1 are no longer produced for these operating systems.
+
 ### Deprecated: "latest" tag
 
 The "latest" tag for CUDA, CUDAGL, and OPENGL images has been deprecated on NGC and Docker Hub.

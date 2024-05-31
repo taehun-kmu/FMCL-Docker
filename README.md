@@ -19,6 +19,10 @@ Please read our [Container Tag Support Policy](https://gitlab.com/nvidia/contain
 
 Centos7 and Ubi7 based images are available for CUDA 12.4.0. Container images starting with CUDA 12.4.1 are no longer produced for these operating systems.
 
+### PowerPC images Deprecation Notice
+
+CUDA 12.4 are the last releases to support PowerPC. Beginning 12.5+ we no longer support ppc64le based images.
+
 ### Deprecated: "latest" tag
 
 The "latest" tag for CUDA, CUDAGL, and OPENGL images has been deprecated on NGC and Docker Hub.

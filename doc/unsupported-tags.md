@@ -12,6 +12,10 @@ Please see [CUDA Container Support Policy](https://gitlab.com/nvidia/container-i
 
 
 ### ubuntu22.04
+#### CUDA 12.4.0
+- `12.4.0-base-ubuntu22.04`
+- `12.4.0-devel-ubuntu22.04`
+- `12.4.0-runtime-ubuntu22.04`
 #### CUDA 12.3.1
 - `12.3.1-base-ubuntu22.04`
 - `12.3.1-devel-ubuntu22.04`
@@ -37,6 +41,10 @@ Please see [CUDA Container Support Policy](https://gitlab.com/nvidia/container-i
 - `12.0.0-devel-ubuntu22.04`
 - `12.0.0-runtime-ubuntu22.04`
 ### ubuntu20.04
+#### CUDA 12.4.0
+- `12.4.0-base-ubuntu20.04`
+- `12.4.0-devel-ubuntu20.04`
+- `12.4.0-runtime-ubuntu20.04`
 #### CUDA 12.3.1
 - `12.3.1-base-ubuntu20.04`
 - `12.3.1-devel-ubuntu20.04`
@@ -152,6 +160,10 @@ Please see [CUDA Container Support Policy](https://gitlab.com/nvidia/container-i
 - `11.0.3-devel-ubuntu16.04`
 - `11.0.3-runtime-ubuntu16.04`
 ### ubi9
+#### CUDA 12.4.0
+- `12.4.0-base-ubi9`
+- `12.4.0-devel-ubi9`
+- `12.4.0-runtime-ubi9`
 #### CUDA 12.3.1
 - `12.3.1-base-ubi9`
 - `12.3.1-devel-ubi9`
@@ -171,6 +183,10 @@ Please see [CUDA Container Support Policy](https://gitlab.com/nvidia/container-i
 - `12.1.0-devel-ubi9`
 - `12.1.0-runtime-ubi9`
 ### ubi8
+#### CUDA 12.4.0
+- `12.4.0-base-ubi8`
+- `12.4.0-devel-ubi8`
+- `12.4.0-runtime-ubi8`
 #### CUDA 12.3.1
 - `12.3.1-base-ubi8`
 - `12.3.1-devel-ubi8`
@@ -226,6 +242,10 @@ Please see [CUDA Container Support Policy](https://gitlab.com/nvidia/container-i
 - `11.0.3-devel-ubi8`
 - `11.0.3-runtime-ubi8`
 ### ubi7
+#### CUDA 12.4.0
+- `12.4.0-base-ubi7`
+- `12.4.0-devel-ubi7`
+- `12.4.0-runtime-ubi7`
 #### CUDA 12.3.1
 - `12.3.1-base-ubi7`
 - `12.3.1-devel-ubi7`
@@ -281,6 +301,10 @@ Please see [CUDA Container Support Policy](https://gitlab.com/nvidia/container-i
 - `11.0.3-devel-ubi7`
 - `11.0.3-runtime-ubi7`
 ### rockylinux9
+#### CUDA 12.4.0
+- `12.4.0-base-rockylinux9`
+- `12.4.0-devel-rockylinux9`
+- `12.4.0-runtime-rockylinux9`
 #### CUDA 12.3.1
 - `12.3.1-base-rockylinux9`
 - `12.3.1-devel-rockylinux9`
@@ -300,6 +324,10 @@ Please see [CUDA Container Support Policy](https://gitlab.com/nvidia/container-i
 - `12.1.0-devel-rockylinux9`
 - `12.1.0-runtime-rockylinux9`
 ### rockylinux8
+#### CUDA 12.4.0
+- `12.4.0-base-rockylinux8`
+- `12.4.0-devel-rockylinux8`
+- `12.4.0-runtime-rockylinux8`
 #### CUDA 12.3.1
 - `12.3.1-base-rockylinux8`
 - `12.3.1-devel-rockylinux8`
@@ -355,6 +383,10 @@ Please see [CUDA Container Support Policy](https://gitlab.com/nvidia/container-i
 - `11.0.3-devel-rockylinux8`
 - `11.0.3-runtime-rockylinux8`
 ### centos7
+#### CUDA 12.4.0
+- `12.4.0-base-centos7`
+- `12.4.0-devel-centos7`
+- `12.4.0-runtime-centos7`
 #### CUDA 12.3.1
 - `12.3.1-base-centos7`
 - `12.3.1-devel-centos7`

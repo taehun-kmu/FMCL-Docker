@@ -433,6 +433,42 @@ trigger:
     - if: '$TRIGGER_OVERRIDE'
 
 # Need to pass these from the trigger
+.kitmaker_ubuntu2404_variables: &kitmaker_ubuntu2404_variables
+  IMAGE_NAME: "gitlab-master.nvidia.com:5005/cuda-installer/cuda/release-candidate/cuda"
+  OS: "ubuntu24.04"
+  OS_NAME: "ubuntu"
+  OS_VERSION: "24.04"
+  ARCHES: "arm64, x86_64"
+  # CI_DEBUG_TRACE: "true"
+
+.kitmaker_ubuntu2404_only: &kitmaker_ubuntu2404_only
+  image: gitlab-master.nvidia.com:5005/cuda-installer/cuda/gitlab-cuda-builder
+  variables:
+    <<: *kitmaker_ubuntu2404_variables
+    TAG_MANIFEST_PATH: "tag_manifest_ubuntu2404"
+  rules:
+    - if: '$TRIGGER == "true" && $KITMAKER == "true" && $FLAVOR == "default"'
+    - if: $UBUNTU2404 == "true"
+
+kitmaker_ubuntu24.04_base:
+  <<: *cuda_base_definition
+  <<: *kitmaker_ubuntu2404_only
+  # Need to build container images on a multi-arch capable machine
+  <<: *tags_definition_multiarch
+
+kitmaker_ubuntu24.04_deploy:
+  <<: *deploy_definition
+  <<: *kitmaker_ubuntu2404_only
+  <<: *tags_definition
+  needs:
+    - job: kitmaker_ubuntu24.04_base
+      artifacts: true
+  artifacts:
+    paths:
+      - tag_manifest_ubuntu2404
+
+
+# Need to pass these from the trigger
 .kitmaker_ubuntu2204_variables: &kitmaker_ubuntu2204_variables
   IMAGE_NAME: "gitlab-master.nvidia.com:5005/cuda-installer/cuda/release-candidate/cuda"
   OS: "ubuntu22.04"
@@ -649,6 +685,78 @@ kitmaker_rockylinux8_deploy:
 
 
 # Need to pass these from the trigger
+.kitmaker_amzn2023_variables: &kitmaker_amzn2023_variables
+  IMAGE_NAME: "gitlab-master.nvidia.com:5005/cuda-installer/cuda/release-candidate/cuda"
+  OS: "amzn2023"
+  OS_NAME: "amzn"
+  OS_VERSION: "2023"
+  ARCHES: "x86_64"
+  # CI_DEBUG_TRACE: "true"
+
+.kitmaker_amzn2023_only: &kitmaker_amzn2023_only
+  image: gitlab-master.nvidia.com:5005/cuda-installer/cuda/gitlab-cuda-builder
+  variables:
+    <<: *kitmaker_amzn2023_variables
+    TAG_MANIFEST_PATH: "tag_manifest_amzn2023"
+  rules:
+    - if: '$TRIGGER == "true" && $KITMAKER == "true" && $FLAVOR == "default"'
+    - if: $AMZN2023 == "true"
+
+kitmaker_amzn2023_base:
+  <<: *cuda_base_definition
+  <<: *kitmaker_amzn2023_only
+  # Need to build container images on a multi-arch capable machine
+  <<: *tags_definition_multiarch
+
+kitmaker_amzn2023_deploy:
+  <<: *deploy_definition
+  <<: *kitmaker_amzn2023_only
+  <<: *tags_definition
+  needs:
+    - job: kitmaker_amzn2023_base
+      artifacts: true
+  artifacts:
+    paths:
+      - tag_manifest_amzn2023
+
+
+# Need to pass these from the trigger
+.kitmaker_cm2_variables: &kitmaker_cm2_variables
+  IMAGE_NAME: "gitlab-master.nvidia.com:5005/cuda-installer/cuda/release-candidate/cuda"
+  OS: "cm2"
+  OS_NAME: "cm"
+  OS_VERSION: "2"
+  ARCHES: "x86_64"
+  # CI_DEBUG_TRACE: "true"
+
+.kitmaker_cm2_only: &kitmaker_cm2_only
+  image: gitlab-master.nvidia.com:5005/cuda-installer/cuda/gitlab-cuda-builder
+  variables:
+    <<: *kitmaker_cm2_variables
+    TAG_MANIFEST_PATH: "tag_manifest_cm2"
+  rules:
+    - if: '$TRIGGER == "true" && $KITMAKER == "true" && $FLAVOR == "default"'
+    - if: $CM2 == "true"
+
+kitmaker_cm2_base:
+  <<: *cuda_base_definition
+  <<: *kitmaker_cm2_only
+  # Need to build container images on a multi-arch capable machine
+  <<: *tags_definition_multiarch
+
+kitmaker_cm2_deploy:
+  <<: *deploy_definition
+  <<: *kitmaker_cm2_only
+  <<: *tags_definition
+  needs:
+    - job: kitmaker_cm2_base
+      artifacts: true
+  artifacts:
+    paths:
+      - tag_manifest_cm2
+
+
+# Need to pass these from the trigger
 .kitmaker_l4t_jetson_variables: &kitmaker_l4t_jetson_variables
   IMAGE_NAME: "gitlab-master.nvidia.com:5005/cuda-installer/cuda/l4t-cuda"
   OS: "l4t"
@@ -740,6 +848,2094 @@ kitmaker_failure:
   script:
     - |
       kitmaker_webhook_failed
+
+
+.rockylinux8_12_5_0_variables: &rockylinux8_12_5_0_variables
+  DIST_BASE_PATH: "dist/12.5.0"
+  IMAGE_NAME: "{}"
+  MANIFEST: "manifests/cuda.yaml"
+  ARCHES: "arm64, x86_64"
+  OS: "rockylinux8"
+  OS_NAME: "rockylinux"
+  OS_VERSION: "8"
+  CUDA_VERSION: "12.5.0"
+
+.rockylinux8_12_5_0_only: &rockylinux8_12_5_0_only
+  <<: *tags_definition_multiarch
+  variables:
+    <<: *rockylinux8_12_5_0_variables
+  rules:
+    - if: '$rockylinux8_12_5_0 == "true"'
+    - if: '$all == "true"'
+
+rockylinux8-v12.5.0:
+  <<: *cuda_base_definition
+  <<: *rockylinux8_12_5_0_only
+
+rockylinux8-v12.5.0-test-arm64:
+  <<: *rockylinux8_12_5_0_only
+  <<: *test_definition
+  variables:
+    <<: *rockylinux8_12_5_0_variables
+    ARCH: "arm64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$rockylinux8_12_5_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: rockylinux8-v12.5.0
+      artifacts: true
+
+rockylinux8-v12.5.0-scan-arm64:
+  <<: *scan_definition
+  <<: *rockylinux8_12_5_0_only
+  needs:
+    - job: rockylinux8-v12.5.0
+    - job: rockylinux8-v12.5.0-test-arm64
+      optional: true
+  variables:
+    <<: *rockylinux8_12_5_0_variables
+    ARCH: "arm64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$rockylinux8_12_5_0 == "true"'
+    - if: '$all == "true"'
+
+rockylinux8-v12.5.0-test-x86_64:
+  <<: *rockylinux8_12_5_0_only
+  <<: *test_definition
+  variables:
+    <<: *rockylinux8_12_5_0_variables
+    ARCH: "x86_64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$rockylinux8_12_5_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: rockylinux8-v12.5.0
+      artifacts: true
+
+rockylinux8-v12.5.0-scan-x86_64:
+  <<: *scan_definition
+  <<: *rockylinux8_12_5_0_only
+  needs:
+    - job: rockylinux8-v12.5.0
+    - job: rockylinux8-v12.5.0-test-x86_64
+      optional: true
+  variables:
+    <<: *rockylinux8_12_5_0_variables
+    ARCH: "x86_64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$rockylinux8_12_5_0 == "true"'
+    - if: '$all == "true"'
+
+rockylinux8-v12.5.0-deploy:
+  <<: *deploy_definition
+  <<: *rockylinux8_12_5_0_only
+  # Override rules from only definition
+  rules:
+    - if: '($NO_TEST == "true" || $NO_SCAN == "true") && $NO_PUSH == "false"'
+      when: never
+    - if: '$rockylinux8_12_5_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: rockylinux8-v12.5.0
+      artifacts: true
+    - job: rockylinux8-v12.5.0-test-arm64
+      optional: true
+    - job: rockylinux8-v12.5.0-scan-arm64
+      optional: true
+    - job: rockylinux8-v12.5.0-test-x86_64
+      optional: true
+    - job: rockylinux8-v12.5.0-scan-x86_64
+      optional: true
+
+
+.rockylinux9_12_5_0_variables: &rockylinux9_12_5_0_variables
+  DIST_BASE_PATH: "dist/12.5.0"
+  IMAGE_NAME: "{}"
+  MANIFEST: "manifests/cuda.yaml"
+  ARCHES: "arm64, x86_64"
+  OS: "rockylinux9"
+  OS_NAME: "rockylinux"
+  OS_VERSION: "9"
+  CUDA_VERSION: "12.5.0"
+
+.rockylinux9_12_5_0_only: &rockylinux9_12_5_0_only
+  <<: *tags_definition_multiarch
+  variables:
+    <<: *rockylinux9_12_5_0_variables
+  rules:
+    - if: '$rockylinux9_12_5_0 == "true"'
+    - if: '$all == "true"'
+
+rockylinux9-v12.5.0:
+  <<: *cuda_base_definition
+  <<: *rockylinux9_12_5_0_only
+
+rockylinux9-v12.5.0-test-arm64:
+  <<: *rockylinux9_12_5_0_only
+  <<: *test_definition
+  variables:
+    <<: *rockylinux9_12_5_0_variables
+    ARCH: "arm64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$rockylinux9_12_5_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: rockylinux9-v12.5.0
+      artifacts: true
+
+rockylinux9-v12.5.0-scan-arm64:
+  <<: *scan_definition
+  <<: *rockylinux9_12_5_0_only
+  needs:
+    - job: rockylinux9-v12.5.0
+    - job: rockylinux9-v12.5.0-test-arm64
+      optional: true
+  variables:
+    <<: *rockylinux9_12_5_0_variables
+    ARCH: "arm64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$rockylinux9_12_5_0 == "true"'
+    - if: '$all == "true"'
+
+rockylinux9-v12.5.0-test-x86_64:
+  <<: *rockylinux9_12_5_0_only
+  <<: *test_definition
+  variables:
+    <<: *rockylinux9_12_5_0_variables
+    ARCH: "x86_64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$rockylinux9_12_5_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: rockylinux9-v12.5.0
+      artifacts: true
+
+rockylinux9-v12.5.0-scan-x86_64:
+  <<: *scan_definition
+  <<: *rockylinux9_12_5_0_only
+  needs:
+    - job: rockylinux9-v12.5.0
+    - job: rockylinux9-v12.5.0-test-x86_64
+      optional: true
+  variables:
+    <<: *rockylinux9_12_5_0_variables
+    ARCH: "x86_64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$rockylinux9_12_5_0 == "true"'
+    - if: '$all == "true"'
+
+rockylinux9-v12.5.0-deploy:
+  <<: *deploy_definition
+  <<: *rockylinux9_12_5_0_only
+  # Override rules from only definition
+  rules:
+    - if: '($NO_TEST == "true" || $NO_SCAN == "true") && $NO_PUSH == "false"'
+      when: never
+    - if: '$rockylinux9_12_5_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: rockylinux9-v12.5.0
+      artifacts: true
+    - job: rockylinux9-v12.5.0-test-arm64
+      optional: true
+    - job: rockylinux9-v12.5.0-scan-arm64
+      optional: true
+    - job: rockylinux9-v12.5.0-test-x86_64
+      optional: true
+    - job: rockylinux9-v12.5.0-scan-x86_64
+      optional: true
+
+
+.ubi8_12_5_0_variables: &ubi8_12_5_0_variables
+  DIST_BASE_PATH: "dist/12.5.0"
+  IMAGE_NAME: "{}"
+  MANIFEST: "manifests/cuda.yaml"
+  ARCHES: "arm64, x86_64"
+  OS: "ubi8"
+  OS_NAME: "ubi"
+  OS_VERSION: "8"
+  CUDA_VERSION: "12.5.0"
+
+.ubi8_12_5_0_only: &ubi8_12_5_0_only
+  <<: *tags_definition_multiarch
+  variables:
+    <<: *ubi8_12_5_0_variables
+  rules:
+    - if: '$ubi8_12_5_0 == "true"'
+    - if: '$all == "true"'
+
+ubi8-v12.5.0:
+  <<: *cuda_base_definition
+  <<: *ubi8_12_5_0_only
+
+ubi8-v12.5.0-test-arm64:
+  <<: *ubi8_12_5_0_only
+  <<: *test_definition
+  variables:
+    <<: *ubi8_12_5_0_variables
+    ARCH: "arm64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$ubi8_12_5_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubi8-v12.5.0
+      artifacts: true
+
+ubi8-v12.5.0-scan-arm64:
+  <<: *scan_definition
+  <<: *ubi8_12_5_0_only
+  needs:
+    - job: ubi8-v12.5.0
+    - job: ubi8-v12.5.0-test-arm64
+      optional: true
+  variables:
+    <<: *ubi8_12_5_0_variables
+    ARCH: "arm64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$ubi8_12_5_0 == "true"'
+    - if: '$all == "true"'
+
+ubi8-v12.5.0-test-x86_64:
+  <<: *ubi8_12_5_0_only
+  <<: *test_definition
+  variables:
+    <<: *ubi8_12_5_0_variables
+    ARCH: "x86_64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$ubi8_12_5_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubi8-v12.5.0
+      artifacts: true
+
+ubi8-v12.5.0-scan-x86_64:
+  <<: *scan_definition
+  <<: *ubi8_12_5_0_only
+  needs:
+    - job: ubi8-v12.5.0
+    - job: ubi8-v12.5.0-test-x86_64
+      optional: true
+  variables:
+    <<: *ubi8_12_5_0_variables
+    ARCH: "x86_64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$ubi8_12_5_0 == "true"'
+    - if: '$all == "true"'
+
+ubi8-v12.5.0-deploy:
+  <<: *deploy_definition
+  <<: *ubi8_12_5_0_only
+  # Override rules from only definition
+  rules:
+    - if: '($NO_TEST == "true" || $NO_SCAN == "true") && $NO_PUSH == "false"'
+      when: never
+    - if: '$ubi8_12_5_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubi8-v12.5.0
+      artifacts: true
+    - job: ubi8-v12.5.0-test-arm64
+      optional: true
+    - job: ubi8-v12.5.0-scan-arm64
+      optional: true
+    - job: ubi8-v12.5.0-test-x86_64
+      optional: true
+    - job: ubi8-v12.5.0-scan-x86_64
+      optional: true
+
+
+.ubi9_12_5_0_variables: &ubi9_12_5_0_variables
+  DIST_BASE_PATH: "dist/12.5.0"
+  IMAGE_NAME: "{}"
+  MANIFEST: "manifests/cuda.yaml"
+  ARCHES: "arm64, x86_64"
+  OS: "ubi9"
+  OS_NAME: "ubi"
+  OS_VERSION: "9"
+  CUDA_VERSION: "12.5.0"
+
+.ubi9_12_5_0_only: &ubi9_12_5_0_only
+  <<: *tags_definition_multiarch
+  variables:
+    <<: *ubi9_12_5_0_variables
+  rules:
+    - if: '$ubi9_12_5_0 == "true"'
+    - if: '$all == "true"'
+
+ubi9-v12.5.0:
+  <<: *cuda_base_definition
+  <<: *ubi9_12_5_0_only
+
+ubi9-v12.5.0-test-arm64:
+  <<: *ubi9_12_5_0_only
+  <<: *test_definition
+  variables:
+    <<: *ubi9_12_5_0_variables
+    ARCH: "arm64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$ubi9_12_5_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubi9-v12.5.0
+      artifacts: true
+
+ubi9-v12.5.0-scan-arm64:
+  <<: *scan_definition
+  <<: *ubi9_12_5_0_only
+  needs:
+    - job: ubi9-v12.5.0
+    - job: ubi9-v12.5.0-test-arm64
+      optional: true
+  variables:
+    <<: *ubi9_12_5_0_variables
+    ARCH: "arm64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$ubi9_12_5_0 == "true"'
+    - if: '$all == "true"'
+
+ubi9-v12.5.0-test-x86_64:
+  <<: *ubi9_12_5_0_only
+  <<: *test_definition
+  variables:
+    <<: *ubi9_12_5_0_variables
+    ARCH: "x86_64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$ubi9_12_5_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubi9-v12.5.0
+      artifacts: true
+
+ubi9-v12.5.0-scan-x86_64:
+  <<: *scan_definition
+  <<: *ubi9_12_5_0_only
+  needs:
+    - job: ubi9-v12.5.0
+    - job: ubi9-v12.5.0-test-x86_64
+      optional: true
+  variables:
+    <<: *ubi9_12_5_0_variables
+    ARCH: "x86_64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$ubi9_12_5_0 == "true"'
+    - if: '$all == "true"'
+
+ubi9-v12.5.0-deploy:
+  <<: *deploy_definition
+  <<: *ubi9_12_5_0_only
+  # Override rules from only definition
+  rules:
+    - if: '($NO_TEST == "true" || $NO_SCAN == "true") && $NO_PUSH == "false"'
+      when: never
+    - if: '$ubi9_12_5_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubi9-v12.5.0
+      artifacts: true
+    - job: ubi9-v12.5.0-test-arm64
+      optional: true
+    - job: ubi9-v12.5.0-scan-arm64
+      optional: true
+    - job: ubi9-v12.5.0-test-x86_64
+      optional: true
+    - job: ubi9-v12.5.0-scan-x86_64
+      optional: true
+
+
+.ubuntu20_04_12_5_0_variables: &ubuntu20_04_12_5_0_variables
+  DIST_BASE_PATH: "dist/12.5.0"
+  IMAGE_NAME: "{}"
+  MANIFEST: "manifests/cuda.yaml"
+  ARCHES: "arm64, x86_64"
+  OS: "ubuntu20.04"
+  OS_NAME: "ubuntu"
+  OS_VERSION: "20.04"
+  CUDA_VERSION: "12.5.0"
+
+.ubuntu20_04_12_5_0_only: &ubuntu20_04_12_5_0_only
+  <<: *tags_definition_multiarch
+  variables:
+    <<: *ubuntu20_04_12_5_0_variables
+  rules:
+    - if: '$ubuntu20_04_12_5_0 == "true"'
+    - if: '$all == "true"'
+
+ubuntu20.04-v12.5.0:
+  <<: *cuda_base_definition
+  <<: *ubuntu20_04_12_5_0_only
+
+ubuntu20.04-v12.5.0-test-arm64:
+  <<: *ubuntu20_04_12_5_0_only
+  <<: *test_definition
+  variables:
+    <<: *ubuntu20_04_12_5_0_variables
+    ARCH: "arm64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$ubuntu20_04_12_5_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubuntu20.04-v12.5.0
+      artifacts: true
+
+ubuntu20.04-v12.5.0-scan-arm64:
+  <<: *scan_definition
+  <<: *ubuntu20_04_12_5_0_only
+  needs:
+    - job: ubuntu20.04-v12.5.0
+    - job: ubuntu20.04-v12.5.0-test-arm64
+      optional: true
+  variables:
+    <<: *ubuntu20_04_12_5_0_variables
+    ARCH: "arm64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$ubuntu20_04_12_5_0 == "true"'
+    - if: '$all == "true"'
+
+ubuntu20.04-v12.5.0-test-x86_64:
+  <<: *ubuntu20_04_12_5_0_only
+  <<: *test_definition
+  variables:
+    <<: *ubuntu20_04_12_5_0_variables
+    ARCH: "x86_64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$ubuntu20_04_12_5_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubuntu20.04-v12.5.0
+      artifacts: true
+
+ubuntu20.04-v12.5.0-scan-x86_64:
+  <<: *scan_definition
+  <<: *ubuntu20_04_12_5_0_only
+  needs:
+    - job: ubuntu20.04-v12.5.0
+    - job: ubuntu20.04-v12.5.0-test-x86_64
+      optional: true
+  variables:
+    <<: *ubuntu20_04_12_5_0_variables
+    ARCH: "x86_64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$ubuntu20_04_12_5_0 == "true"'
+    - if: '$all == "true"'
+
+ubuntu20.04-v12.5.0-deploy:
+  <<: *deploy_definition
+  <<: *ubuntu20_04_12_5_0_only
+  # Override rules from only definition
+  rules:
+    - if: '($NO_TEST == "true" || $NO_SCAN == "true") && $NO_PUSH == "false"'
+      when: never
+    - if: '$ubuntu20_04_12_5_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubuntu20.04-v12.5.0
+      artifacts: true
+    - job: ubuntu20.04-v12.5.0-test-arm64
+      optional: true
+    - job: ubuntu20.04-v12.5.0-scan-arm64
+      optional: true
+    - job: ubuntu20.04-v12.5.0-test-x86_64
+      optional: true
+    - job: ubuntu20.04-v12.5.0-scan-x86_64
+      optional: true
+
+
+.ubuntu22_04_12_5_0_variables: &ubuntu22_04_12_5_0_variables
+  DIST_BASE_PATH: "dist/12.5.0"
+  IMAGE_NAME: "{}"
+  MANIFEST: "manifests/cuda.yaml"
+  ARCHES: "arm64, x86_64"
+  OS: "ubuntu22.04"
+  OS_NAME: "ubuntu"
+  OS_VERSION: "22.04"
+  CUDA_VERSION: "12.5.0"
+
+.ubuntu22_04_12_5_0_only: &ubuntu22_04_12_5_0_only
+  <<: *tags_definition_multiarch
+  variables:
+    <<: *ubuntu22_04_12_5_0_variables
+  rules:
+    - if: '$ubuntu22_04_12_5_0 == "true"'
+    - if: '$all == "true"'
+
+ubuntu22.04-v12.5.0:
+  <<: *cuda_base_definition
+  <<: *ubuntu22_04_12_5_0_only
+
+ubuntu22.04-v12.5.0-test-arm64:
+  <<: *ubuntu22_04_12_5_0_only
+  <<: *test_definition
+  variables:
+    <<: *ubuntu22_04_12_5_0_variables
+    ARCH: "arm64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$ubuntu22_04_12_5_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubuntu22.04-v12.5.0
+      artifacts: true
+
+ubuntu22.04-v12.5.0-scan-arm64:
+  <<: *scan_definition
+  <<: *ubuntu22_04_12_5_0_only
+  needs:
+    - job: ubuntu22.04-v12.5.0
+    - job: ubuntu22.04-v12.5.0-test-arm64
+      optional: true
+  variables:
+    <<: *ubuntu22_04_12_5_0_variables
+    ARCH: "arm64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$ubuntu22_04_12_5_0 == "true"'
+    - if: '$all == "true"'
+
+ubuntu22.04-v12.5.0-test-x86_64:
+  <<: *ubuntu22_04_12_5_0_only
+  <<: *test_definition
+  variables:
+    <<: *ubuntu22_04_12_5_0_variables
+    ARCH: "x86_64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$ubuntu22_04_12_5_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubuntu22.04-v12.5.0
+      artifacts: true
+
+ubuntu22.04-v12.5.0-scan-x86_64:
+  <<: *scan_definition
+  <<: *ubuntu22_04_12_5_0_only
+  needs:
+    - job: ubuntu22.04-v12.5.0
+    - job: ubuntu22.04-v12.5.0-test-x86_64
+      optional: true
+  variables:
+    <<: *ubuntu22_04_12_5_0_variables
+    ARCH: "x86_64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$ubuntu22_04_12_5_0 == "true"'
+    - if: '$all == "true"'
+
+ubuntu22.04-v12.5.0-deploy:
+  <<: *deploy_definition
+  <<: *ubuntu22_04_12_5_0_only
+  # Override rules from only definition
+  rules:
+    - if: '($NO_TEST == "true" || $NO_SCAN == "true") && $NO_PUSH == "false"'
+      when: never
+    - if: '$ubuntu22_04_12_5_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubuntu22.04-v12.5.0
+      artifacts: true
+    - job: ubuntu22.04-v12.5.0-test-arm64
+      optional: true
+    - job: ubuntu22.04-v12.5.0-scan-arm64
+      optional: true
+    - job: ubuntu22.04-v12.5.0-test-x86_64
+      optional: true
+    - job: ubuntu22.04-v12.5.0-scan-x86_64
+      optional: true
+
+
+.rockylinux8_12_4_1_variables: &rockylinux8_12_4_1_variables
+  DIST_BASE_PATH: "dist/12.4.1"
+  IMAGE_NAME: "{}"
+  MANIFEST: "manifests/cuda.yaml"
+  ARCHES: "arm64, x86_64"
+  OS: "rockylinux8"
+  OS_NAME: "rockylinux"
+  OS_VERSION: "8"
+  CUDA_VERSION: "12.4.1"
+
+.rockylinux8_12_4_1_only: &rockylinux8_12_4_1_only
+  <<: *tags_definition_multiarch
+  variables:
+    <<: *rockylinux8_12_4_1_variables
+  rules:
+    - if: '$rockylinux8_12_4_1 == "true"'
+    - if: '$all == "true"'
+
+rockylinux8-v12.4.1:
+  <<: *cuda_base_definition
+  <<: *rockylinux8_12_4_1_only
+
+rockylinux8-v12.4.1-test-arm64:
+  <<: *rockylinux8_12_4_1_only
+  <<: *test_definition
+  variables:
+    <<: *rockylinux8_12_4_1_variables
+    ARCH: "arm64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$rockylinux8_12_4_1 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: rockylinux8-v12.4.1
+      artifacts: true
+
+rockylinux8-v12.4.1-scan-arm64:
+  <<: *scan_definition
+  <<: *rockylinux8_12_4_1_only
+  needs:
+    - job: rockylinux8-v12.4.1
+    - job: rockylinux8-v12.4.1-test-arm64
+      optional: true
+  variables:
+    <<: *rockylinux8_12_4_1_variables
+    ARCH: "arm64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$rockylinux8_12_4_1 == "true"'
+    - if: '$all == "true"'
+
+rockylinux8-v12.4.1-test-x86_64:
+  <<: *rockylinux8_12_4_1_only
+  <<: *test_definition
+  variables:
+    <<: *rockylinux8_12_4_1_variables
+    ARCH: "x86_64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$rockylinux8_12_4_1 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: rockylinux8-v12.4.1
+      artifacts: true
+
+rockylinux8-v12.4.1-scan-x86_64:
+  <<: *scan_definition
+  <<: *rockylinux8_12_4_1_only
+  needs:
+    - job: rockylinux8-v12.4.1
+    - job: rockylinux8-v12.4.1-test-x86_64
+      optional: true
+  variables:
+    <<: *rockylinux8_12_4_1_variables
+    ARCH: "x86_64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$rockylinux8_12_4_1 == "true"'
+    - if: '$all == "true"'
+
+rockylinux8-v12.4.1-deploy:
+  <<: *deploy_definition
+  <<: *rockylinux8_12_4_1_only
+  # Override rules from only definition
+  rules:
+    - if: '($NO_TEST == "true" || $NO_SCAN == "true") && $NO_PUSH == "false"'
+      when: never
+    - if: '$rockylinux8_12_4_1 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: rockylinux8-v12.4.1
+      artifacts: true
+    - job: rockylinux8-v12.4.1-test-arm64
+      optional: true
+    - job: rockylinux8-v12.4.1-scan-arm64
+      optional: true
+    - job: rockylinux8-v12.4.1-test-x86_64
+      optional: true
+    - job: rockylinux8-v12.4.1-scan-x86_64
+      optional: true
+
+
+.rockylinux9_12_4_1_variables: &rockylinux9_12_4_1_variables
+  DIST_BASE_PATH: "dist/12.4.1"
+  IMAGE_NAME: "{}"
+  MANIFEST: "manifests/cuda.yaml"
+  ARCHES: "arm64, x86_64"
+  OS: "rockylinux9"
+  OS_NAME: "rockylinux"
+  OS_VERSION: "9"
+  CUDA_VERSION: "12.4.1"
+
+.rockylinux9_12_4_1_only: &rockylinux9_12_4_1_only
+  <<: *tags_definition_multiarch
+  variables:
+    <<: *rockylinux9_12_4_1_variables
+  rules:
+    - if: '$rockylinux9_12_4_1 == "true"'
+    - if: '$all == "true"'
+
+rockylinux9-v12.4.1:
+  <<: *cuda_base_definition
+  <<: *rockylinux9_12_4_1_only
+
+rockylinux9-v12.4.1-test-arm64:
+  <<: *rockylinux9_12_4_1_only
+  <<: *test_definition
+  variables:
+    <<: *rockylinux9_12_4_1_variables
+    ARCH: "arm64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$rockylinux9_12_4_1 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: rockylinux9-v12.4.1
+      artifacts: true
+
+rockylinux9-v12.4.1-scan-arm64:
+  <<: *scan_definition
+  <<: *rockylinux9_12_4_1_only
+  needs:
+    - job: rockylinux9-v12.4.1
+    - job: rockylinux9-v12.4.1-test-arm64
+      optional: true
+  variables:
+    <<: *rockylinux9_12_4_1_variables
+    ARCH: "arm64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$rockylinux9_12_4_1 == "true"'
+    - if: '$all == "true"'
+
+rockylinux9-v12.4.1-test-x86_64:
+  <<: *rockylinux9_12_4_1_only
+  <<: *test_definition
+  variables:
+    <<: *rockylinux9_12_4_1_variables
+    ARCH: "x86_64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$rockylinux9_12_4_1 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: rockylinux9-v12.4.1
+      artifacts: true
+
+rockylinux9-v12.4.1-scan-x86_64:
+  <<: *scan_definition
+  <<: *rockylinux9_12_4_1_only
+  needs:
+    - job: rockylinux9-v12.4.1
+    - job: rockylinux9-v12.4.1-test-x86_64
+      optional: true
+  variables:
+    <<: *rockylinux9_12_4_1_variables
+    ARCH: "x86_64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$rockylinux9_12_4_1 == "true"'
+    - if: '$all == "true"'
+
+rockylinux9-v12.4.1-deploy:
+  <<: *deploy_definition
+  <<: *rockylinux9_12_4_1_only
+  # Override rules from only definition
+  rules:
+    - if: '($NO_TEST == "true" || $NO_SCAN == "true") && $NO_PUSH == "false"'
+      when: never
+    - if: '$rockylinux9_12_4_1 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: rockylinux9-v12.4.1
+      artifacts: true
+    - job: rockylinux9-v12.4.1-test-arm64
+      optional: true
+    - job: rockylinux9-v12.4.1-scan-arm64
+      optional: true
+    - job: rockylinux9-v12.4.1-test-x86_64
+      optional: true
+    - job: rockylinux9-v12.4.1-scan-x86_64
+      optional: true
+
+
+.ubi8_12_4_1_variables: &ubi8_12_4_1_variables
+  DIST_BASE_PATH: "dist/12.4.1"
+  IMAGE_NAME: "{}"
+  MANIFEST: "manifests/cuda.yaml"
+  ARCHES: "arm64, x86_64"
+  OS: "ubi8"
+  OS_NAME: "ubi"
+  OS_VERSION: "8"
+  CUDA_VERSION: "12.4.1"
+
+.ubi8_12_4_1_only: &ubi8_12_4_1_only
+  <<: *tags_definition_multiarch
+  variables:
+    <<: *ubi8_12_4_1_variables
+  rules:
+    - if: '$ubi8_12_4_1 == "true"'
+    - if: '$all == "true"'
+
+ubi8-v12.4.1:
+  <<: *cuda_base_definition
+  <<: *ubi8_12_4_1_only
+
+ubi8-v12.4.1-test-arm64:
+  <<: *ubi8_12_4_1_only
+  <<: *test_definition
+  variables:
+    <<: *ubi8_12_4_1_variables
+    ARCH: "arm64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$ubi8_12_4_1 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubi8-v12.4.1
+      artifacts: true
+
+ubi8-v12.4.1-scan-arm64:
+  <<: *scan_definition
+  <<: *ubi8_12_4_1_only
+  needs:
+    - job: ubi8-v12.4.1
+    - job: ubi8-v12.4.1-test-arm64
+      optional: true
+  variables:
+    <<: *ubi8_12_4_1_variables
+    ARCH: "arm64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$ubi8_12_4_1 == "true"'
+    - if: '$all == "true"'
+
+ubi8-v12.4.1-test-x86_64:
+  <<: *ubi8_12_4_1_only
+  <<: *test_definition
+  variables:
+    <<: *ubi8_12_4_1_variables
+    ARCH: "x86_64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$ubi8_12_4_1 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubi8-v12.4.1
+      artifacts: true
+
+ubi8-v12.4.1-scan-x86_64:
+  <<: *scan_definition
+  <<: *ubi8_12_4_1_only
+  needs:
+    - job: ubi8-v12.4.1
+    - job: ubi8-v12.4.1-test-x86_64
+      optional: true
+  variables:
+    <<: *ubi8_12_4_1_variables
+    ARCH: "x86_64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$ubi8_12_4_1 == "true"'
+    - if: '$all == "true"'
+
+ubi8-v12.4.1-deploy:
+  <<: *deploy_definition
+  <<: *ubi8_12_4_1_only
+  # Override rules from only definition
+  rules:
+    - if: '($NO_TEST == "true" || $NO_SCAN == "true") && $NO_PUSH == "false"'
+      when: never
+    - if: '$ubi8_12_4_1 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubi8-v12.4.1
+      artifacts: true
+    - job: ubi8-v12.4.1-test-arm64
+      optional: true
+    - job: ubi8-v12.4.1-scan-arm64
+      optional: true
+    - job: ubi8-v12.4.1-test-x86_64
+      optional: true
+    - job: ubi8-v12.4.1-scan-x86_64
+      optional: true
+
+
+.ubi9_12_4_1_variables: &ubi9_12_4_1_variables
+  DIST_BASE_PATH: "dist/12.4.1"
+  IMAGE_NAME: "{}"
+  MANIFEST: "manifests/cuda.yaml"
+  ARCHES: "arm64, x86_64"
+  OS: "ubi9"
+  OS_NAME: "ubi"
+  OS_VERSION: "9"
+  CUDA_VERSION: "12.4.1"
+
+.ubi9_12_4_1_only: &ubi9_12_4_1_only
+  <<: *tags_definition_multiarch
+  variables:
+    <<: *ubi9_12_4_1_variables
+  rules:
+    - if: '$ubi9_12_4_1 == "true"'
+    - if: '$all == "true"'
+
+ubi9-v12.4.1:
+  <<: *cuda_base_definition
+  <<: *ubi9_12_4_1_only
+
+ubi9-v12.4.1-test-arm64:
+  <<: *ubi9_12_4_1_only
+  <<: *test_definition
+  variables:
+    <<: *ubi9_12_4_1_variables
+    ARCH: "arm64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$ubi9_12_4_1 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubi9-v12.4.1
+      artifacts: true
+
+ubi9-v12.4.1-scan-arm64:
+  <<: *scan_definition
+  <<: *ubi9_12_4_1_only
+  needs:
+    - job: ubi9-v12.4.1
+    - job: ubi9-v12.4.1-test-arm64
+      optional: true
+  variables:
+    <<: *ubi9_12_4_1_variables
+    ARCH: "arm64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$ubi9_12_4_1 == "true"'
+    - if: '$all == "true"'
+
+ubi9-v12.4.1-test-x86_64:
+  <<: *ubi9_12_4_1_only
+  <<: *test_definition
+  variables:
+    <<: *ubi9_12_4_1_variables
+    ARCH: "x86_64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$ubi9_12_4_1 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubi9-v12.4.1
+      artifacts: true
+
+ubi9-v12.4.1-scan-x86_64:
+  <<: *scan_definition
+  <<: *ubi9_12_4_1_only
+  needs:
+    - job: ubi9-v12.4.1
+    - job: ubi9-v12.4.1-test-x86_64
+      optional: true
+  variables:
+    <<: *ubi9_12_4_1_variables
+    ARCH: "x86_64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$ubi9_12_4_1 == "true"'
+    - if: '$all == "true"'
+
+ubi9-v12.4.1-deploy:
+  <<: *deploy_definition
+  <<: *ubi9_12_4_1_only
+  # Override rules from only definition
+  rules:
+    - if: '($NO_TEST == "true" || $NO_SCAN == "true") && $NO_PUSH == "false"'
+      when: never
+    - if: '$ubi9_12_4_1 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubi9-v12.4.1
+      artifacts: true
+    - job: ubi9-v12.4.1-test-arm64
+      optional: true
+    - job: ubi9-v12.4.1-scan-arm64
+      optional: true
+    - job: ubi9-v12.4.1-test-x86_64
+      optional: true
+    - job: ubi9-v12.4.1-scan-x86_64
+      optional: true
+
+
+.ubuntu20_04_12_4_1_variables: &ubuntu20_04_12_4_1_variables
+  DIST_BASE_PATH: "dist/12.4.1"
+  IMAGE_NAME: "{}"
+  MANIFEST: "manifests/cuda.yaml"
+  ARCHES: "arm64, x86_64"
+  OS: "ubuntu20.04"
+  OS_NAME: "ubuntu"
+  OS_VERSION: "20.04"
+  CUDA_VERSION: "12.4.1"
+
+.ubuntu20_04_12_4_1_only: &ubuntu20_04_12_4_1_only
+  <<: *tags_definition_multiarch
+  variables:
+    <<: *ubuntu20_04_12_4_1_variables
+  rules:
+    - if: '$ubuntu20_04_12_4_1 == "true"'
+    - if: '$all == "true"'
+
+ubuntu20.04-v12.4.1:
+  <<: *cuda_base_definition
+  <<: *ubuntu20_04_12_4_1_only
+
+ubuntu20.04-v12.4.1-test-arm64:
+  <<: *ubuntu20_04_12_4_1_only
+  <<: *test_definition
+  variables:
+    <<: *ubuntu20_04_12_4_1_variables
+    ARCH: "arm64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$ubuntu20_04_12_4_1 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubuntu20.04-v12.4.1
+      artifacts: true
+
+ubuntu20.04-v12.4.1-scan-arm64:
+  <<: *scan_definition
+  <<: *ubuntu20_04_12_4_1_only
+  needs:
+    - job: ubuntu20.04-v12.4.1
+    - job: ubuntu20.04-v12.4.1-test-arm64
+      optional: true
+  variables:
+    <<: *ubuntu20_04_12_4_1_variables
+    ARCH: "arm64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$ubuntu20_04_12_4_1 == "true"'
+    - if: '$all == "true"'
+
+ubuntu20.04-v12.4.1-test-x86_64:
+  <<: *ubuntu20_04_12_4_1_only
+  <<: *test_definition
+  variables:
+    <<: *ubuntu20_04_12_4_1_variables
+    ARCH: "x86_64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$ubuntu20_04_12_4_1 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubuntu20.04-v12.4.1
+      artifacts: true
+
+ubuntu20.04-v12.4.1-scan-x86_64:
+  <<: *scan_definition
+  <<: *ubuntu20_04_12_4_1_only
+  needs:
+    - job: ubuntu20.04-v12.4.1
+    - job: ubuntu20.04-v12.4.1-test-x86_64
+      optional: true
+  variables:
+    <<: *ubuntu20_04_12_4_1_variables
+    ARCH: "x86_64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$ubuntu20_04_12_4_1 == "true"'
+    - if: '$all == "true"'
+
+ubuntu20.04-v12.4.1-deploy:
+  <<: *deploy_definition
+  <<: *ubuntu20_04_12_4_1_only
+  # Override rules from only definition
+  rules:
+    - if: '($NO_TEST == "true" || $NO_SCAN == "true") && $NO_PUSH == "false"'
+      when: never
+    - if: '$ubuntu20_04_12_4_1 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubuntu20.04-v12.4.1
+      artifacts: true
+    - job: ubuntu20.04-v12.4.1-test-arm64
+      optional: true
+    - job: ubuntu20.04-v12.4.1-scan-arm64
+      optional: true
+    - job: ubuntu20.04-v12.4.1-test-x86_64
+      optional: true
+    - job: ubuntu20.04-v12.4.1-scan-x86_64
+      optional: true
+
+
+.ubuntu22_04_12_4_1_variables: &ubuntu22_04_12_4_1_variables
+  DIST_BASE_PATH: "dist/12.4.1"
+  IMAGE_NAME: "{}"
+  MANIFEST: "manifests/cuda.yaml"
+  ARCHES: "arm64, x86_64"
+  OS: "ubuntu22.04"
+  OS_NAME: "ubuntu"
+  OS_VERSION: "22.04"
+  CUDA_VERSION: "12.4.1"
+
+.ubuntu22_04_12_4_1_only: &ubuntu22_04_12_4_1_only
+  <<: *tags_definition_multiarch
+  variables:
+    <<: *ubuntu22_04_12_4_1_variables
+  rules:
+    - if: '$ubuntu22_04_12_4_1 == "true"'
+    - if: '$all == "true"'
+
+ubuntu22.04-v12.4.1:
+  <<: *cuda_base_definition
+  <<: *ubuntu22_04_12_4_1_only
+
+ubuntu22.04-v12.4.1-test-arm64:
+  <<: *ubuntu22_04_12_4_1_only
+  <<: *test_definition
+  variables:
+    <<: *ubuntu22_04_12_4_1_variables
+    ARCH: "arm64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$ubuntu22_04_12_4_1 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubuntu22.04-v12.4.1
+      artifacts: true
+
+ubuntu22.04-v12.4.1-scan-arm64:
+  <<: *scan_definition
+  <<: *ubuntu22_04_12_4_1_only
+  needs:
+    - job: ubuntu22.04-v12.4.1
+    - job: ubuntu22.04-v12.4.1-test-arm64
+      optional: true
+  variables:
+    <<: *ubuntu22_04_12_4_1_variables
+    ARCH: "arm64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$ubuntu22_04_12_4_1 == "true"'
+    - if: '$all == "true"'
+
+ubuntu22.04-v12.4.1-test-x86_64:
+  <<: *ubuntu22_04_12_4_1_only
+  <<: *test_definition
+  variables:
+    <<: *ubuntu22_04_12_4_1_variables
+    ARCH: "x86_64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$ubuntu22_04_12_4_1 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubuntu22.04-v12.4.1
+      artifacts: true
+
+ubuntu22.04-v12.4.1-scan-x86_64:
+  <<: *scan_definition
+  <<: *ubuntu22_04_12_4_1_only
+  needs:
+    - job: ubuntu22.04-v12.4.1
+    - job: ubuntu22.04-v12.4.1-test-x86_64
+      optional: true
+  variables:
+    <<: *ubuntu22_04_12_4_1_variables
+    ARCH: "x86_64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$ubuntu22_04_12_4_1 == "true"'
+    - if: '$all == "true"'
+
+ubuntu22.04-v12.4.1-deploy:
+  <<: *deploy_definition
+  <<: *ubuntu22_04_12_4_1_only
+  # Override rules from only definition
+  rules:
+    - if: '($NO_TEST == "true" || $NO_SCAN == "true") && $NO_PUSH == "false"'
+      when: never
+    - if: '$ubuntu22_04_12_4_1 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubuntu22.04-v12.4.1
+      artifacts: true
+    - job: ubuntu22.04-v12.4.1-test-arm64
+      optional: true
+    - job: ubuntu22.04-v12.4.1-scan-arm64
+      optional: true
+    - job: ubuntu22.04-v12.4.1-test-x86_64
+      optional: true
+    - job: ubuntu22.04-v12.4.1-scan-x86_64
+      optional: true
+
+
+.centos7_12_4_0_variables: &centos7_12_4_0_variables
+  DIST_BASE_PATH: "dist/12.4.0"
+  IMAGE_NAME: "{}"
+  MANIFEST: "manifests/cuda.yaml"
+  ARCHES: "x86_64"
+  OS: "centos7"
+  OS_NAME: "centos"
+  OS_VERSION: "7"
+  CUDA_VERSION: "12.4.0"
+
+.centos7_12_4_0_only: &centos7_12_4_0_only
+  <<: *tags_definition_multiarch
+  variables:
+    <<: *centos7_12_4_0_variables
+  rules:
+    - if: '$centos7_12_4_0 == "true"'
+    - if: '$all == "true"'
+
+centos7-v12.4.0:
+  <<: *cuda_base_definition
+  <<: *centos7_12_4_0_only
+
+centos7-v12.4.0-test-x86_64:
+  <<: *centos7_12_4_0_only
+  <<: *test_definition
+  variables:
+    <<: *centos7_12_4_0_variables
+    ARCH: "x86_64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$centos7_12_4_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: centos7-v12.4.0
+      artifacts: true
+
+centos7-v12.4.0-scan-x86_64:
+  <<: *scan_definition
+  <<: *centos7_12_4_0_only
+  needs:
+    - job: centos7-v12.4.0
+    - job: centos7-v12.4.0-test-x86_64
+      optional: true
+  variables:
+    <<: *centos7_12_4_0_variables
+    ARCH: "x86_64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$centos7_12_4_0 == "true"'
+    - if: '$all == "true"'
+
+centos7-v12.4.0-deploy:
+  <<: *deploy_definition
+  <<: *centos7_12_4_0_only
+  # Override rules from only definition
+  rules:
+    - if: '($NO_TEST == "true" || $NO_SCAN == "true") && $NO_PUSH == "false"'
+      when: never
+    - if: '$centos7_12_4_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: centos7-v12.4.0
+      artifacts: true
+    - job: centos7-v12.4.0-test-x86_64
+      optional: true
+    - job: centos7-v12.4.0-scan-x86_64
+      optional: true
+
+
+.rockylinux8_12_4_0_variables: &rockylinux8_12_4_0_variables
+  DIST_BASE_PATH: "dist/12.4.0"
+  IMAGE_NAME: "{}"
+  MANIFEST: "manifests/cuda.yaml"
+  ARCHES: "arm64, x86_64"
+  OS: "rockylinux8"
+  OS_NAME: "rockylinux"
+  OS_VERSION: "8"
+  CUDA_VERSION: "12.4.0"
+
+.rockylinux8_12_4_0_only: &rockylinux8_12_4_0_only
+  <<: *tags_definition_multiarch
+  variables:
+    <<: *rockylinux8_12_4_0_variables
+  rules:
+    - if: '$rockylinux8_12_4_0 == "true"'
+    - if: '$all == "true"'
+
+rockylinux8-v12.4.0:
+  <<: *cuda_base_definition
+  <<: *rockylinux8_12_4_0_only
+
+rockylinux8-v12.4.0-test-arm64:
+  <<: *rockylinux8_12_4_0_only
+  <<: *test_definition
+  variables:
+    <<: *rockylinux8_12_4_0_variables
+    ARCH: "arm64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$rockylinux8_12_4_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: rockylinux8-v12.4.0
+      artifacts: true
+
+rockylinux8-v12.4.0-scan-arm64:
+  <<: *scan_definition
+  <<: *rockylinux8_12_4_0_only
+  needs:
+    - job: rockylinux8-v12.4.0
+    - job: rockylinux8-v12.4.0-test-arm64
+      optional: true
+  variables:
+    <<: *rockylinux8_12_4_0_variables
+    ARCH: "arm64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$rockylinux8_12_4_0 == "true"'
+    - if: '$all == "true"'
+
+rockylinux8-v12.4.0-test-x86_64:
+  <<: *rockylinux8_12_4_0_only
+  <<: *test_definition
+  variables:
+    <<: *rockylinux8_12_4_0_variables
+    ARCH: "x86_64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$rockylinux8_12_4_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: rockylinux8-v12.4.0
+      artifacts: true
+
+rockylinux8-v12.4.0-scan-x86_64:
+  <<: *scan_definition
+  <<: *rockylinux8_12_4_0_only
+  needs:
+    - job: rockylinux8-v12.4.0
+    - job: rockylinux8-v12.4.0-test-x86_64
+      optional: true
+  variables:
+    <<: *rockylinux8_12_4_0_variables
+    ARCH: "x86_64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$rockylinux8_12_4_0 == "true"'
+    - if: '$all == "true"'
+
+rockylinux8-v12.4.0-deploy:
+  <<: *deploy_definition
+  <<: *rockylinux8_12_4_0_only
+  # Override rules from only definition
+  rules:
+    - if: '($NO_TEST == "true" || $NO_SCAN == "true") && $NO_PUSH == "false"'
+      when: never
+    - if: '$rockylinux8_12_4_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: rockylinux8-v12.4.0
+      artifacts: true
+    - job: rockylinux8-v12.4.0-test-arm64
+      optional: true
+    - job: rockylinux8-v12.4.0-scan-arm64
+      optional: true
+    - job: rockylinux8-v12.4.0-test-x86_64
+      optional: true
+    - job: rockylinux8-v12.4.0-scan-x86_64
+      optional: true
+
+
+.rockylinux9_12_4_0_variables: &rockylinux9_12_4_0_variables
+  DIST_BASE_PATH: "dist/12.4.0"
+  IMAGE_NAME: "{}"
+  MANIFEST: "manifests/cuda.yaml"
+  ARCHES: "arm64, x86_64"
+  OS: "rockylinux9"
+  OS_NAME: "rockylinux"
+  OS_VERSION: "9"
+  CUDA_VERSION: "12.4.0"
+
+.rockylinux9_12_4_0_only: &rockylinux9_12_4_0_only
+  <<: *tags_definition_multiarch
+  variables:
+    <<: *rockylinux9_12_4_0_variables
+  rules:
+    - if: '$rockylinux9_12_4_0 == "true"'
+    - if: '$all == "true"'
+
+rockylinux9-v12.4.0:
+  <<: *cuda_base_definition
+  <<: *rockylinux9_12_4_0_only
+
+rockylinux9-v12.4.0-test-arm64:
+  <<: *rockylinux9_12_4_0_only
+  <<: *test_definition
+  variables:
+    <<: *rockylinux9_12_4_0_variables
+    ARCH: "arm64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$rockylinux9_12_4_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: rockylinux9-v12.4.0
+      artifacts: true
+
+rockylinux9-v12.4.0-scan-arm64:
+  <<: *scan_definition
+  <<: *rockylinux9_12_4_0_only
+  needs:
+    - job: rockylinux9-v12.4.0
+    - job: rockylinux9-v12.4.0-test-arm64
+      optional: true
+  variables:
+    <<: *rockylinux9_12_4_0_variables
+    ARCH: "arm64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$rockylinux9_12_4_0 == "true"'
+    - if: '$all == "true"'
+
+rockylinux9-v12.4.0-test-x86_64:
+  <<: *rockylinux9_12_4_0_only
+  <<: *test_definition
+  variables:
+    <<: *rockylinux9_12_4_0_variables
+    ARCH: "x86_64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$rockylinux9_12_4_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: rockylinux9-v12.4.0
+      artifacts: true
+
+rockylinux9-v12.4.0-scan-x86_64:
+  <<: *scan_definition
+  <<: *rockylinux9_12_4_0_only
+  needs:
+    - job: rockylinux9-v12.4.0
+    - job: rockylinux9-v12.4.0-test-x86_64
+      optional: true
+  variables:
+    <<: *rockylinux9_12_4_0_variables
+    ARCH: "x86_64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$rockylinux9_12_4_0 == "true"'
+    - if: '$all == "true"'
+
+rockylinux9-v12.4.0-deploy:
+  <<: *deploy_definition
+  <<: *rockylinux9_12_4_0_only
+  # Override rules from only definition
+  rules:
+    - if: '($NO_TEST == "true" || $NO_SCAN == "true") && $NO_PUSH == "false"'
+      when: never
+    - if: '$rockylinux9_12_4_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: rockylinux9-v12.4.0
+      artifacts: true
+    - job: rockylinux9-v12.4.0-test-arm64
+      optional: true
+    - job: rockylinux9-v12.4.0-scan-arm64
+      optional: true
+    - job: rockylinux9-v12.4.0-test-x86_64
+      optional: true
+    - job: rockylinux9-v12.4.0-scan-x86_64
+      optional: true
+
+
+.ubi7_12_4_0_variables: &ubi7_12_4_0_variables
+  DIST_BASE_PATH: "dist/12.4.0"
+  IMAGE_NAME: "{}"
+  MANIFEST: "manifests/cuda.yaml"
+  ARCHES: "x86_64"
+  OS: "ubi7"
+  OS_NAME: "ubi"
+  OS_VERSION: "7"
+  CUDA_VERSION: "12.4.0"
+
+.ubi7_12_4_0_only: &ubi7_12_4_0_only
+  <<: *tags_definition_multiarch
+  variables:
+    <<: *ubi7_12_4_0_variables
+  rules:
+    - if: '$ubi7_12_4_0 == "true"'
+    - if: '$all == "true"'
+
+ubi7-v12.4.0:
+  <<: *cuda_base_definition
+  <<: *ubi7_12_4_0_only
+
+ubi7-v12.4.0-test-x86_64:
+  <<: *ubi7_12_4_0_only
+  <<: *test_definition
+  variables:
+    <<: *ubi7_12_4_0_variables
+    ARCH: "x86_64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$ubi7_12_4_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubi7-v12.4.0
+      artifacts: true
+
+ubi7-v12.4.0-scan-x86_64:
+  <<: *scan_definition
+  <<: *ubi7_12_4_0_only
+  needs:
+    - job: ubi7-v12.4.0
+    - job: ubi7-v12.4.0-test-x86_64
+      optional: true
+  variables:
+    <<: *ubi7_12_4_0_variables
+    ARCH: "x86_64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$ubi7_12_4_0 == "true"'
+    - if: '$all == "true"'
+
+ubi7-v12.4.0-deploy:
+  <<: *deploy_definition
+  <<: *ubi7_12_4_0_only
+  # Override rules from only definition
+  rules:
+    - if: '($NO_TEST == "true" || $NO_SCAN == "true") && $NO_PUSH == "false"'
+      when: never
+    - if: '$ubi7_12_4_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubi7-v12.4.0
+      artifacts: true
+    - job: ubi7-v12.4.0-test-x86_64
+      optional: true
+    - job: ubi7-v12.4.0-scan-x86_64
+      optional: true
+
+
+.ubi8_12_4_0_variables: &ubi8_12_4_0_variables
+  DIST_BASE_PATH: "dist/12.4.0"
+  IMAGE_NAME: "{}"
+  MANIFEST: "manifests/cuda.yaml"
+  ARCHES: "arm64, x86_64"
+  OS: "ubi8"
+  OS_NAME: "ubi"
+  OS_VERSION: "8"
+  CUDA_VERSION: "12.4.0"
+
+.ubi8_12_4_0_only: &ubi8_12_4_0_only
+  <<: *tags_definition_multiarch
+  variables:
+    <<: *ubi8_12_4_0_variables
+  rules:
+    - if: '$ubi8_12_4_0 == "true"'
+    - if: '$all == "true"'
+
+ubi8-v12.4.0:
+  <<: *cuda_base_definition
+  <<: *ubi8_12_4_0_only
+
+ubi8-v12.4.0-test-arm64:
+  <<: *ubi8_12_4_0_only
+  <<: *test_definition
+  variables:
+    <<: *ubi8_12_4_0_variables
+    ARCH: "arm64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$ubi8_12_4_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubi8-v12.4.0
+      artifacts: true
+
+ubi8-v12.4.0-scan-arm64:
+  <<: *scan_definition
+  <<: *ubi8_12_4_0_only
+  needs:
+    - job: ubi8-v12.4.0
+    - job: ubi8-v12.4.0-test-arm64
+      optional: true
+  variables:
+    <<: *ubi8_12_4_0_variables
+    ARCH: "arm64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$ubi8_12_4_0 == "true"'
+    - if: '$all == "true"'
+
+ubi8-v12.4.0-test-x86_64:
+  <<: *ubi8_12_4_0_only
+  <<: *test_definition
+  variables:
+    <<: *ubi8_12_4_0_variables
+    ARCH: "x86_64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$ubi8_12_4_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubi8-v12.4.0
+      artifacts: true
+
+ubi8-v12.4.0-scan-x86_64:
+  <<: *scan_definition
+  <<: *ubi8_12_4_0_only
+  needs:
+    - job: ubi8-v12.4.0
+    - job: ubi8-v12.4.0-test-x86_64
+      optional: true
+  variables:
+    <<: *ubi8_12_4_0_variables
+    ARCH: "x86_64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$ubi8_12_4_0 == "true"'
+    - if: '$all == "true"'
+
+ubi8-v12.4.0-deploy:
+  <<: *deploy_definition
+  <<: *ubi8_12_4_0_only
+  # Override rules from only definition
+  rules:
+    - if: '($NO_TEST == "true" || $NO_SCAN == "true") && $NO_PUSH == "false"'
+      when: never
+    - if: '$ubi8_12_4_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubi8-v12.4.0
+      artifacts: true
+    - job: ubi8-v12.4.0-test-arm64
+      optional: true
+    - job: ubi8-v12.4.0-scan-arm64
+      optional: true
+    - job: ubi8-v12.4.0-test-x86_64
+      optional: true
+    - job: ubi8-v12.4.0-scan-x86_64
+      optional: true
+
+
+.ubi9_12_4_0_variables: &ubi9_12_4_0_variables
+  DIST_BASE_PATH: "dist/12.4.0"
+  IMAGE_NAME: "{}"
+  MANIFEST: "manifests/cuda.yaml"
+  ARCHES: "arm64, x86_64"
+  OS: "ubi9"
+  OS_NAME: "ubi"
+  OS_VERSION: "9"
+  CUDA_VERSION: "12.4.0"
+
+.ubi9_12_4_0_only: &ubi9_12_4_0_only
+  <<: *tags_definition_multiarch
+  variables:
+    <<: *ubi9_12_4_0_variables
+  rules:
+    - if: '$ubi9_12_4_0 == "true"'
+    - if: '$all == "true"'
+
+ubi9-v12.4.0:
+  <<: *cuda_base_definition
+  <<: *ubi9_12_4_0_only
+
+ubi9-v12.4.0-test-arm64:
+  <<: *ubi9_12_4_0_only
+  <<: *test_definition
+  variables:
+    <<: *ubi9_12_4_0_variables
+    ARCH: "arm64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$ubi9_12_4_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubi9-v12.4.0
+      artifacts: true
+
+ubi9-v12.4.0-scan-arm64:
+  <<: *scan_definition
+  <<: *ubi9_12_4_0_only
+  needs:
+    - job: ubi9-v12.4.0
+    - job: ubi9-v12.4.0-test-arm64
+      optional: true
+  variables:
+    <<: *ubi9_12_4_0_variables
+    ARCH: "arm64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$ubi9_12_4_0 == "true"'
+    - if: '$all == "true"'
+
+ubi9-v12.4.0-test-x86_64:
+  <<: *ubi9_12_4_0_only
+  <<: *test_definition
+  variables:
+    <<: *ubi9_12_4_0_variables
+    ARCH: "x86_64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$ubi9_12_4_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubi9-v12.4.0
+      artifacts: true
+
+ubi9-v12.4.0-scan-x86_64:
+  <<: *scan_definition
+  <<: *ubi9_12_4_0_only
+  needs:
+    - job: ubi9-v12.4.0
+    - job: ubi9-v12.4.0-test-x86_64
+      optional: true
+  variables:
+    <<: *ubi9_12_4_0_variables
+    ARCH: "x86_64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$ubi9_12_4_0 == "true"'
+    - if: '$all == "true"'
+
+ubi9-v12.4.0-deploy:
+  <<: *deploy_definition
+  <<: *ubi9_12_4_0_only
+  # Override rules from only definition
+  rules:
+    - if: '($NO_TEST == "true" || $NO_SCAN == "true") && $NO_PUSH == "false"'
+      when: never
+    - if: '$ubi9_12_4_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubi9-v12.4.0
+      artifacts: true
+    - job: ubi9-v12.4.0-test-arm64
+      optional: true
+    - job: ubi9-v12.4.0-scan-arm64
+      optional: true
+    - job: ubi9-v12.4.0-test-x86_64
+      optional: true
+    - job: ubi9-v12.4.0-scan-x86_64
+      optional: true
+
+
+.ubuntu20_04_12_4_0_variables: &ubuntu20_04_12_4_0_variables
+  DIST_BASE_PATH: "dist/12.4.0"
+  IMAGE_NAME: "{}"
+  MANIFEST: "manifests/cuda.yaml"
+  ARCHES: "arm64, x86_64"
+  OS: "ubuntu20.04"
+  OS_NAME: "ubuntu"
+  OS_VERSION: "20.04"
+  CUDA_VERSION: "12.4.0"
+
+.ubuntu20_04_12_4_0_only: &ubuntu20_04_12_4_0_only
+  <<: *tags_definition_multiarch
+  variables:
+    <<: *ubuntu20_04_12_4_0_variables
+  rules:
+    - if: '$ubuntu20_04_12_4_0 == "true"'
+    - if: '$all == "true"'
+
+ubuntu20.04-v12.4.0:
+  <<: *cuda_base_definition
+  <<: *ubuntu20_04_12_4_0_only
+
+ubuntu20.04-v12.4.0-test-arm64:
+  <<: *ubuntu20_04_12_4_0_only
+  <<: *test_definition
+  variables:
+    <<: *ubuntu20_04_12_4_0_variables
+    ARCH: "arm64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$ubuntu20_04_12_4_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubuntu20.04-v12.4.0
+      artifacts: true
+
+ubuntu20.04-v12.4.0-scan-arm64:
+  <<: *scan_definition
+  <<: *ubuntu20_04_12_4_0_only
+  needs:
+    - job: ubuntu20.04-v12.4.0
+    - job: ubuntu20.04-v12.4.0-test-arm64
+      optional: true
+  variables:
+    <<: *ubuntu20_04_12_4_0_variables
+    ARCH: "arm64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$ubuntu20_04_12_4_0 == "true"'
+    - if: '$all == "true"'
+
+ubuntu20.04-v12.4.0-test-x86_64:
+  <<: *ubuntu20_04_12_4_0_only
+  <<: *test_definition
+  variables:
+    <<: *ubuntu20_04_12_4_0_variables
+    ARCH: "x86_64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$ubuntu20_04_12_4_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubuntu20.04-v12.4.0
+      artifacts: true
+
+ubuntu20.04-v12.4.0-scan-x86_64:
+  <<: *scan_definition
+  <<: *ubuntu20_04_12_4_0_only
+  needs:
+    - job: ubuntu20.04-v12.4.0
+    - job: ubuntu20.04-v12.4.0-test-x86_64
+      optional: true
+  variables:
+    <<: *ubuntu20_04_12_4_0_variables
+    ARCH: "x86_64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$ubuntu20_04_12_4_0 == "true"'
+    - if: '$all == "true"'
+
+ubuntu20.04-v12.4.0-deploy:
+  <<: *deploy_definition
+  <<: *ubuntu20_04_12_4_0_only
+  # Override rules from only definition
+  rules:
+    - if: '($NO_TEST == "true" || $NO_SCAN == "true") && $NO_PUSH == "false"'
+      when: never
+    - if: '$ubuntu20_04_12_4_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubuntu20.04-v12.4.0
+      artifacts: true
+    - job: ubuntu20.04-v12.4.0-test-arm64
+      optional: true
+    - job: ubuntu20.04-v12.4.0-scan-arm64
+      optional: true
+    - job: ubuntu20.04-v12.4.0-test-x86_64
+      optional: true
+    - job: ubuntu20.04-v12.4.0-scan-x86_64
+      optional: true
+
+
+.ubuntu22_04_12_4_0_variables: &ubuntu22_04_12_4_0_variables
+  DIST_BASE_PATH: "dist/12.4.0"
+  IMAGE_NAME: "{}"
+  MANIFEST: "manifests/cuda.yaml"
+  ARCHES: "arm64, x86_64"
+  OS: "ubuntu22.04"
+  OS_NAME: "ubuntu"
+  OS_VERSION: "22.04"
+  CUDA_VERSION: "12.4.0"
+
+.ubuntu22_04_12_4_0_only: &ubuntu22_04_12_4_0_only
+  <<: *tags_definition_multiarch
+  variables:
+    <<: *ubuntu22_04_12_4_0_variables
+  rules:
+    - if: '$ubuntu22_04_12_4_0 == "true"'
+    - if: '$all == "true"'
+
+ubuntu22.04-v12.4.0:
+  <<: *cuda_base_definition
+  <<: *ubuntu22_04_12_4_0_only
+
+ubuntu22.04-v12.4.0-test-arm64:
+  <<: *ubuntu22_04_12_4_0_only
+  <<: *test_definition
+  variables:
+    <<: *ubuntu22_04_12_4_0_variables
+    ARCH: "arm64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$ubuntu22_04_12_4_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubuntu22.04-v12.4.0
+      artifacts: true
+
+ubuntu22.04-v12.4.0-scan-arm64:
+  <<: *scan_definition
+  <<: *ubuntu22_04_12_4_0_only
+  needs:
+    - job: ubuntu22.04-v12.4.0
+    - job: ubuntu22.04-v12.4.0-test-arm64
+      optional: true
+  variables:
+    <<: *ubuntu22_04_12_4_0_variables
+    ARCH: "arm64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$ubuntu22_04_12_4_0 == "true"'
+    - if: '$all == "true"'
+
+ubuntu22.04-v12.4.0-test-x86_64:
+  <<: *ubuntu22_04_12_4_0_only
+  <<: *test_definition
+  variables:
+    <<: *ubuntu22_04_12_4_0_variables
+    ARCH: "x86_64"
+  rules:
+    - if: '$NO_TEST == "true"'
+      when: never
+    - if: '$ubuntu22_04_12_4_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubuntu22.04-v12.4.0
+      artifacts: true
+
+ubuntu22.04-v12.4.0-scan-x86_64:
+  <<: *scan_definition
+  <<: *ubuntu22_04_12_4_0_only
+  needs:
+    - job: ubuntu22.04-v12.4.0
+    - job: ubuntu22.04-v12.4.0-test-x86_64
+      optional: true
+  variables:
+    <<: *ubuntu22_04_12_4_0_variables
+    ARCH: "x86_64"
+  # Override rules from only definition
+  rules:
+    - if: '$NO_SCAN == "true" || $NO_TEST == "true"'
+      when: never
+    - if: '$ubuntu22_04_12_4_0 == "true"'
+    - if: '$all == "true"'
+
+ubuntu22.04-v12.4.0-deploy:
+  <<: *deploy_definition
+  <<: *ubuntu22_04_12_4_0_only
+  # Override rules from only definition
+  rules:
+    - if: '($NO_TEST == "true" || $NO_SCAN == "true") && $NO_PUSH == "false"'
+      when: never
+    - if: '$ubuntu22_04_12_4_0 == "true"'
+    - if: '$all == "true"'
+  needs:
+    - job: ubuntu22.04-v12.4.0
+      artifacts: true
+    - job: ubuntu22.04-v12.4.0-test-arm64
+      optional: true
+    - job: ubuntu22.04-v12.4.0-scan-arm64
+      optional: true
+    - job: ubuntu22.04-v12.4.0-test-x86_64
+      optional: true
+    - job: ubuntu22.04-v12.4.0-scan-x86_64
+      optional: true
 
 
 .centos7_12_3_2_variables: &centos7_12_3_2_variables

@@ -59,7 +59,7 @@ class ShipitData:
         funnel_distro = distro
         if (
             foo := supported_platforms.by_distro(funnel_distro)
-        ) and "rpm" in foo.package_format:
+        ) and "rpm" in foo.package_format and foo.distro not in ['amzn', 'cm']:
             funnel_distro = "rhel"
         self.arch = arch
         modified_distro_version = distro_version.replace(".", "")
@@ -201,7 +201,7 @@ class ShipitData:
         repo_distro = self.distro
         if (
             foo := supported_platforms.by_distro(repo_distro)
-        ) and "rpm" in foo.package_format:
+        ) and "rpm" in foo.package_format and foo.distro not in ['amzn', 'cm']:
             repo_distro = "rhel"
         clean_distro = "{}{}".format(repo_distro, self.distro_version.replace(".", ""))
         return (
@@ -363,6 +363,14 @@ class ShipitData:
                 if "ubi" in self.distro:
                     base_image = (
                         f"registry.access.redhat.com/ubi{self.distro_version}/ubi:latest"
+                    )
+                if "amzn" in self.distro:
+                    base_image = (
+                        f"amazonlinux:{self.distro_version}"
+                    )
+                if "cm" in self.distro:
+                    base_image = (
+                        f"mcr.microsoft.com/cbl-mariner/base/core:{self.distro_version}.0"
                     )
                 requires = ""
 

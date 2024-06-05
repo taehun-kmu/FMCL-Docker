@@ -13,7 +13,7 @@ log = logging.getLogger()
 HTTP_RETRY_ATTEMPTS = 3
 HTTP_RETRY_WAIT_SECS = 30
 
-SUPPORTED_DISTRO_LIST = ["ubuntu", "ubi", "centos", "rockylinux"]
+SUPPORTED_DISTRO_LIST = ["ubuntu", "ubi", "rockylinux", "amzn", "cm"]
 L4T_BASE_IMAGE_NAME = "nvcr.io/nvidian/nvidia-aarch64-base"
 
 # Increased buildkit version from 0.8.1 to 0.10.3 to overcome ubuntu 22.04 build failures
@@ -107,6 +107,12 @@ def _pop_supported_platforms():
     return [
         SupportedPlatform(
             distro="ubuntu",
+            version="24.04",
+            arches=[arches.arm64, arches.x86_64],
+            package_format="deb",
+        ),
+        SupportedPlatform(
+            distro="ubuntu",
             version="22.04",
             arches=[arches.arm64, arches.x86_64],
             package_format="deb",
@@ -141,6 +147,18 @@ def _pop_supported_platforms():
             distro="rockylinux",
             version="8",
             arches=[arches.x86_64, arches.arm64],
+            package_format="rpm",
+        ),
+        SupportedPlatform(
+            distro="amzn",
+            version="2023",
+            arches=[arches.x86_64],
+            package_format="rpm",
+        ),
+        SupportedPlatform(
+            distro="cm",
+            version="2",
+            arches=[arches.x86_64],
             package_format="rpm",
         ),
         SupportedPlatform(

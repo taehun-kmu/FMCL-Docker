@@ -9,6 +9,10 @@ ENV NVIDIA_REQUIRE_CUDA "{{ cuda.x86_64.requires }}"
 {% endif %}
 ENV NV_CUDA_CUDART_VERSION {{ cuda.x86_64.components.cudart.version }}
 
+{% if "cm" in cuda.os.distro %}
+RUN yum upgrade -y && yum install -y ca-certificates
+{% endif %}
+
 COPY cuda.repo-x86_64 /etc/yum.repos.d/cuda.repo
 
 {% endif %}
@@ -20,6 +24,10 @@ ENV NVARCH sbsa
 ENV NVIDIA_REQUIRE_CUDA "{{ cuda.arm64.requires }}"
 {% endif %}
 ENV NV_CUDA_CUDART_VERSION {{ cuda.arm64.components.cudart.version }}
+
+{% if "cm" in cuda.os.distro %}
+RUN yum upgrade -y && yum install -y ca-certificates
+{% endif %}
 
 COPY cuda.repo-arm64 /etc/yum.repos.d/cuda.repo
 {% endif %}
@@ -47,10 +55,6 @@ RUN NVIDIA_GPGKEY_SUM=d0664fbbdb8c32356d45de36c5984617217b2d0bef41b93ccecd326ba3
     echo "$NVIDIA_GPGKEY_SUM  /etc/pki/rpm-gpg/RPM-GPG-KEY-NVIDIA" | sha256sum -c --strict -
 
 ENV CUDA_VERSION {{ cuda.version.release_label }}
-
-{% if "cm" in cuda.os.distro %}
-RUN yum upgrade -y && yum install -y ca-certificates
-{% endif %}
 
 # For libraries in the cuda-compat-* package: https://docs.nvidia.com/cuda/eula/index.html#attachment-a
 RUN yum upgrade -y && yum install -y \

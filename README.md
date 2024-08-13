@@ -17,15 +17,17 @@ Please read our [Container Tag Support Policy](https://gitlab.com/nvidia/contain
 
 ### Centos7 and Ubi7 Deprecation Notice
 
-Centos7 and Ubi7 based images are available for CUDA 12.4.0. Container images starting with CUDA 12.4.1 are no longer produced for these operating systems.
+Centos7 and Ubi7 based images are available up till CUDA 12.4.0. Starting with CUDA 12.4.1, images for these operating systems are no longer produced.
 
 ### PowerPC images Deprecation Notice
 
 CUDA 12.4 are the last releases to support PowerPC. Beginning 12.5+ we no longer support ppc64le based images.
 
-### Ubuntu 24.04 support
+### Ubuntu 24.04, AmazonLinux 2023, AzureLinux 2 support
 
 CUDA 12.5.1 brings support for Ubuntu 24.04 images.
+
+CUDA 12.6.0 brings support for AmazonLinux (amzn2023) and CBL-Mariner/AzureLinux (cm2).
 
 ### Deprecated: "latest" tag
 

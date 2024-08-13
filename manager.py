@@ -1242,7 +1242,7 @@ class ManagerGenerate(Manager):
                                 labels[2] = value
                             if value in ("base", "devel", "runtime"):
                                 labels[3] = value
-                            if re.compile(r"centos*|ubuntu*|ubi*|rocky*").match(value):
+                            if re.compile(r"centos*|ubuntu*|ubi*|rocky*|amzn*|cm.").match(value):
                                 operating_system = value.split("-")
                                 labels[4] = operating_system[0]
                                 dotdistro = labels[4]
@@ -1303,6 +1303,14 @@ class ManagerGenerate(Manager):
             elif "rocky" in OS:
                 distro = OS.split("rockylinux")
                 platforms[OS]["name"] = f"Rockylinux {distro[1]}"
+                platforms[OS]["arches"] = get_arches_for_platform(OS)
+            elif "amzn" in OS:
+                distro = OS.split("amzn")
+                platforms[OS]["name"] = f"Amzn {distro[1]}"
+                platforms[OS]["arches"] = get_arches_for_platform(OS)
+            elif "cm" in OS:
+                distro = OS.split("cm")
+                platforms[OS]["name"] = f"CM {distro[1]}"
                 platforms[OS]["arches"] = get_arches_for_platform(OS)
             else:
                 distro = OS.split("ubi")
@@ -1377,6 +1385,12 @@ class ManagerGenerate(Manager):
             elif "rockylinux" in tags:
                 rockylinux_tags = tags.split("-")
                 distros_list.append(rockylinux_tags[len(rockylinux_tags) - 1])
+            elif "amzn" in tags:
+                amazonlinux_tags = tags.split("-")
+                distros_list.append(amazonlinux_tags[len(amazonlinux_tags) - 1])
+            elif "cm" in tags:
+                azurelinux_tags = tags.split("-")
+                distros_list.append(azurelinux_tags[len(azurelinux_tags) - 1])
         distros_set = set(distros_list)
 
         manifest = self.parent.manifest

@@ -1,0 +1,29 @@
+name: cuda
+services:
+    systemd-cuda:
+        stdin_open: true
+        tty: true
+        container_name: cuda
+        tmpfs:
+            - /tmp:exec
+            - /run
+            - /run/lock
+        volumes:
+            - /sys/fs/cgroup:/sys/fs/cgroup
+        networks:
+            ipvlan_net:
+                ipv4_address: 192.168.0.201
+        runtime: nvidia
+        deploy:
+            resources:
+                reservations:
+                    devices:
+                        - driver: nvidia
+                          count: all
+                          capabilities:
+                              - gpu
+        image: taehun3446/systemd-cuda:12.4.1-cudnn-devel
+networks:
+    ipvlan_net:
+        external: true
+        name: ipvlan_net
